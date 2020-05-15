@@ -1,0 +1,14 @@
+-Strip the platform dependent console functions, or use preprocessors and have some for windows, linux, and dummy. 
+-Strip the "System("Blah blah")" platform dependent functions.
+-Switch from u_Data_3 to templates
+-Standardize comment format across all files.
+-Rework console output commands to be crossplatform through #IFDEF preprocessor
+-Separate files into the correct format of header files and code files
+-During building of a 1 dimensional network the error:5 "access denied" occured when the memory mapping could not reopen the file after enlarging it.
+-Many instances of variables being assigned incompatable data type values potentially leading to a loss of data, hundreds of warnings atm.
+-Create namespace for the library
+-c_NT3_Command_Parser is a mess. Needs revised and modularized. 
+-Use more prebuilt functions for math and other things. 
+-More abstractions between classes instead of direct access to public members.
+-Documentation is currently lacking to say the least.
+-The NT3 and LoTd libraries need merged.

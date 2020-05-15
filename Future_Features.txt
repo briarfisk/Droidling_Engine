@@ -1,0 +1,4 @@
+-GUI designer for the WYSIWYG editor, uses 
+-Option to load different portions of the CAN when filling. 
+--RC, State, etc. So the MMap only has to do one load the node once.
+-
