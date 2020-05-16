@@ -31,7 +31,7 @@ void init_Console()
      hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 }
 
-void set_Console_Title(string p_Title)
+void set_Console_Title(std::string p_Title)
 {
      SetConsoleTitleA(p_Title.c_str());
 	 
@@ -51,7 +51,7 @@ void output_Console_Character_Colored(int p_bg, int p_fg, char p_Char)
      //hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
      // sets color
      SetConsoleTextAttribute(hConsole, p_fg+(p_bg*16));
-     cout << p_Char;
+     std::cout << p_Char;
      SetConsoleTextAttribute(hConsole, fg+(bg*16));
 }
 
@@ -61,7 +61,7 @@ void output_Console_Int_Colored(int p_bg, int p_fg, int p_Int)
      //hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
      // sets color
      SetConsoleTextAttribute(hConsole, p_fg+(p_bg*16));
-     cout << p_Int;
+     std::cout << p_Int;
      SetConsoleTextAttribute(hConsole, fg+(bg*16));
      set_Console_Color(bg, fg);
 }
@@ -71,7 +71,7 @@ void output_Console_Float_Colored(int p_bg, int p_fg, float p_Float)
      //hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
      // sets color
      SetConsoleTextAttribute(hConsole, p_fg+(p_bg*16));
-     cout << p_Float;
+     std::cout << p_Float;
      SetConsoleTextAttribute(hConsole, fg+(bg*16));
      set_Console_Color(bg, fg);
 }
@@ -82,7 +82,7 @@ void output_Console_Float_Colored_With_Additional_Charge_For_Precision_Setting(i
      // sets color
      SetConsoleTextAttribute(hConsole, p_fg+(p_bg*16));
      p_Float += p_Precision;
-     cout << p_Float;
+     std::cout << p_Float;
      SetConsoleTextAttribute(hConsole, fg+(bg*16));
      set_Console_Color(bg, fg);
 }
@@ -95,24 +95,24 @@ void output_Console_Float_Colored_With_Precision_5(int p_bg, int p_fg, float p_F
      SetConsoleTextAttribute(hConsole, p_fg+(p_bg*16));
      int tmp = int (p_Float * 100000);
      p_Float = float (tmp * .000001);
-     cout << p_Float;
+     std::cout << p_Float;
      
      SetConsoleTextAttribute(hConsole, fg+(bg*16));
      set_Console_Color(bg, fg);
 }
 
 
-void ostr(int p_bg, int p_fg, string p_String)
+void ostr(int p_bg, int p_fg, std::string p_String)
 {
      SetConsoleTextAttribute(hConsole, p_fg+(p_bg*16));
-     cout << p_String;
+     std::cout << p_String;
      SetConsoleTextAttribute(hConsole, fg+(bg*16));
 }
 
 void ochr(int p_bg, int p_fg, char p_String)
 {
      SetConsoleTextAttribute(hConsole, p_fg+(p_bg*16));
-     cout << p_String;
+     std::cout << p_String;
      SetConsoleTextAttribute(hConsole, fg+(bg*16));
 }
 
@@ -121,11 +121,11 @@ void opchr(int p_bg, int p_fg, char p_String)
      SetConsoleTextAttribute(hConsole, p_fg+(p_bg*16));
      if (int (p_String) == 0 || int (p_String) == 7 || int (p_String) == 8 || int (p_String) == 9 || int (p_String) == 10 || int (p_String) == 13 || int (p_String) == 255)
      {
-          cout << "?";
+          std::cout << "?";
      }
      else
      {
-          cout << p_String;
+          std::cout << p_String;
      }
      SetConsoleTextAttribute(hConsole, fg+(bg*16));
 }
@@ -133,35 +133,35 @@ void opchr(int p_bg, int p_fg, char p_String)
 void oull(int p_bg, int p_fg, unsigned long long int p_Int)
 {
      SetConsoleTextAttribute(hConsole, p_fg+(p_bg*16));
-     cout << p_Int;
+     std::cout << p_Int;
      SetConsoleTextAttribute(hConsole, fg+(bg*16));
 }
 
 void oint(int p_bg, int p_fg, int p_Int)
 {
 	SetConsoleTextAttribute(hConsole, p_fg + (p_bg * 16));
-	cout << p_Int;
+	std::cout << p_Int;
 	SetConsoleTextAttribute(hConsole, fg + (bg * 16));
 }
 
 void oint64(int p_bg, int p_fg, long long int p_Int)
 {
 	SetConsoleTextAttribute(hConsole, p_fg + (p_bg * 16));
-	cout << p_Int;
+	std::cout << p_Int;
 	SetConsoleTextAttribute(hConsole, fg + (bg * 16));
 }
 
 void oflt(int p_bg, int p_fg, float p_Float)
 {
      SetConsoleTextAttribute(hConsole, p_fg+(p_bg*16));
-     cout << p_Float;
+     std::cout << p_Float;
      SetConsoleTextAttribute(hConsole, fg+(bg*16));
 }
 
 void odbl(int p_bg, int p_fg, double p_Double)
 {
      SetConsoleTextAttribute(hConsole, p_fg+(p_bg*16));
-     cout << p_Double;
+     std::cout << p_Double;
      SetConsoleTextAttribute(hConsole, fg+(bg*16));
 }
 
@@ -170,7 +170,7 @@ void odbl(int p_bg, int p_fg, double p_Double)
 void opoi(int p_bg, int p_fg, void * p_NR)
 {
      SetConsoleTextAttribute(hConsole, p_fg+(p_bg*16));
-     cout << p_NR;
+     std::cout << p_NR;
      SetConsoleTextAttribute(hConsole, fg+(bg*16));
 }
 
@@ -179,7 +179,7 @@ void opoi(int p_bg, int p_fg, void * p_NR)
 
 void oindex(int p_Index, int p_Color = 13)
 {
-     cout << " ["; oint(0, p_Color, p_Index); cout << "] ";
+     std::cout << " ["; oint(0, p_Color, p_Index); std::cout << "] ";
 }
 
 
@@ -242,7 +242,7 @@ void cls(int X = 0, int Y = 0, int Width = 4, int Height = 100)
           console_Move_Cursor_To_Given_X_And_Y(X, cou_Y);
           for (int cou_Index=0;cou_Index<Width;cou_Index++)
           {
-               cout << "                         ";
+               std::cout << "                         ";
           }
      }
      console_Move_Cursor_To_Given_X_And_Y(X, Y);
@@ -272,7 +272,7 @@ void console_Draw_Line(int p_X1, int p_Y1, int p_X2, int p_Y2, int p_Color = 1, 
           tmp_Rise_Inc = tmp_Rise / abs(tmp_Rise);
           tmp_Run_Inc = tmp_Run / abs(tmp_Rise);
           
-//          cout << "\n ~Ri >= ~Ru " << tmp_Rise_Inc << "\\" << tmp_Run_Inc;
+//          std::cout << "\n ~Ri >= ~Ru " << tmp_Rise_Inc << "\\" << tmp_Run_Inc;
           
           for (int cou_Y=0;cou_Y<(int (abs(tmp_Rise) * p_Percentage));cou_Y++)
           {
@@ -291,7 +291,7 @@ void console_Draw_Line(int p_X1, int p_Y1, int p_X2, int p_Y2, int p_Color = 1, 
           tmp_Rise_Inc = tmp_Rise / abs(tmp_Run);
           tmp_Run_Inc = tmp_Run / abs(tmp_Run);
           
-//          cout << "\n ~Ri < ~Ru " << tmp_Rise_Inc << "\\" << tmp_Run_Inc;
+//          std::cout << "\n ~Ri < ~Ru " << tmp_Rise_Inc << "\\" << tmp_Run_Inc;
           
           for (int cou_X=0;cou_X<abs(int ((tmp_Run) * p_Percentage));cou_X++)
           {
@@ -321,11 +321,11 @@ void countdown(int p_Seconds)
      for (int cou_Index=0;cou_Index<(p_Seconds * 10);cou_Index++)
      {
           xy(tmp_X, tmp_Y);
-          cout << " <{ ";
+          std::cout << " <{ ";
           
           odbl(0, 12, tmp_Output);
           
-          cout << "     ";
+          std::cout << "     ";
           
           Sleep(100);
           

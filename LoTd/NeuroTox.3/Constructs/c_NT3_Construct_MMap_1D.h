@@ -35,11 +35,11 @@ public:
      
      
      //The name of the Construct.
-     string Name;
+     std::string Name;
      
      //With the MMap the construct is tied to a directory.
-     string Dir;
-     string FName;
+     std::string Dir;
+     std::string FName;
      
      c_NT3_Construct_MMap_1D()
      {
@@ -96,16 +96,16 @@ public:
      
      ~c_NT3_Construct_MMap_1D()
      {
-          cout << "\n  ~c_NT3_Construct_MMap_1D " << Name << " " << this << ".........."; cout.flush();
+          std::cout << "\n  ~c_NT3_Construct_MMap_1D " << Name << " " << this << ".........."; std::cout.flush();
           
           delete [] Charging_Buffers;
           Charging_Buffers = NULL;
           Input_Depth = 0;
-          cout << "\n  ~~~c_NT3_Construct_MMap_1D " << Name << " " << this << ".........."; cout.flush();
+          std::cout << "\n  ~~~c_NT3_Construct_MMap_1D " << Name << " " << this << ".........."; std::cout.flush();
      }
      
      //Sets the name of the construct and the tables.
-     void set_Name(string p_Name)
+     void set_Name(std::string p_Name)
      {
           Name = p_Name;
           
@@ -136,7 +136,7 @@ public:
      }
      
 	 //This is done on the first run.
-	 int first_Run(string p_Dir, string p_Name)
+	 int first_Run(std::string p_Dir, std::string p_Name)
 	 {
 	     set_Name(p_Name);
 
@@ -149,9 +149,9 @@ public:
 	 }
 
 	 //Init the node network.
-	 int init(string p_Dir, string p_Name)
+	 int init(std::string p_Dir, std::string p_Name)
 	 {
-		 cout << "\n Initializing Construct:" << p_Name;
+		 std::cout << "\n Initializing Construct:" << p_Name;
 		 set_Name(p_Name);
 
 		 Dir = p_Dir;
@@ -160,7 +160,7 @@ public:
 		 return Nodes.init(p_Dir, p_Name);
 	 }
 	      
-     c_Raw_Table_1D * get_Table_1D(string p_Table)
+     c_Raw_Table_1D * get_Table_1D(std::string p_Table)
      {
           if (p_Table == "tbl_Input"){ return &tbl_Input; }
      
@@ -182,10 +182,10 @@ public:
      
           if (p_Table == "tbl_Vision_Output"){ return &tbl_Vision_Output; }
           if (p_Table == "tbl_Vision_Charge_Output"){ return &tbl_Vision_Charge_Output; }
-          ostr(0, 12, "\n Table NOT found:"); cout << p_Table;
+          ostr(0, 12, "\n Table NOT found:"); std::cout << p_Table;
           return NULL;
      }
-     c_Raw_Table_2D * get_Table_2D(string p_Table)
+     c_Raw_Table_2D * get_Table_2D(std::string p_Table)
      {
           return NULL;
      }
@@ -205,27 +205,27 @@ public:
           
           if (settings_Eval_Method == 0)
           {
-			  //*cout << "\n settings_Eval_Method == 0";
+			  //*std::cout << "\n settings_Eval_Method == 0";
                for (int cou_Row=0;cou_Row<tbl_Input.Number_Of_Rows;cou_Row++)
                {
                     Current_Row = cou_Row;
                     for (int cou_Cell=0;cou_Cell<tbl_Input.Rows[0]->Depth;cou_Cell++)
                     {
-						//*cout << "\n Current_Cell = cou_Cell;";
+						//*std::cout << "\n Current_Cell = cou_Cell;";
                          Current_Cell = cou_Cell;
                          
-						 //*cout << "\n Build_Input_Query(cou_Cell);";
+						 //*std::cout << "\n Build_Input_Query(cou_Cell);";
                          Build_Input_Query();
                          
                          if (settings_Tier_Is_Floating)
                          {
                               settings_Tier = int (Input_Depth * settings_Tier_Depth);
-                              //*cout << "\n " << Name << " settings_Tier->" << settings_Tier << " = Input_Depth->" << Input_Depth << " * " << settings_Tier_Depth;
+                              //*std::cout << "\n " << Name << " settings_Tier->" << settings_Tier << " = Input_Depth->" << Input_Depth << " * " << settings_Tier_Depth;
                          }
                          
-						 //*cout << "\n init_Charging_Buffer();";
+						 //*std::cout << "\n init_Charging_Buffer();";
                          init_Charging_Buffer();
-						 //*cout << "\n charge_Buffer();";
+						 //*std::cout << "\n charge_Buffer();";
                          if (settings_RC)
                          {
                               charge_Buffer_RC();
@@ -235,7 +235,7 @@ public:
                               charge_Buffer();
                          }
                          
-						 //*cout << "\n discharge_Treetops();";
+						 //*std::cout << "\n discharge_Treetops();";
                          discharge_Treetops(p_Discharge);
                     }
                }
@@ -244,7 +244,7 @@ public:
           //This has to be done separately because each cell has to have the corresponding charge input.
           if (settings_Eval_Method == 1)
           {
-			  //*cout << "\n settings_Eval_Method == 1 " << tbl_Input.Number_Of_Rows;
+			  //*std::cout << "\n settings_Eval_Method == 1 " << tbl_Input.Number_Of_Rows;
 
                for (int cou_Row=0;cou_Row<tbl_Input.Number_Of_Rows;cou_Row++)
                {
@@ -253,26 +253,26 @@ public:
                     Current_Row = cou_Row;
                     
                     //Only one cell in the input.
-					//*cout << "\n Current_Cell = 0;";
+					//*std::cout << "\n Current_Cell = 0;";
                     Current_Cell = 0;
                     
-					//*cout << "\n Build_Input_Query(0);";
+					//*std::cout << "\n Build_Input_Query(0);";
                     Build_Input_Query();
                     
                     if (settings_Tier_Is_Floating)
                     {
                          settings_Tier = int (Input_Depth * settings_Tier_Depth);
-                         //*cout << "\n " << Name << " settings_Tier->" << settings_Tier << " = Input_Depth->" << Input_Depth << " * " << settings_Tier_Depth;
+                         //*std::cout << "\n " << Name << " settings_Tier->" << settings_Tier << " = Input_Depth->" << Input_Depth << " * " << settings_Tier_Depth;
                     }
                     
-					//*cout << "\n init_Charging_Buffer();";
+					//*std::cout << "\n init_Charging_Buffer();";
                     init_Charging_Buffer();
-					//*cout << "\n charge_Buffer();";
+					//*std::cout << "\n charge_Buffer();";
                     
                     //Aux refers to weighted input.
                     charge_Aux_Buffer();
                     
-					//*cout << "\n discharge_Treetops();";
+					//*std::cout << "\n discharge_Treetops();";
                     discharge_Treetops(p_Discharge);
                }
           }
@@ -295,7 +295,7 @@ public:
      //Charges a single buffer.
      void charge_Buffer()
      {
-		 //*cout << "\n --charge_Buffer()";
+		 //*std::cout << "\n --charge_Buffer()";
           Charging_Buffers[0].Input_Position = 0;
 		  //*Charging_Buffers[0].output_All_Buffers();
           
@@ -317,9 +317,9 @@ public:
 			   //*Charging_Buffers[0].output_All_Buffers();
 
                if (!Charging_Buffers[0].flg_Not_Done){ break; }
-               //-----*ostr(0, 7, "\n cou_T:"); cout << cou_T;
+               //-----*ostr(0, 7, "\n cou_T:"); std::cout << cou_T;
           }
-          //-----*cout << "\n  overcharge flg_Not_Done->" << Charging_Buffers[0].flg_Not_Done;
+          //-----*std::cout << "\n  overcharge flg_Not_Done->" << Charging_Buffers[0].flg_Not_Done;
           while(Charging_Buffers[0].flg_Not_Done)
           {
                Charging_Buffers[0].charge_Outputs(setting_Charge_Spike);
@@ -333,7 +333,7 @@ public:
      //Charges a single buffer.
      void charge_Buffer_RC()
      {
-		 //*cout << "\n --charge_Buffer_RC()";
+		 //*std::cout << "\n --charge_Buffer_RC()";
           Charging_Buffers[0].Input_Position = 0;
 		  //*Charging_Buffers[0].output_All_Buffers();
 
@@ -352,10 +352,10 @@ public:
                Charging_Buffers[0].gather();
                
                if (!Charging_Buffers[0].flg_Not_Done){ break; }
-			   //*ostr(0, 7, "\n cou_T:"); cout << cou_T;
+			   //*ostr(0, 7, "\n cou_T:"); std::cout << cou_T;
 			   //*Charging_Buffers[0].output_All_Buffers();
           }
-          //--cout << "\n  overcharge flg_Not_Done->" << Charging_Buffers[0].flg_Not_Done;
+          //--std::cout << "\n  overcharge flg_Not_Done->" << Charging_Buffers[0].flg_Not_Done;
           
           while(Charging_Buffers[0].flg_Not_Done)
           {
@@ -364,7 +364,7 @@ public:
                Charging_Buffers[0].gather();
                //--ostr(0, 7, "\n   flg_Not_Done...");
           }
-          //*---cout << "\n    Done Chargin RC";
+          //*---std::cout << "\n    Done Chargin RC";
      }
      
      //Charges a single buffer.
@@ -417,9 +417,9 @@ public:
                Charging_Buffers[0].gather();
                
                if (!Charging_Buffers[0].flg_Not_Done){ break; }
-               //*---ostr(0, 7, "\n cou_T:"); cout << cou_T;
+               //*---ostr(0, 7, "\n cou_T:"); std::cout << cou_T;
           }
-          //--cout << "\n  overcharge flg_Not_Done->" << Charging_Buffers[0].flg_Not_Done;
+          //--std::cout << "\n  overcharge flg_Not_Done->" << Charging_Buffers[0].flg_Not_Done;
           
           while(Charging_Buffers[0].flg_Not_Done)
           {
@@ -434,7 +434,7 @@ public:
                Charging_Buffers[0].gather();
                //--ostr(0, 7, "\n   flg_Not_Done...");
           }
-          //*---cout << "\n    Done Chargin RC";
+          //*---std::cout << "\n    Done Chargin RC";
      }
      
      ////==-----------------------+
@@ -595,9 +595,9 @@ public:
                //In the other build methods to build across CAN.Treeto pwould be preceeded by Current_Row
                tbl_Treetops_Output.add_Int(Current_Row, u_Data_3_Set_Byte(CAN.Treetop.U, CID.U));
 			   tbl_Charge_Output.add_Int(Current_Row, settings_Base_Charge);
-               //-----*cout << "\n u_Data_3_Set_Byte(" << CAN.Treetop.U << ", " << CID.U << ")";
-               //-----*cout << "\n   (" << u_Data_3_Set_Byte(CAN.Treetop.U, CID.U) << ")";
-               //-----*cout << "\n   (" << u_Data_3_Get_Byte(u_Data_3_Set_Byte(CAN.Treetop.U, CID.U)) << ")";
+               //-----*std::cout << "\n u_Data_3_Set_Byte(" << CAN.Treetop.U << ", " << CID.U << ")";
+               //-----*std::cout << "\n   (" << u_Data_3_Set_Byte(CAN.Treetop.U, CID.U) << ")";
+               //-----*std::cout << "\n   (" << u_Data_3_Get_Byte(u_Data_3_Set_Byte(CAN.Treetop.U, CID.U)) << ")";
                //tbl_Treetops_Output.add_Int((CAN.Treetop.U));
           }
           if (settings_Build_Method == 1)
@@ -685,10 +685,10 @@ public:
                while(tmp_LL != NULL)
                {
                     if (tmp_LL->NID.U == 0){ tmp_LL = tmp_LL->Next; continue; }
-                    //*cout << "\n";
+                    //*std::cout << "\n";
                     //*tmp_LL->NID->bp_O();
-                    //*cout << " "; odbl(0, 12, (settings_Base_Charge * settings_Action_Potential_Threshold));
-                    //*cout << " "; oint(0, 13, (tmp_LL->Charge.I));
+                    //*std::cout << " "; odbl(0, 12, (settings_Base_Charge * settings_Action_Potential_Threshold));
+                    //*std::cout << " "; oint(0, 13, (tmp_LL->Charge.I));
                     if (tmp_LL->Charge.I > (settings_Base_Charge * settings_Action_Potential_Threshold)){  } else { tmp_LL = tmp_LL->Next; continue; }
                     
                     int tmp_Row = 0;
@@ -724,10 +724,10 @@ public:
                while(tmp_LL != NULL)
                {
                     if (tmp_LL->NID.U == 0){ tmp_LL = tmp_LL->Next; continue; }
-                    //*cout << "\n";
+                    //*std::cout << "\n";
                     //*tmp_LL->NID->bp_O();
-                    //*cout << " "; odbl(0, 12, (settings_Base_Charge * settings_Action_Potential_Threshold));
-                    //*cout << " "; oint(0, 13, (tmp_LL->Charge.I));
+                    //*std::cout << " "; odbl(0, 12, (settings_Base_Charge * settings_Action_Potential_Threshold));
+                    //*std::cout << " "; oint(0, 13, (tmp_LL->Charge.I));
                     if (tmp_LL->Charge.I > (settings_Base_Charge * settings_Action_Potential_Threshold)){  } else { tmp_LL = tmp_LL->Next; continue; }
                     
                     int tmp_Row = 0;
@@ -761,14 +761,14 @@ public:
                
                for (int cou_Cell=0;cou_Cell<tbl_Pattern_Output.Rows[Current_Row]->Depth;cou_Cell++)
                {
-                    //cout << "\n Cell "; oindex(cou_Cell);
+                    //std::cout << "\n Cell "; oindex(cou_Cell);
                     tmp_Cell = tbl_Pattern_Output.Rows[Current_Row]->Cells[cou_Cell];
                     
                     for (int cou_Data=0;cou_Data<tmp_Cell->Length;cou_Data++)
                     {
                          tbl_Salt_Output.set_UInt(Current_Row, cou_Cell, cou_Data, u_Data_3_Get_Byte(tmp_Cell->Data[cou_Data].U));
                          tbl_Pattern_Output.set_UInt(Current_Row, cou_Cell, cou_Data, u_Data_3_Get_Unsalted(tmp_Cell->Data[cou_Data].U));
-                         //cout << "\n      ["; oint(0, 7, cou_Cell); cout << "] " << tmp_Cell->Data[cou_Data].U << " "; oint(0, 12, u_Data_3_Get_Byte(tmp_Cell->Data[cou_Data].U)); cout << " "; oint(0, 11, u_Data_3_Get_Byte(tmp_Cell->Data[cou_Data].U));
+                         //std::cout << "\n      ["; oint(0, 7, cou_Cell); std::cout << "] " << tmp_Cell->Data[cou_Data].U << " "; oint(0, 12, u_Data_3_Get_Byte(tmp_Cell->Data[cou_Data].U)); std::cout << " "; oint(0, 11, u_Data_3_Get_Byte(tmp_Cell->Data[cou_Data].U));
                     }
                }
           }
@@ -821,56 +821,56 @@ public:
      //Outputs the node network.
      void output_Nodes()
      {
-          cout << "\n\n " << Name;
+          std::cout << "\n\n " << Name;
           Nodes.output_Nodes();
      }
      
      //Outputs the input table.
      void output_Input_Table()
      {
-          cout << "\n\n ---===+===---";
-          cout << "\n " << Name << " Inputs Tables ->" << this;
+          std::cout << "\n\n ---===+===---";
+          std::cout << "\n " << Name << " Inputs Tables ->" << this;
           tbl_Input.output_C(1);
           
-          cout << "\n --===+===--\n";
+          std::cout << "\n --===+===--\n";
      }
      void output_Input_Table_I()
      {
-          cout << "\n\n ---===+===---";
-          cout << "\n " << Name << " Inputs Tables ->" << this;
+          std::cout << "\n\n ---===+===---";
+          std::cout << "\n " << Name << " Inputs Tables ->" << this;
           tbl_Input.output_I(1);
           
-          cout << "\n --===+===--\n";
+          std::cout << "\n --===+===--\n";
      }
      void output_Input_Table_F()
      {
-          cout << "\n\n ---===+===---";
-          cout << "\n " << Name << " Inputs Tables ->" << this;
+          std::cout << "\n\n ---===+===---";
+          std::cout << "\n " << Name << " Inputs Tables ->" << this;
           tbl_Input.output_F(1);
           
-          cout << "\n --===+===--\n";
+          std::cout << "\n --===+===--\n";
      }
      void output_Input_Table_NR()
      {
-          cout << "\n\n ---===+===---";
-          cout << "\n " << Name << " Inputs Tables ->" << this;
+          std::cout << "\n\n ---===+===---";
+          std::cout << "\n " << Name << " Inputs Tables ->" << this;
           tbl_Input.output_NR(1);
           
-          cout << "\n --===+===--\n";
+          std::cout << "\n --===+===--\n";
      }
      
      //Outputs the input tables.
      void output_Input_Tables()
      {
-          cout << "\n\n ---===+===---";
-          cout << "\n " << Name << " Inputs Tables ->" << this;
+          std::cout << "\n\n ---===+===---";
+          std::cout << "\n " << Name << " Inputs Tables ->" << this;
           tbl_Input.output_C(1);
           
           //tbl_Input_Aux.output_I(1);
           tbl_Input_Charges.output_I(1);
           tbl_Input_Position.output_I(1);
           tbl_Input_Depths.output_I(1);
-          cout << "\n --===+===--\n";
+          std::cout << "\n --===+===--\n";
      }
 
      
@@ -895,8 +895,8 @@ public:
 	 //Outputs the tables of the construct.
 	 void output_Output_Tables()
 	 {
-		 cout << "\n\n\t ---===+===---";
-		 cout << "\n\t " << Name << " [" << CID.U << "] Output Tables ->" << this;
+		 std::cout << "\n\n\t ---===+===---";
+		 std::cout << "\n\t " << Name << " [" << CID.U << "] Output Tables ->" << this;
 
 		 tbl_Pattern_Output.output_C(2);
 		 //tbl_Pattern_Output.output_U(2);
@@ -906,14 +906,14 @@ public:
 		 tbl_Position_Output.output_I(2);
 		 tbl_RC_Output.output_F(2);
 		 tbl_Treetops_Output.output_U(2);
-		 cout << "\n\t ---===+===---\n";
+		 std::cout << "\n\t ---===+===---\n";
 	 }
 	 
 	 //Outputs the tables of the construct.
-	 void output_Output_Tables(string p_Pat_Out)
+	 void output_Output_Tables(std::string p_Pat_Out)
 	 {
-		 cout << "\n\n\t ---===+===---";
-		 cout << "\n\t " << Name << " [" << CID.U << "] Output Tables ->" << this;
+		 std::cout << "\n\n\t ---===+===---";
+		 std::cout << "\n\t " << Name << " [" << CID.U << "] Output Tables ->" << this;
 
 		 //tbl_Pattern_Output.output_U(2);
 		 if (p_Pat_Out == "C") { tbl_Pattern_Output.output_C(2); }
@@ -925,14 +925,14 @@ public:
 		 tbl_Position_Output.output_I(2);
 		 tbl_RC_Output.output_F(2);
 		 tbl_Treetops_Output.output_U(2);
-		 cout << "\n\t ---===+===---\n";
+		 std::cout << "\n\t ---===+===---\n";
 	 }
      
      //Outputs the tables of the construct with the patterns as int.
      void output_Output_Tables_I()
      {
-          cout << "\n\n\t ---===+===---";
-          cout << "\n\t " << Name << " Output_Tables_I ->" << this;
+          std::cout << "\n\n\t ---===+===---";
+          std::cout << "\n\t " << Name << " Output_Tables_I ->" << this;
           
           tbl_Pattern_Output.output_I(2);
           tbl_Salt_Output.output_I(2);
@@ -940,14 +940,14 @@ public:
           tbl_Position_Output.output_I(2);
           tbl_RC_Output.output_F(2);
           tbl_Treetops_Output.output_I(2);
-          cout << "\n\t ---===+===---\n";
+          std::cout << "\n\t ---===+===---\n";
      }
      
      //Outputs the tables of the construct with the patterns as int.
      void output_Output_Tables_F()
      {
-          cout << "\n\n\t ---===+===---";
-          cout << "\n\t " << Name << " Output_Tables_I ->" << this;
+          std::cout << "\n\n\t ---===+===---";
+          std::cout << "\n\t " << Name << " Output_Tables_I ->" << this;
           
           tbl_Pattern_Output.output_F(2);
           tbl_Salt_Output.output_C(2);
@@ -955,7 +955,7 @@ public:
           tbl_Position_Output.output_F(2);
           tbl_RC_Output.output_F(2);
           tbl_Treetops_Output.output_F(2);
-          cout << "\n\t ---===+===---\n";
+          std::cout << "\n\t ---===+===---\n";
      }
 
 	 //Outputs the CANs.
@@ -992,43 +992,43 @@ public:
      //Outputs the settings of the current Construct.
      void output_Settings()
      {
-          cout << "\n\n --  Settings For penis enlargement ===D~~ "; ostr(0, 13, Name);
+          std::cout << "\n\n --  Settings For penis enlargement ===D~~ "; ostr(0, 13, Name);
           
           //Use in the expanded form.
-          //cout << "\n  setting_Charge_L.................... "; oint(0, 11, setting_Charge_L);
-          //cout << "\n  setting_Charge_R.................... "; oint(0, 11, setting_Charge_R);
-          //cout << "\n  settings_Tier....................... "; oint(0, 11, settings_Tier);
-          //cout << "\n  settings_Tier_Is_Floating........... "; oint(0, 11, settings_Tier_Is_Floating);
-          cout << "\n  settings_Tier_Depth................. "; odbl(0, 11, settings_Tier_Depth);
-          cout << "\n  settings_Action_Potential_Threshold. "; odbl(0, 11, settings_Action_Potential_Threshold);
-          cout << "\n  settings_Base_Charge................ "; oint(0, 11, settings_Base_Charge);
-          cout << "\n  settings_Modifier_Charge............ "; odbl(0, 11, settings_Modifier_Charge);
+          //std::cout << "\n  setting_Charge_L.................... "; oint(0, 11, setting_Charge_L);
+          //std::cout << "\n  setting_Charge_R.................... "; oint(0, 11, setting_Charge_R);
+          //std::cout << "\n  settings_Tier....................... "; oint(0, 11, settings_Tier);
+          //std::cout << "\n  settings_Tier_Is_Floating........... "; oint(0, 11, settings_Tier_Is_Floating);
+          std::cout << "\n  settings_Tier_Depth................. "; odbl(0, 11, settings_Tier_Depth);
+          std::cout << "\n  settings_Action_Potential_Threshold. "; odbl(0, 11, settings_Action_Potential_Threshold);
+          std::cout << "\n  settings_Base_Charge................ "; oint(0, 11, settings_Base_Charge);
+          std::cout << "\n  settings_Modifier_Charge............ "; odbl(0, 11, settings_Modifier_Charge);
      }
      
      //Outputs the settings of the current Construct.
      void output_Settings_Full()
      {
-          cout << "\n\n --  Settings For "; ostr(0, 13, Name);
+          std::cout << "\n\n --  Settings For "; ostr(0, 13, Name);
           
           //Use in the expanded form.
-          cout << "\n  Charge_L.................... "; oint(0, 11, setting_Charge_L);
-          cout << "\n  Charge_R.................... "; oint(0, 11, setting_Charge_R);
-          cout << "\n  Tier....................... "; oint(0, 11, settings_Tier);
-          cout << "\n  Tier_Is_Floating........... "; oint(0, 11, settings_Tier_Is_Floating);
-          cout << "\n  Tier_Depth................. "; odbl(0, 11, settings_Tier_Depth);
-          cout << "\n  Action_Potential_Threshold. "; odbl(0, 11, settings_Action_Potential_Threshold);
-          cout << "\n  Base_Charge................ "; oint(0, 11, settings_Base_Charge);
-          cout << "\n  Modifier_Charge............ "; odbl(0, 11, settings_Modifier_Charge);
-          cout << "\n  Use_Input_Charges............ "; odbl(0, 11, setting_Use_Input_Charges);
-          cout << "\n  Build_Vision............ "; odbl(0, 11, settings_Build_Vision);
-          cout << "\n  Bubble_Sort_Output............ "; odbl(0, 11, settings_Bubble_Sort_Output);
-          cout << "\n  Input_Charging_Depth............ "; odbl(0, 11, settings_Input_Charging_Depth);
-          cout << "\n  Cross_CAN_Charging............ "; odbl(0, 11, settings_Cross_CAN_Charging);
-          cout << "\n  Stack_Output_From_Foreign_Treetops............ "; odbl(0, 11, settings_Stack_Output_From_Foreign_Treetops);
-          cout << "\n  settings_RC.............. "; odbl(0, 11, settings_RC);
+          std::cout << "\n  Charge_L.................... "; oint(0, 11, setting_Charge_L);
+          std::cout << "\n  Charge_R.................... "; oint(0, 11, setting_Charge_R);
+          std::cout << "\n  Tier....................... "; oint(0, 11, settings_Tier);
+          std::cout << "\n  Tier_Is_Floating........... "; oint(0, 11, settings_Tier_Is_Floating);
+          std::cout << "\n  Tier_Depth................. "; odbl(0, 11, settings_Tier_Depth);
+          std::cout << "\n  Action_Potential_Threshold. "; odbl(0, 11, settings_Action_Potential_Threshold);
+          std::cout << "\n  Base_Charge................ "; oint(0, 11, settings_Base_Charge);
+          std::cout << "\n  Modifier_Charge............ "; odbl(0, 11, settings_Modifier_Charge);
+          std::cout << "\n  Use_Input_Charges............ "; odbl(0, 11, setting_Use_Input_Charges);
+          std::cout << "\n  Build_Vision............ "; odbl(0, 11, settings_Build_Vision);
+          std::cout << "\n  Bubble_Sort_Output............ "; odbl(0, 11, settings_Bubble_Sort_Output);
+          std::cout << "\n  Input_Charging_Depth............ "; odbl(0, 11, settings_Input_Charging_Depth);
+          std::cout << "\n  Cross_CAN_Charging............ "; odbl(0, 11, settings_Cross_CAN_Charging);
+          std::cout << "\n  Stack_Output_From_Foreign_Treetops............ "; odbl(0, 11, settings_Stack_Output_From_Foreign_Treetops);
+          std::cout << "\n  settings_RC.............. "; odbl(0, 11, settings_RC);
      }
      
-     void output_Nodes_As_HTML(string p_Dir, string p_File, int p_X_Padd = 10, int p_Y_Padd = 40)
+     void output_Nodes_As_HTML(std::string p_Dir, std::string p_File, int p_X_Padd = 10, int p_Y_Padd = 40)
      {
           Nodes.output_Nodes_As_HTML(p_Dir, p_File, p_X_Padd, p_Y_Padd);
      }
@@ -1051,9 +1051,9 @@ public:
      ////==--------------+
      
      //Accepts an input to the inputs motherfucker.
-     void in(int p_Row, int p_Cell, string p_Submission)
+     void in(int p_Row, int p_Cell, std::string p_Submission)
      {
-          tbl_Input.set_String(p_Row, p_Cell, p_Submission);
+          tbl_Input.set_string(p_Row, p_Cell, p_Submission);
      }
      
      //Accepts an input to the inputs motherfucker.
@@ -1170,20 +1170,20 @@ public:
      ////==---------------------------------+
      
      //Saves the construct.
-     void Save(string p_Dir, string p_Name)
+     void Save(std::string p_Dir, std::string p_Name)
      {
           if (p_Name == "NO_NAME"){ p_Name = Name; }
           
           //The save file.
-          ofstream SF;
+          std::ofstream SF;
           
-          string tmp_SF_FN = p_Dir + p_Name + ".Con.Header.dat";
+          std::string tmp_SF_FN = p_Dir + p_Name + ".Con.Header.dat";
 
-		  cout << "\n     Saving Construct " << Name << " To \"" << tmp_SF_FN << "\"";
+		  std::cout << "\n     Saving Construct " << Name << " To \"" << tmp_SF_FN << "\"";
 
-          SF.open(tmp_SF_FN, ios::trunc);
+          SF.open(tmp_SF_FN, std::ios::trunc);
           
-          if (!SF.is_open()){ cout << "\n\t SAVE FILE " << tmp_SF_FN << " CANNOT BE OPENED!!!"; return; }
+          if (!SF.is_open()){ std::cout << "\n\t SAVE FILE " << tmp_SF_FN << " CANNOT BE OPENED!!!"; return; }
           
           //-- Read the settings into the file.
           
@@ -1248,141 +1248,141 @@ public:
      }
      
      //Loads a construct.     
-     void Load(string p_Dir, string p_FName)
+     void Load(std::string p_Dir, std::string p_FName)
      {
           //The save file.
-          ifstream LF;
+          std::ifstream LF;
           
-          string tmp_Setting_Name = "";
-          string tmp_Setting_Placeholder = "";
+          std::string tmp_Setting_Name = "";
+          std::string tmp_Setting_Placeholder = "";
           
-          string tmp_LF_FN = p_Dir + p_FName + ".Con.Header.dat";
+          std::string tmp_LF_FN = p_Dir + p_FName + ".Con.Header.dat";
           
           LF.open(tmp_LF_FN);
           
-          if (!LF.is_open()){ cout << "\n\t SAVE FILE " << p_FName << " CANNOT BE OPENED!!!"; system("PAUSE > NULL"); return; }
+          if (!LF.is_open()){ std::cout << "\n\t SAVE FILE " << p_FName << " CANNOT BE OPENED!!!"; system("PAUSE > NULL"); return; }
           
           //-- Read the settings into the file.
           
           //The constructs name.
           LF >> tmp_Setting_Name;
-          cout << "\nName " << tmp_Setting_Name;
+          std::cout << "\nName " << tmp_Setting_Name;
           LF >> Name;
-          cout << " " << Name;
+          std::cout << " " << Name;
           set_Name(Name);
           
           //CID of the construct.
           LF >> tmp_Setting_Name;
-          cout << "\nCID " << tmp_Setting_Name;
+          std::cout << "\nCID " << tmp_Setting_Name;
           LF >> CID.U;
-          cout << " " << CID.U;
+          std::cout << " " << CID.U;
           
           //Charging legs.
           LF >> tmp_Setting_Name;
-          cout << "\nsetting_Charge_L " << tmp_Setting_Name;
+          std::cout << "\nsetting_Charge_L " << tmp_Setting_Name;
           LF >> setting_Charge_L;
-          cout << " " << setting_Charge_L;
+          std::cout << " " << setting_Charge_L;
           
           LF >> tmp_Setting_Name;
-          cout << "\nsetting_Charge_R " << tmp_Setting_Name;
+          std::cout << "\nsetting_Charge_R " << tmp_Setting_Name;
           LF >> setting_Charge_R;
-          cout << " " << setting_Charge_R;
+          std::cout << " " << setting_Charge_R;
           
           //The tier to start charging.
           LF >> tmp_Setting_Name;
-          cout << "\nsettings_Tier " << tmp_Setting_Name;
+          std::cout << "\nsettings_Tier " << tmp_Setting_Name;
           LF >> settings_Tier;
-          cout << " " << settings_Tier;
+          std::cout << " " << settings_Tier;
           
           //Floating vrs fixed tier depth
           LF >> tmp_Setting_Name;
-          cout << "\nsettings_Tier_Is_Floating " << tmp_Setting_Name;
+          std::cout << "\nsettings_Tier_Is_Floating " << tmp_Setting_Name;
           LF >> settings_Tier_Is_Floating;
-          cout << " " << settings_Tier_Is_Floating;
+          std::cout << " " << settings_Tier_Is_Floating;
           
           //Floating tier modifier.
           LF >> tmp_Setting_Name;
-          cout << "\nsettings_Tier_Depth " << tmp_Setting_Name;
+          std::cout << "\nsettings_Tier_Depth " << tmp_Setting_Name;
           LF >> settings_Tier_Depth;
-          cout << " " << settings_Tier_Depth;
+          std::cout << " " << settings_Tier_Depth;
           
           //The Action Potential Threshold as percentage of the base charge.
           LF >> tmp_Setting_Name;
-          cout << "\nsettings_Action_Potential_Threshold " << tmp_Setting_Name;
+          std::cout << "\nsettings_Action_Potential_Threshold " << tmp_Setting_Name;
           LF >> settings_Action_Potential_Threshold;
-          cout << " " << settings_Action_Potential_Threshold;
+          std::cout << " " << settings_Action_Potential_Threshold;
           
           //The base charge to apply from the CAN.
           LF >> tmp_Setting_Name;
-          cout << "\nsettings_Base_Charge " << tmp_Setting_Name;
+          std::cout << "\nsettings_Base_Charge " << tmp_Setting_Name;
           LF >> settings_Base_Charge;
-          cout << " " << settings_Base_Charge;
+          std::cout << " " << settings_Base_Charge;
           
           //The multiple to reduce each recursive charge by.
           LF >> tmp_Setting_Name;
-          cout << "\nsettings_Modifier_Charge " << tmp_Setting_Name;
+          std::cout << "\nsettings_Modifier_Charge " << tmp_Setting_Name;
           LF >> settings_Modifier_Charge;
-          cout << " " << settings_Modifier_Charge;
+          std::cout << " " << settings_Modifier_Charge;
           
           //Whether or not to use the input charges for charging.
           LF >> tmp_Setting_Name;
-          cout << "\nsetting_Use_Input_Charges " << tmp_Setting_Name;
+          std::cout << "\nsetting_Use_Input_Charges " << tmp_Setting_Name;
           LF >> setting_Use_Input_Charges;
-          cout << " " << setting_Use_Input_Charges;
+          std::cout << " " << setting_Use_Input_Charges;
           
           //Build a vision or do not build a vision.
           LF >> tmp_Setting_Name;
-          cout << "\nsettings_Build_Vision " << tmp_Setting_Name;
+          std::cout << "\nsettings_Build_Vision " << tmp_Setting_Name;
           LF >> settings_Build_Vision;
-          cout << " " << settings_Build_Vision;
+          std::cout << " " << settings_Build_Vision;
           
           //Sort the tables by charge.
           LF >> tmp_Setting_Name;
-          cout << "\nsettings_Bubble_Sort_Output " << tmp_Setting_Name;
+          std::cout << "\nsettings_Bubble_Sort_Output " << tmp_Setting_Name;
           LF >> settings_Bubble_Sort_Output;
-          cout << " " << settings_Bubble_Sort_Output;
+          std::cout << " " << settings_Bubble_Sort_Output;
           
           //settings_Input_Charging_Depth
           LF >> tmp_Setting_Name;
-          cout << "\nsettings_Input_Charging_Depth " << tmp_Setting_Name;
+          std::cout << "\nsettings_Input_Charging_Depth " << tmp_Setting_Name;
           LF >> settings_Input_Charging_Depth;
-          cout << " " << settings_Input_Charging_Depth;
+          std::cout << " " << settings_Input_Charging_Depth;
           
           //Whether or not to stack outputs when discharging foreign nodes.
           LF >> tmp_Setting_Name;
-          cout << "\nsettings_Stack_Output_From_Foreign_Treetops " << tmp_Setting_Name;
+          std::cout << "\nsettings_Stack_Output_From_Foreign_Treetops " << tmp_Setting_Name;
           LF >> settings_Stack_Output_From_Foreign_Treetops;
-          cout << " " << settings_Stack_Output_From_Foreign_Treetops;
+          std::cout << " " << settings_Stack_Output_From_Foreign_Treetops;
           
           //Placeholder For Future Settings
           LF >> tmp_Setting_Name;
-          cout << "\nsettings_Build_Method " << tmp_Setting_Name;
+          std::cout << "\nsettings_Build_Method " << tmp_Setting_Name;
           LF >> settings_Build_Method;
-          cout << " " << settings_Build_Method;
+          std::cout << " " << settings_Build_Method;
           
           //Placeholder For Future Settings
           LF >> tmp_Setting_Name;
-          cout << "\nsettings_Eval_Method " << tmp_Setting_Name;
+          std::cout << "\nsettings_Eval_Method " << tmp_Setting_Name;
           LF >> settings_Eval_Method;
-          cout << " " << settings_Eval_Method;
+          std::cout << " " << settings_Eval_Method;
           
           //Placeholder For Future Settings
 		  LF >> tmp_Setting_Name;
-		  cout << "\nsetting_Charge_Spike " << tmp_Setting_Name;
+		  std::cout << "\nsetting_Charge_Spike " << tmp_Setting_Name;
 		  LF >> setting_Charge_Spike;
-		  cout << " " << setting_Charge_Spike;
+		  std::cout << " " << setting_Charge_Spike;
           
           //Placeholder For Future Settings
           LF >> tmp_Setting_Name;
-          cout << "\nsettings_Flat_Output " << tmp_Setting_Name;
+          std::cout << "\nsettings_Flat_Output " << tmp_Setting_Name;
           LF >> settings_Flat_Output;
-          cout << " " << settings_Flat_Output;
+          std::cout << " " << settings_Flat_Output;
           
           //Placeholder For Future Settings
           LF >> tmp_Setting_Name;
-          cout << "\nsettings_RC " << tmp_Setting_Name;
+          std::cout << "\nsettings_RC " << tmp_Setting_Name;
           LF >> settings_RC;
-          cout << " " << settings_RC;
+          std::cout << " " << settings_RC;
           
           //Now that the settings are read in its time for the node network.
           //Nodes.load(&LF);

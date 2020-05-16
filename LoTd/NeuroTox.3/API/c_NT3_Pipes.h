@@ -33,23 +33,23 @@ public:
           reset();
      }
      
-     void set_Input_Data(string p_String)                                  { if (Dimension == 1){ Input->reset(); Input->set_String(0, p_String); } }
+     void set_Input_Data(std::string p_String)                             { if (Dimension == 1){ Input->reset(); Input->set_string(0, p_String); } }
      void set_Input_Charges_Data(unsigned long long int p_Charge)          { if (Dimension == 1){ Input_Charges->reset(); Input_Charges->set_UInt(0, p_Charge); } }
-     void set_Pattern_Output_Data(string p_String)                         { if (Dimension == 1){ Pattern_Output->reset(); Pattern_Output->set_String(0, p_String); } }
+     void set_Pattern_Output_Data(std::string p_String)                    { if (Dimension == 1){ Pattern_Output->reset(); Pattern_Output->set_string(0, p_String); } }
      void set_Charge_Output_Data(unsigned long long int p_Charge)          { if (Dimension == 1){ Charge_Output->reset(); Charge_Output->set_UInt(0, p_Charge); } }
      void set_RC_Output_Data(double p_RC)                                  { if (Dimension == 1){ RC_Output->reset(); RC_Output->set_Float(0, p_RC); } }
      void set_Treetops_Output_Data(unsigned long long int p_Treetop)       { if (Dimension == 1){ Treetops_Output->reset(); Treetops_Output->set_UInt(0, p_Treetop); } }
      
-     void add_Input_Data(string p_String)                                  { if (Dimension == 1){ Input->reset(); Input->submit_String(p_String); } }
+     void add_Input_Data(std::string p_String)                             { if (Dimension == 1){ Input->reset(); Input->submit_String(p_String); } }
      void add_Input_Charges_Data(unsigned long long int p_Charge)          { if (Dimension == 1){ Input_Charges->reset(); Input_Charges->submit_UInt(p_Charge); } }
-     void add_Pattern_Output_Data(string p_String)                         { if (Dimension == 1){ Pattern_Output->reset(); Pattern_Output->submit_String(p_String); } }
+     void add_Pattern_Output_Data(std::string p_String)                    { if (Dimension == 1){ Pattern_Output->reset(); Pattern_Output->submit_String(p_String); } }
      void add_Charge_Output_Data(unsigned long long int p_Charge)          { if (Dimension == 1){ Charge_Output->reset(); Charge_Output->submit_UInt(p_Charge); } }
      void add_RC_Output_Data(double p_RC)                                  { if (Dimension == 1){ RC_Output->reset(); RC_Output->submit_Float(p_RC); } }
      void add_Treetops_Output_Data(unsigned long long int p_Treetop)       { if (Dimension == 1){ Treetops_Output->reset(); Treetops_Output->submit_UInt(p_Treetop); } }
      
-     string get_Input_Data(int p_Cell = 0, int p_Index = 0)                          { if (Dimension == 1){ return  Input->Cells[p_Cell]->get_String(); } else { return ""; } }
+     std::string get_Input_Data(int p_Cell = 0, int p_Index = 0)                     { if (Dimension == 1){ return  Input->Cells[p_Cell]->get_String(); } else { return ""; } }
      unsigned long long int get_Input_Charges_Data(int p_Cell = 0, int p_Index = 0)  { if (Dimension == 1){ return  Input_Charges->Cells[p_Cell]->Data[p_Index].U; } else { return 0; } }
-     string get_Pattern_Output_Data(int p_Cell = 0, int p_Index = 0)                 { if (Dimension == 1){ return  Pattern_Output->Cells[p_Cell]->get_String(); } else { return ""; } }
+     std::string get_Pattern_Output_Data(int p_Cell = 0, int p_Index = 0)            { if (Dimension == 1){ return  Pattern_Output->Cells[p_Cell]->get_String(); } else { return ""; } }
      unsigned long long int get_Charge_Output_Data(int p_Cell = 0, int p_Index = 0)  { if (Dimension == 1){ return  Charge_Output->Cells[p_Cell]->Data[p_Index].U; } else { return 0; } }
      double get_RC_Output_Data(int p_Cell = 0, int p_Index = 0)                      { if (Dimension == 1){ return  RC_Output->Cells[p_Cell]->Data[p_Index].F; } else { return 0.0; } }
      unsigned long long int get_Treetops_Output_Data(int p_Cell = 0, int p_Index = 0){ if (Dimension == 1){ return  Treetops_Output->Cells[p_Cell]->Data[p_Index].U; } else { return 0; } }
@@ -61,7 +61,7 @@ public:
      }
      
      /*
-     string get_String()
+     std::string get_String()
      {
           if (Dimension == 1)
           { 
@@ -92,27 +92,27 @@ public:
                //overwrite_Row(p_From->RC_Output, RC_Output);
                //overwrite_Row(p_From->Treetops_Output, Treetops_Output);
           
-          //cout << "\n Input: " << Input << " flg_Input: " <<  flg_Input;
+          //std::cout << "\n Input: " << Input << " flg_Input: " <<  flg_Input;
           if (Input == NULL){ Input = new c_Raw_Table_Row_1D; flg_Input = 1; }
           if (Input != NULL){ Input->reset(); }
           
-          //cout << " Input_Charges: " << Input_Charges << " flg: " <<  flg_Input_Charges;
+          //std::cout << " Input_Charges: " << Input_Charges << " flg: " <<  flg_Input_Charges;
           if (Input_Charges == NULL){ Input_Charges = new c_Raw_Table_Row_1D; flg_Input_Charges = 1; }
           if (Input_Charges != NULL){ Input_Charges->reset(); }
           
-          //cout << " Pattern_Output: " << Pattern_Output << " flg: " <<  flg_Pattern_Output;
+          //std::cout << " Pattern_Output: " << Pattern_Output << " flg: " <<  flg_Pattern_Output;
           if (Pattern_Output == NULL){ Pattern_Output = new c_Raw_Table_Row_1D; flg_Pattern_Output = 1; }
           if (Pattern_Output != NULL){ Pattern_Output->reset(); }
           
-          //cout << " Charge_Output: " << Charge_Output << " flg: " <<  flg_Charge_Output;
+          //std::cout << " Charge_Output: " << Charge_Output << " flg: " <<  flg_Charge_Output;
           if (Charge_Output == NULL){ Charge_Output = new c_Raw_Table_Row_1D; flg_Charge_Output = 1; }
           if (Charge_Output != NULL){ Charge_Output->reset(); }
           
-          //cout << " RC_Output: " << RC_Output << " flg: " <<  flg_RC_Output;
+          //std::cout << " RC_Output: " << RC_Output << " flg: " <<  flg_RC_Output;
           if (RC_Output == NULL){ RC_Output = new c_Raw_Table_Row_1D; flg_RC_Output = 1; }
           if (RC_Output != NULL){ RC_Output->reset(); }
           
-          //cout << " Treetops_Output: " << Treetops_Output << " flg: " <<  flg_Treetops_Output;
+          //std::cout << " Treetops_Output: " << Treetops_Output << " flg: " <<  flg_Treetops_Output;
           if (Treetops_Output == NULL){ Treetops_Output = new c_Raw_Table_Row_1D; flg_Treetops_Output = 1; }
           if (Treetops_Output != NULL){ Treetops_Output->reset(); }
           
@@ -239,8 +239,8 @@ public:
                int tmp_Depth = p_From->Depth;
                for (int cou_Cell=0;cou_Cell<tmp_Depth;cou_Cell++)
                {
-                    //---*cout << "\n"; oindex(cou_Cell, 13);
-                    //---*cout << "\n\n " << p_From->Cells[cou_Cell]->get_String();
+                    //---*std::cout << "\n"; oindex(cou_Cell, 13);
+                    //---*std::cout << "\n\n " << p_From->Cells[cou_Cell]->get_String();
                     p_To->submit_UData_String(p_From->Cells[cou_Cell]->Data, p_From->Cells[cou_Cell]->Length);
                }
           }
@@ -258,8 +258,8 @@ public:
 			   int tmp_Offset = p_To->Depth;
                for (int cou_Cell=0;cou_Cell<tmp_Depth;cou_Cell++)
                {
-                    //---*cout << "\n"; oindex(cou_Cell, 13);
-                    //---*cout << "\n\n " << p_From->Cells[cou_Cell]->get_String();
+                    //---*std::cout << "\n"; oindex(cou_Cell, 13);
+                    //---*std::cout << "\n\n " << p_From->Cells[cou_Cell]->get_String();
                     p_To->set_UInt((cou_Cell + tmp_Offset), 0, p_From->Cells[cou_Cell]->Data[0].U);
                }
           }
@@ -268,7 +268,7 @@ public:
      //Overwrites the data in the rows with the given row.
      void overwrite(c_NT3_IO * p_From, int p_AnMoDe_Type, int p_Index)
      {
-          /*---*/ostr(0, 8, "\n  overwrite("); cout << p_AnMoDe_Type << ", " << p_Index; ostr(0, 8, ")");
+          /*---*/ostr(0, 8, "\n  overwrite("); std::cout << p_AnMoDe_Type << ", " << p_Index; ostr(0, 8, ")");
           
           reset();
           
@@ -300,7 +300,7 @@ public:
      //Writes form the lower construct to this higher one.
      void angel_Overwrite_Con(c_NT3_IO * p_Lower_Construct)
      {
-          //*---ostr(0, 8, "\n  overwrite("); cout << p_From; ostr(0, 8, ")");
+          //*---ostr(0, 8, "\n  overwrite("); std::cout << p_From; ostr(0, 8, ")");
           
           reset();
           
@@ -311,7 +311,7 @@ public:
      //Writes form the lower construct to this higher one.
      void angel_Append_Con(c_NT3_IO * p_Lower_Construct, int p_Index)
      {
-          //*---ostr(0, 8, "\n  overwrite("); cout << p_From; ostr(0, 8, ")");
+          //*---ostr(0, 8, "\n  overwrite("); std::cout << p_From; ostr(0, 8, ")");
           
           append_Row(p_Lower_Construct->Treetops_Output, Input, p_Index);
           append_Row(p_Lower_Construct->Charge_Output, Input_Charges, p_Index);
@@ -320,7 +320,7 @@ public:
      //Writes from the higher construct to this lower one.
      void demon_Overwrite_Con(c_NT3_IO * p_Higher_Construct, int p_Index)
      {
-          ostr(0, 12, "\n  demon_Overwrite_Con("); cout << p_Index; ostr(0, 8, ")");
+          ostr(0, 12, "\n  demon_Overwrite_Con("); std::cout << p_Index; ostr(0, 8, ")");
           
           //From the Higher constructs pattern and charge output tables to this entities treetops and charge tables for backpropagation.
           
@@ -330,18 +330,18 @@ public:
           
           if (Dimension == 1)
           {
-               /*---*/cout << "\n   Pattern->Depth:"; oint(0, 12, p_Higher_Construct->Pattern_Output->Depth);
+               /*---*/std::cout << "\n   Pattern->Depth:"; oint(0, 12, p_Higher_Construct->Pattern_Output->Depth);
                if (Treetops_Output != NULL)
                {
                     for (int cou_Cell=0;cou_Cell<p_Higher_Construct->Pattern_Output->Depth;cou_Cell++)
                     {
                          Treetops_Output->set_UInt(cou_Cell, p_Higher_Construct->Pattern_Output->Cells[cou_Cell]->Data[p_Index].U);
                     }
-                    cout << "\n\n\n\n\n\n\n p_Index: " << p_Index; 
-                    cout << "\n -------p_Higher_Construct->Pattern_Output:";
-                    p_Higher_Construct->Pattern_Output->output_U(); cout << "\n";
-                    cout << "\n -------Treetops_Output:";
-                    Treetops_Output->output_U(); cout << "\n";
+                    std::cout << "\n\n\n\n\n\n\n p_Index: " << p_Index; 
+                    std::cout << "\n -------p_Higher_Construct->Pattern_Output:";
+                    p_Higher_Construct->Pattern_Output->output_U(); std::cout << "\n";
+                    std::cout << "\n -------Treetops_Output:";
+                    Treetops_Output->output_U(); std::cout << "\n";
                }
                overwrite_Row(p_Higher_Construct->Charge_Output, Charge_Output);
           }
@@ -413,7 +413,7 @@ public:
      }
      
      //Accepts the 4 attachment points.
-     void attach(c_Raw_Table_Row_1D * p_Row_1D, string p_Table)
+     void attach(c_Raw_Table_Row_1D * p_Row_1D, std::string p_Table)
      {
           if (p_Table == "Input"){ if (p_Row_1D != NULL){ io_Connection.set_Input(p_Row_1D); } }
           if (p_Table == "Input_Charges"){ if (p_Row_1D != NULL){ io_Connection.set_Input_Charges(p_Row_1D); } }
@@ -528,10 +528,10 @@ public:
           Pipe_AnMoDe = p_AnMoDe;
           Pipe_Type = 0;
           
-          ostr(0, 13, "\n\n From.End:"); cout << From.End;
-          ostr(0, 14, " From.Type:"); cout << From.Type;
-          ostr(0, 13, "\n To.End:"); cout << To.End;
-          ostr(0, 14, " To.Type:"); cout << To.Type;
+          ostr(0, 13, "\n\n From.End:"); std::cout << From.End;
+          ostr(0, 14, " From.Type:"); std::cout << From.Type;
+          ostr(0, 13, "\n To.End:"); std::cout << To.End;
+          ostr(0, 14, " To.Type:"); std::cout << To.Type;
           ostr(0, 7, "\n     Connection Type: ");
           if (p_AnMoDe == 0){ ostr(0, 10, "Angelic"); }
           if (p_AnMoDe == 1){ ostr(0, 8, "Mortal"); }
@@ -716,7 +716,7 @@ public:
           ostr(0, 7, "\n       From.Charge_Output__:"); if (From.io_Connection.Charge_Output != NULL){ From.io_Connection.Charge_Output->output_U(); } else { ostr(0, 12, "NULL"); }
           ostr(0, 7, "\n       From.RC_Output______:"); if (From.io_Connection.RC_Output != NULL){ From.io_Connection.RC_Output->output_U(); } else { ostr(0, 12, "NULL"); }
           ostr(0, 7, "\n       From.TreeTops_Output:"); if (From.io_Connection.Treetops_Output != NULL){ From.io_Connection.Treetops_Output->output_U(); } else { ostr(0, 12, "NULL"); }
-          cout << "\n\n";
+          std::cout << "\n\n";
           ostr(0, 7, "\n       To.Input____________:"); if (To.io_Connection.Input != NULL){ To.io_Connection.Input->output_U(); } else { ostr(0, 12, "NULL"); }
           ostr(0, 7, "\n       To.Input_Charges____:"); if (To.io_Connection.Input_Charges != NULL){ To.io_Connection.Input_Charges->output_U(); } else { ostr(0, 12, "NULL"); }
           ostr(0, 7, "\n       To.Pattern_Output___:"); if (To.io_Connection.Pattern_Output != NULL){ To.io_Connection.Pattern_Output->output_U(); } else { ostr(0, 12, "NULL"); }
@@ -790,7 +790,7 @@ public:
      //Appends cells from the first index to the row in the second index.
      void Append(int p_Pipe)
      {
-          //ostr(0, 7, "\n void Append"); ostr(0, 12, "("); cout << p_Pipe; ostr(0, 12, ")");
+          //ostr(0, 7, "\n void Append"); ostr(0, 12, "("); std::cout << p_Pipe; ostr(0, 12, ")");
           //Check for pipe.
           if (p_Pipe >= Data_Pipe_Count){ return; }
           
@@ -802,8 +802,8 @@ public:
      //Resets the output index and copies the input index to it.
      void Overwrite(int p_Pipe, int p_AnMoDe = 0)
      {
-          //ostr(0, 7, "\n void Overwrite"); ostr(0, 12, "("); cout << p_Pipe; ostr(0, 12, ")");
-          //*---cout << "\n void Overwrite(" << p_Pipe << ")";
+          //ostr(0, 7, "\n void Overwrite"); ostr(0, 12, "("); std::cout << p_Pipe; ostr(0, 12, ")");
+          //*---std::cout << "\n void Overwrite(" << p_Pipe << ")";
           
           //Check for pipe.
           if (p_Pipe >= Data_Pipe_Count){ return; }
@@ -814,8 +814,8 @@ public:
      //Resets the output index and copies the input index to it.
      void Drain(int p_Pipe)
      {
-          //ostr(0, 7, "\n void Overwrite"); ostr(0, 12, "("); cout << p_Pipe; ostr(0, 12, ")");
-          //*---cout << "\n void Overwrite(" << p_Pipe << ")";
+          //ostr(0, 7, "\n void Overwrite"); ostr(0, 12, "("); std::cout << p_Pipe; ostr(0, 12, ")");
+          //*---std::cout << "\n void Overwrite(" << p_Pipe << ")";
           
           //Check for pipe.
           if (p_Pipe >= Data_Pipe_Count){ return; }
@@ -826,8 +826,8 @@ public:
      //Resets the output index and copies the input index to it.
      void Hotlink(int p_Pipe)
      {
-          cout << "\n void pipe_Hotlink(" << p_Pipe << ")";
-          //*---cout << "\n void pipe_Overwrite(" << p_Pipe << ")";
+          std::cout << "\n void pipe_Hotlink(" << p_Pipe << ")";
+          //*---std::cout << "\n void pipe_Overwrite(" << p_Pipe << ")";
           
           //Check for pipe.
           if (p_Pipe >= Data_Pipe_Count){ return; }

@@ -11,7 +11,7 @@ private:
 	c_NT3_Data_Buffer* Discharging_Buffers;
 
 	//Name of the sandbox.
-	string Name;
+	std::string Name;
 
 
 public:
@@ -20,10 +20,10 @@ public:
 	bool flg_Initialized;
 
 	//The directory that the sandbox is stored in.
-	string DIR;
+	std::string DIR;
 
 	//The names of the constructs in the assembly.
-	string Construct_Names[1000];
+	std::string Construct_Names[1000];
 
 	//Dimension of construct.
 	int Construct_Types[1000];
@@ -88,7 +88,7 @@ public:
 
 	c_NT3_SANDBOX()//(c_NT3_Command_Parser * p_CMD)
 	{
-		cout << "\n c_NT3_SANDBOX"; cout.flush();
+		std::cout << "\n c_NT3_SANDBOX"; std::cout.flush();
 		Name = "Generic_Sandbox_Assembly";
 		Discharging_Buffers = NULL;
 
@@ -136,18 +136,18 @@ public:
 
 	~c_NT3_SANDBOX()
 	{
-		cout << "\n ~c_NT3_SANDBOX " << Name << " " << this << ".........."; cout.flush();
+		std::cout << "\n ~c_NT3_SANDBOX " << Name << " " << this << ".........."; std::cout.flush();
 
 		for (int cou_Index = 0; cou_Index < Construct_Count; cou_Index++)
 		{
 			delete Constructs[cou_Index];
 			Constructs[cou_Index] = NULL;
 		}
-		cout << "\n ~~~c_NT3_SANDBOX " << Name << " " << this << ".........."; cout.flush();
+		std::cout << "\n ~~~c_NT3_SANDBOX " << Name << " " << this << ".........."; std::cout.flush();
 	}
 
 	//Sets the name of the assembly.
-	void set_Name(string p_Name)
+	void set_Name(std::string p_Name)
 	{
 		Name = p_Name;
 	}
@@ -161,7 +161,7 @@ public:
 
 	//Creates a sandbox.
 	//The name is what is used to save it and initialize new constructs.
-	void create_Sandbox(string p_Name)
+	void create_Sandbox(std::string p_Name)
 	{
 		//Set the name of the sandbox.
 		Name = p_Name;
@@ -174,29 +174,29 @@ public:
 	void init_Constructs()
 	{
 		/*
-		string tmp_Name = "";
-		string tmp_Dir = "NT3.Save/" + Name + "/";
-		string tmp_MK_Dir = "md \"" + tmp_Dir + "\"";
-		cout << "\n " << tmp_MK_Dir;
+		std::string tmp_Name = "";
+		std::string tmp_Dir = "NT3.Save/" + Name + "/";
+		std::string tmp_MK_Dir = "md \"" + tmp_Dir + "\"";
+		std::cout << "\n " << tmp_MK_Dir;
 
-		cout << "\n Saving constructs to \"" << tmp_Dir << "\"";
+		std::cout << "\n Saving constructs to \"" << tmp_Dir << "\"";
 
 		system(tmp_MK_Dir.c_str());
 
 		for (int cou_Index = 0; cou_Index < Construct_Count; cou_Index++)
 		{
-			cout << "\n  Saving Construct[" << cou_Index << "]";
+			std::cout << "\n  Saving Construct[" << cou_Index << "]";
 			Constructs[cou_Index]->Save(tmp_Dir, "NO_NAME");
 		}*/
 		Save();
 	}
 
 	//Loads a construct.
-	void load_Construct(string p_Name, int p_Type = 1, int p_Tier = 1)
+	void load_Construct(std::string p_Name, int p_Type = 1, int p_Tier = 1)
 	{
-		ostr(0, 7, "\n void load_Construct"); ostr(0, 12, "("); cout << p_Name; ostr(0, 12, ", "); cout << p_Type; ostr(0, 12, ", "); cout << p_Tier; ostr(0, 12, ")");
-		string tmp_Dir = "NT3.Save/" + Name;
-		ostr(0, 8, "\n   loading from:"); cout << tmp_Dir;
+		ostr(0, 7, "\n void load_Construct"); ostr(0, 12, "("); std::cout << p_Name; ostr(0, 12, ", "); std::cout << p_Type; ostr(0, 12, ", "); std::cout << p_Tier; ostr(0, 12, ")");
+		std::string tmp_Dir = "NT3.Save/" + Name;
+		ostr(0, 8, "\n   loading from:"); std::cout << tmp_Dir;
 
 		if (p_Type == 0)
 		{
@@ -223,7 +223,7 @@ public:
 		if (p_Tier > Construct_Highest_Tier) { Construct_Highest_Tier = p_Tier; }
 		Constructs[Construct_Count]->set_CID(((unsigned long long int) Construct_Count));
 
-		cout << "\n" << Constructs[Construct_Count]->CID.U;
+		std::cout << "\n" << Constructs[Construct_Count]->CID.U;
 
 		Construct_Positions[Construct_Count].X = (p_Tier * 128);
 		Constructs[Construct_Count]->X = (p_Tier * 16);
@@ -244,11 +244,11 @@ public:
 	}
 
 	//Create new construct.
-	void create_Construct(string p_Name, int p_Type = 1, int p_Tier = 1)
+	void create_Construct(std::string p_Name, int p_Type = 1, int p_Tier = 1)
 	{
-		ostr(0, 7, "\n void create_Construct"); ostr(0, 12, "("); cout << p_Name; ostr(0, 12, ", "); cout << p_Type; ostr(0, 12, ", "); cout << p_Tier; ostr(0, 12, ")");
+		ostr(0, 7, "\n void create_Construct"); ostr(0, 12, "("); std::cout << p_Name; ostr(0, 12, ", "); std::cout << p_Type; ostr(0, 12, ", "); std::cout << p_Tier; ostr(0, 12, ")");
 
-		string tmp_Dir = "NT3.Save/" + Name;
+		std::string tmp_Dir = "NT3.Save/" + Name;
 
 		if (p_Type == 0)
 		{
@@ -275,7 +275,7 @@ public:
 		if (p_Tier > Construct_Highest_Tier) { Construct_Highest_Tier = p_Tier; }
 		Constructs[Construct_Count]->set_CID(((unsigned long long int) Construct_Count));
 
-		cout << "\n" << Constructs[Construct_Count]->CID.U;
+		std::cout << "\n" << Constructs[Construct_Count]->CID.U;
 
 		Construct_Positions[Construct_Count].X = (p_Tier * 128);
 		Constructs[Construct_Count]->X = (p_Tier * 128);
@@ -299,7 +299,7 @@ public:
 	//Returns the index of the new input.
 	int create_Input(int p_Dimension = 1)
 	{
-		ostr(0, 7, "\n void create_Input"); ostr(0, 12, "("); cout << p_Dimension; ostr(0, 12, ")");
+		ostr(0, 7, "\n void create_Input"); ostr(0, 12, "("); std::cout << p_Dimension; ostr(0, 12, ")");
 
 		int tmp_Type = -1;
 		if (p_Dimension == 1)
@@ -333,7 +333,7 @@ public:
 	//Returns the index of the new output.
 	int create_Output(int p_Dimension = 1)
 	{
-		ostr(0, 7, "\n void create_Output"); ostr(0, 12, "("); cout << p_Dimension; ostr(0, 12, ")");
+		ostr(0, 7, "\n void create_Output"); ostr(0, 12, "("); std::cout << p_Dimension; ostr(0, 12, ")");
 
 		int tmp_Type = -1;
 		if (p_Dimension == 1)
@@ -370,14 +370,14 @@ public:
 	// From_X > To_X = Demonic
 	int create_Connection(int p_From, int p_From_Index, int p_To, int p_To_Index)
 	{
-		ostr(0, 7, "\n void create_Connection"); ostr(0, 12, "("); cout << p_From; ostr(0, 12, ", "); cout << p_From_Index; ostr(0, 12, ", "); cout << p_To; ostr(0, 12, ", "); cout << p_To_Index; ostr(0, 12, ")");
+		ostr(0, 7, "\n void create_Connection"); ostr(0, 12, "("); std::cout << p_From; ostr(0, 12, ", "); std::cout << p_From_Index; ostr(0, 12, ", "); std::cout << p_To; ostr(0, 12, ", "); std::cout << p_To_Index; ostr(0, 12, ")");
 
 		void* tmp_From = NULL;
 		void* tmp_To = NULL;
 
-		//cout << "\n\n p_From->" << p_From << " p_To->" << p_To;
-		//cout << "\n " << NT3INPUT << " " << NT3OUTPUT << " " << NT3CONSTRUCT;
-		//cout << "\n " << Register_Type[p_From] << " " << Register
+		//std::cout << "\n\n p_From->" << p_From << " p_To->" << p_To;
+		//std::cout << "\n " << NT3INPUT << " " << NT3OUTPUT << " " << NT3CONSTRUCT;
+		//std::cout << "\n " << Register_Type[p_From] << " " << Register
 
 		//Get the from connection.
 		if ((Register_Type[p_From] == NT3INPUT1D) || (Register_Type[p_From] == NT3INPUT2D))
@@ -431,7 +431,7 @@ public:
 	// [1]: Input_ID, [2]: Construct_ID, [3]: Construct_Input_Index.
 	int hotlink_Input(int p_Input_ID, int p_CID, int p_CID_In_Index = 0)
 	{
-		ostr(0, 7, "\n void hotlink_Input"); ostr(0, 12, "("); cout << p_Input_ID; ostr(0, 12, ", "); cout << p_CID; ostr(0, 12, ", "); cout << p_CID_In_Index; ostr(0, 12, ")"); ostr(0, 12, "  --COMMAND CURRENTLY DISABLED");
+		ostr(0, 7, "\n void hotlink_Input"); ostr(0, 12, "("); std::cout << p_Input_ID; ostr(0, 12, ", "); std::cout << p_CID; ostr(0, 12, ", "); std::cout << p_CID_In_Index; ostr(0, 12, ")"); ostr(0, 12, "  --COMMAND CURRENTLY DISABLED");
 		/*
 		c_Raw_Table_Row_1D * tmp_Input = Inputs[p_Input_ID].Row_1D;
 		tmp_Input->output_C();
@@ -450,18 +450,18 @@ public:
 	//Moves a construct.
 	void move_Construct_CID(int p_Construct, int p_X, int p_Y)
 	{
-		ostr(0, 7, "\n void move_Construct_CID"); ostr(0, 12, "("); cout << p_Construct; ostr(0, 12, ", "); cout << p_X; ostr(0, 12, ", "); cout << p_Y; ostr(0, 12, ")");
+		ostr(0, 7, "\n void move_Construct_CID"); ostr(0, 12, "("); std::cout << p_Construct; ostr(0, 12, ", "); std::cout << p_X; ostr(0, 12, ", "); std::cout << p_Y; ostr(0, 12, ")");
 		if ((p_Construct >= Construct_Count) || (p_Construct < 0))
 		{
-			cout << "\n INVALID CONSTRUCT ID ";
+			std::cout << "\n INVALID CONSTRUCT ID ";
 			oint(0, 12, p_Construct);
-			cout << " of ";
+			std::cout << " of ";
 			oint(0, 7, Construct_Count);
-			cout << "\n xy(";
+			std::cout << "\n xy(";
 			oint(0, 13, p_X);
-			cout << ", ";
+			std::cout << ", ";
 			oint(0, 13, p_Y);
-			cout << ")";
+			std::cout << ")";
 			system("pause > NULL");
 			return;
 		}
@@ -474,18 +474,18 @@ public:
 
 	void move_Construct(int p_Register, int p_X, int p_Y)
 	{
-		ostr(0, 7, "\n void move_Construct"); ostr(0, 12, "("); cout << p_Register; ostr(0, 12, ", "); cout << p_X; ostr(0, 12, ", "); cout << p_Y; ostr(0, 12, ")");
+		ostr(0, 7, "\n void move_Construct"); ostr(0, 12, "("); std::cout << p_Register; ostr(0, 12, ", "); std::cout << p_X; ostr(0, 12, ", "); std::cout << p_Y; ostr(0, 12, ")");
 		if ((p_Register >= Register_Current_Count) || (p_Register < 0))
 		{
-			cout << "\n INVALID Register ID ";
+			std::cout << "\n INVALID Register ID ";
 			oint(0, 12, p_Register);
-			cout << " of ";
+			std::cout << " of ";
 			oint(0, 7, Register_Current_Count);
-			cout << "\n xy(";
+			std::cout << "\n xy(";
 			oint(0, 13, p_X);
-			cout << ", ";
+			std::cout << ", ";
 			oint(0, 13, p_Y);
-			cout << ")";
+			std::cout << ")";
 			system("pause > NULL");
 			return;
 		}
@@ -508,28 +508,28 @@ public:
 	}
 
 	//Sets a given input to the given string.
-	void set_Input_String(int p_Input, string p_Data)
+	void set_Input_String(int p_Input, std::string p_Data)
 	{
-		ostr(0, 7, "\n void set_Input_String"); ostr(0, 12, "("); cout << p_Input; ostr(0, 12, ", "); cout << p_Data; ostr(0, 12, ")");
+		ostr(0, 7, "\n void set_Input_String"); ostr(0, 12, "("); std::cout << p_Input; ostr(0, 12, ", "); std::cout << p_Data; ostr(0, 12, ")");
 		Inputs[p_Input].set_Input_Data(p_Data);
-		//*---cout << "\n Inputs[" << p_Input << "].set_String(" << p_Input << ", " << p_Data << "); ";
+		//*---std::cout << "\n Inputs[" << p_Input << "].set_string(" << p_Input << ", " << p_Data << "); ";
 		//*---output_Input_Data();
 	}
 
 	//Adds a given input to the given string.
-	void add_Input_String(int p_Input, string p_Data)
+	void add_Input_String(int p_Input, std::string p_Data)
 	{
-		ostr(0, 7, "\n void add_Input_String"); ostr(0, 12, "("); cout << p_Input; ostr(0, 12, ", "); cout << p_Data; ostr(0, 12, ")");
+		ostr(0, 7, "\n void add_Input_String"); ostr(0, 12, "("); std::cout << p_Input; ostr(0, 12, ", "); std::cout << p_Data; ostr(0, 12, ")");
 		Inputs[p_Input].add_Input_Data(p_Data);
-		//*---cout << "\n Inputs[" << p_Input << "].set_String(" << p_Input << ", " << p_Data << "); ";
+		//*---std::cout << "\n Inputs[" << p_Input << "].set_string(" << p_Input << ", " << p_Data << "); ";
 		//*---output_Input_Data();
 	}
 
 
 	//Gets an output string.
-	string get_Output_String(int p_Output)
+	std::string get_Output_String(int p_Output)
 	{
-		ostr(0, 7, "\n void get_Pattern_Output_Data"); ostr(0, 12, "("); cout << p_Output; ostr(0, 12, ", "); cout << Outputs[p_Output].get_Pattern_Output_Data(); ostr(0, 12, ")");
+		ostr(0, 7, "\n void get_Pattern_Output_Data"); ostr(0, 12, "("); std::cout << p_Output; ostr(0, 12, ", "); std::cout << Outputs[p_Output].get_Pattern_Output_Data(); ostr(0, 12, ")");
 		return Outputs[p_Output].get_Pattern_Output_Data();
 	}
 
@@ -538,7 +538,7 @@ public:
 	//Appends cells from the first index to the row in the second index.
 	void pipe_Append(int p_Pipe, int p_AnMoDe = 0)
 	{
-		//ostr(0, 7, "\n void pipe_Append"); ostr(0, 12, "("); cout << p_Pipe; ostr(0, 12, ", "); cout << p_AnMoDe; ostr(0, 12, ")");
+		//ostr(0, 7, "\n void pipe_Append"); ostr(0, 12, "("); std::cout << p_Pipe; ostr(0, 12, ", "); std::cout << p_AnMoDe; ostr(0, 12, ")");
 
 		Data_Pipes.Append(p_Pipe);
 	}
@@ -546,8 +546,8 @@ public:
 	//Resets the output index and copies the input index to it.
 	void pipe_Overwrite(int p_Pipe, int p_AnMoDe = 0)
 	{
-		//ostr(0, 7, "\n void pipe_Overwrite"); ostr(0, 12, "("); cout << p_Pipe; ostr(0, 12, ", "); cout << p_AnMoDe; ostr(0, 12, ")");
-		//*---cout << "\n void pipe_Overwrite(" << p_Pipe << ")";
+		//ostr(0, 7, "\n void pipe_Overwrite"); ostr(0, 12, "("); std::cout << p_Pipe; ostr(0, 12, ", "); std::cout << p_AnMoDe; ostr(0, 12, ")");
+		//*---std::cout << "\n void pipe_Overwrite(" << p_Pipe << ")";
 
 		Data_Pipes.Overwrite(p_Pipe, p_AnMoDe);
 	}
@@ -555,8 +555,8 @@ public:
 	//Resets the output index and copies the input index to it.
 	void pipe_Drain(int p_Pipe)
 	{
-		ostr(0, 7, "\n void pipe_Drain"); ostr(0, 12, "("); cout << p_Pipe; ostr(0, 12, ")");
-		//*---cout << "\n void pipe_Overwrite(" << p_Pipe << ")";
+		ostr(0, 7, "\n void pipe_Drain"); ostr(0, 12, "("); std::cout << p_Pipe; ostr(0, 12, ")");
+		//*---std::cout << "\n void pipe_Overwrite(" << p_Pipe << ")";
 
 		Data_Pipes.Drain(p_Pipe);
 	}
@@ -564,8 +564,8 @@ public:
 	//Resets the output index and copies the input index to it.
 	void pipe_Hotlink(int p_Pipe)
 	{
-		cout << "\n void pipe_Hotlink(" << p_Pipe << ")";
-		//*---cout << "\n void pipe_Overwrite(" << p_Pipe << ")";
+		std::cout << "\n void pipe_Hotlink(" << p_Pipe << ")";
+		//*---std::cout << "\n void pipe_Overwrite(" << p_Pipe << ")";
 
 		Data_Pipes.Hotlink(p_Pipe);
 	}
@@ -575,7 +575,7 @@ public:
 	//Evals one of the eval CMD tables.
 	void Eval(int p_Construct, int p_Discharge = 1)
 	{
-		ostr(0, 7, "\nvoid Eval"); ostr(0, 12, "("); cout << p_Construct; ostr(0, 7, ", "); cout << p_Discharge; ostr(0, 7, ")");
+		ostr(0, 7, "\nvoid Eval"); ostr(0, 12, "("); std::cout << p_Construct; ostr(0, 7, ", "); std::cout << p_Discharge; ostr(0, 7, ")");
 		if (p_Construct >= Construct_Count) { return; }
 
 		Constructs[p_Construct]->Eval(p_Discharge);
@@ -584,7 +584,7 @@ public:
 	//Discharges a construct, used for discharging lower level constructs after using the drain pipes.
 	void Discharge(int p_Construct)
 	{
-		ostr(0, 7, "\nvoid Discharge"); ostr(0, 12, "("); cout << p_Construct; ostr(0, 7, ")");
+		ostr(0, 7, "\nvoid Discharge"); ostr(0, 12, "("); std::cout << p_Construct; ostr(0, 7, ")");
 		if (p_Construct >= Construct_Count) { return; }
 
 		Constructs[p_Construct]->Discharge();
@@ -593,7 +593,7 @@ public:
 	//Evals one of the build CMD tables.
 	void Build(int p_Construct)
 	{
-		//ostr(0, 7, "\nvoid Build"); ostr(0, 12, "("); cout << p_Construct; ostr(0, 12, ")");
+		//ostr(0, 7, "\nvoid Build"); ostr(0, 12, "("); std::cout << p_Construct; ostr(0, 12, ")");
 		if (p_Construct >= Construct_Count) { return; }
 
 		Constructs[p_Construct]->Build();
@@ -625,7 +625,7 @@ public:
 				xy(0, Inputs[tmp_ID].Y);
 				ostr(0, 13, "<-");
 				oint(0, 14, cou_Index);
-				cout << " ";
+				std::cout << " ";
 				oint(0, 7, Inputs[tmp_ID].Dimension);
 				ostr(0, 13, "->");
 			}
@@ -634,56 +634,56 @@ public:
 				xy(Outputs[tmp_ID].X, Outputs[tmp_ID].Y);
 				ostr(0, 13, "<-");
 				oint(0, 15, cou_Index);
-				cout << " ";
+				std::cout << " ";
 				oint(0, 8, Outputs[tmp_ID].Dimension);
 				ostr(0, 13, "->");
 			}
 			if (tmp_Type == NT3CONSTRUCT1D)
 			{
 				xy(Construct_Positions[tmp_ID].X, Construct_Positions[tmp_ID].Y);
-				//cout << "(";  oint(0, 7, tmp_ID); cout << " "; oint(0, 13, Construct_Types[tmp_ID]); cout << " " << Construct_Names[tmp_ID] << ")";
-				ostr(0, 13, "("); oint(0, 7, cou_Index); cout << " " << Construct_Names[tmp_ID]; ostr(0, 13, ")");
+				//std::cout << "(";  oint(0, 7, tmp_ID); std::cout << " "; oint(0, 13, Construct_Types[tmp_ID]); std::cout << " " << Construct_Names[tmp_ID] << ")";
+				ostr(0, 13, "("); oint(0, 7, cou_Index); std::cout << " " << Construct_Names[tmp_ID]; ostr(0, 13, ")");
 			}
 		}
 		xy(0, (Input_Count * 5));
 		output_Registry();
-		cout << "\n";
+		std::cout << "\n";
 		output_Pipe_Data();
 	}
 	
 	void output_Registry()
 	{
-		cout << "\n Registry->";
+		std::cout << "\n Registry->";
 		for (int cou_Index = 0; cou_Index < Register_Current_Count; cou_Index++)
 		{
-			cout << "\n";
+			std::cout << "\n";
 			oint(0, 8, cou_Index);
 
-			cout << " "; oint(0, (7 + Register_Type[cou_Index]), Register[cou_Index]);
-			cout << " "; oint(0, (8 + Register_Type[cou_Index]), Register_Type[cou_Index]);
+			std::cout << " "; oint(0, (7 + Register_Type[cou_Index]), Register[cou_Index]);
+			std::cout << " "; oint(0, (8 + Register_Type[cou_Index]), Register_Type[cou_Index]);
 
 			if (Register_Type[cou_Index] == NT3INPUT1D)
 			{
 				ostr(0, (13 + Register_Type[cou_Index]), " Input 1D ");
-				cout << "  ";
+				std::cout << "  ";
 				Inputs[cou_Index].output_C();
 			}
 			if (Register_Type[cou_Index] == NT3INPUT2D)
 			{
 				ostr(0, (13 + Register_Type[cou_Index]), " Input 2D ");
-				cout << "  ";
+				std::cout << "  ";
 				Inputs[cou_Index].output_C();
 			}
 			if (Register_Type[cou_Index] == NT3OUTPUT1D)
 			{
 				ostr(0, (13 + Register_Type[cou_Index]), " Output 1D ");
-				cout << "  ";
+				std::cout << "  ";
 				Outputs[cou_Index].output_C();
 			}
 			if (Register_Type[cou_Index] == NT3OUTPUT2D)
 			{
 				ostr(0, (13 + Register_Type[cou_Index]), " Output 2D ");
-				cout << "  ";
+				std::cout << "  ";
 				Outputs[cou_Index].output_C();
 			}
 			if (Register_Type[cou_Index] == NT3CONSTRUCT1D)
@@ -771,19 +771,19 @@ public:
 	{
 		int tmp_R = 0;
 
-		cout << "\n Data_Pipes->";
+		std::cout << "\n Data_Pipes->";
 		for (int cou_Index = 0; cou_Index < Data_Pipes.get_Data_Pipe_Count(); cou_Index++)
 		{
-			cout << "\n";
+			std::cout << "\n";
 			oint(0, 8, cou_Index);
 
 
 			//From
 			tmp_R = Data_Pipes.Pipe[cou_Index].get_From_Register();
 
-			cout << " From->"; oint(0, (7 + Register_Type[tmp_R]), Register[tmp_R]);
-			cout << " "; oint(0, (8 + Register_Type[tmp_R]), Register_Type[tmp_R]);
-			cout << " "; oint(0, 8, Data_Pipes.Pipe[cou_Index].get_From_Index());
+			std::cout << " From->"; oint(0, (7 + Register_Type[tmp_R]), Register[tmp_R]);
+			std::cout << " "; oint(0, (8 + Register_Type[tmp_R]), Register_Type[tmp_R]);
+			std::cout << " "; oint(0, 8, Data_Pipes.Pipe[cou_Index].get_From_Index());
 
 			if (Register_Type[tmp_R] == NT3INPUT1D)
 			{
@@ -809,9 +809,9 @@ public:
 			//To
 			tmp_R = Data_Pipes.Pipe[cou_Index].get_To_Register();
 
-			cout << " To->"; oint(0, (7 + Register_Type[tmp_R]), Register[tmp_R]);
-			cout << " "; oint(0, (8 + Register_Type[tmp_R]), Register_Type[tmp_R]);
-			cout << " "; oint(0, 8, Data_Pipes.Pipe[cou_Index].get_To_Index());
+			std::cout << " To->"; oint(0, (7 + Register_Type[tmp_R]), Register[tmp_R]);
+			std::cout << " "; oint(0, (8 + Register_Type[tmp_R]), Register_Type[tmp_R]);
+			std::cout << " "; oint(0, 8, Data_Pipes.Pipe[cou_Index].get_To_Index());
 
 			if (Register_Type[tmp_R] == NT3INPUT1D)
 			{
@@ -839,26 +839,26 @@ public:
 	//Outputs the input information.
 	void output_Input_Data()
 	{
-		cout << "\n Inputs->" << Input_Count;
+		std::cout << "\n Inputs->" << Input_Count;
 		for (int cou_Index = 0; cou_Index < Input_Count; cou_Index++)
 		{
-			//cout << "\n " << Inputs[cou_Index].get_String();
-			cout << "\n "; Inputs[cou_Index].output_C();
+			//std::cout << "\n " << Inputs[cou_Index].get_String();
+			std::cout << "\n "; Inputs[cou_Index].output_C();
 		}
 	}
 
 	//Outputs the input information.
 	void output_Output_Data()
 	{
-		cout << "\n Outputs->" << Output_Count;
+		std::cout << "\n Outputs->" << Output_Count;
 		for (int cou_Index = 0; cou_Index < Output_Count; cou_Index++)
 		{
-			cout << "\n " << Outputs[cou_Index].get_Input_Data();
-			cout << "\n " << Outputs[cou_Index].get_Input_Charges_Data();
-			cout << "\n " << Outputs[cou_Index].get_Pattern_Output_Data();
-			cout << "\n " << Outputs[cou_Index].get_Charge_Output_Data();
-			cout << "\n " << Outputs[cou_Index].get_RC_Output_Data();
-			cout << "\n " << Outputs[cou_Index].get_Treetops_Output_Data();
+			std::cout << "\n " << Outputs[cou_Index].get_Input_Data();
+			std::cout << "\n " << Outputs[cou_Index].get_Input_Charges_Data();
+			std::cout << "\n " << Outputs[cou_Index].get_Pattern_Output_Data();
+			std::cout << "\n " << Outputs[cou_Index].get_Charge_Output_Data();
+			std::cout << "\n " << Outputs[cou_Index].get_RC_Output_Data();
+			std::cout << "\n " << Outputs[cou_Index].get_Treetops_Output_Data();
 
 		}
 	}
@@ -898,7 +898,7 @@ public:
 	}
 
 	//Outputs the nodes as HTML
-	void output_Nodes_As_HTML(int p_Construct, string p_Dir, string p_File, int p_X_Padd, int p_Y_Padd)
+	void output_Nodes_As_HTML(int p_Construct, std::string p_Dir, std::string p_File, int p_X_Padd, int p_Y_Padd)
 	{
 		Constructs[p_Construct]->output_Nodes_As_HTML(p_Dir, p_File, p_X_Padd, p_Y_Padd);
 	}
@@ -907,27 +907,27 @@ public:
 
 	//Saves the sandbox.
 	//Saves to a dir passed to it, the dir is under NT3.Save, or it saves to the name of the sandbox in the NT3.Save folder.
-	void Save(string p_DIR = "NO_DIR")
+	void Save(std::string p_DIR = "NO_DIR")
 	{
-		string DIR = "NT3.Save/" + p_DIR + "/";
-		string tmp_FName = "NT3.Save/" + p_DIR + "/" + Name + ".sand";
+		std::string DIR = "NT3.Save/" + p_DIR + "/";
+		std::string tmp_FName = "NT3.Save/" + p_DIR + "/" + Name + ".sand";
 
 		if (p_DIR == "NO_DIR")
 		{
 			DIR = "NT3.Save/" + Name + "/";
 			tmp_FName = "NT3.Save/" + Name + "/" + Name + ".sand";
 		}
-		cout << "\n Saving Sandbox:" << tmp_FName;
+		std::cout << "\n Saving Sandbox:" << tmp_FName;
 
 		//Attempt to create the directory.
-		string tmp_MD = "md \"" + DIR + "\"";
+		std::string tmp_MD = "md \"" + DIR + "\"";
 
 		//Create the directory.
 		system(tmp_MD.c_str());
 
-		ofstream SF;
-		SF.open(tmp_FName, ios::trunc);
-		if (!SF.is_open()) { SF.close(); cout << "\n\n ERROR CANNOT OPEN SAVE FILE " << tmp_FName; system("PAUSE > NULL"); return; }
+		std::ofstream SF;
+		SF.open(tmp_FName, std::ios::trunc);
+		if (!SF.is_open()) { SF.close(); std::cout << "\n\n ERROR CANNOT OPEN SAVE FILE " << tmp_FName; system("PAUSE > NULL"); return; }
 
 		SF << "Register " << Register_Current_Count;
 		for (int cou_Index = 0; cou_Index < Register_Current_Count; cou_Index++)
@@ -1014,7 +1014,7 @@ public:
 		SF.close();
 
 		tmp_FName = DIR + "ConIndex.con";
-		SF.open(tmp_FName, ios::trunc);
+		SF.open(tmp_FName, std::ios::trunc);
 
 		for (int cou_Index = 0; cou_Index < Construct_Count; cou_Index++)
 		{
@@ -1032,27 +1032,27 @@ public:
 	}
 
 	//Loads the sandbox.
-	void Load(string p_FName)
+	void Load(std::string p_FName)
 	{
-		string DIR = "NT3.Save/" + p_FName + "/";
+		std::string DIR = "NT3.Save/" + p_FName + "/";
 
-		string tmp_FName = DIR + p_FName + ".sand";
+		std::string tmp_FName = DIR + p_FName + ".sand";
 
-		ifstream SF;
+		std::ifstream SF;
 		SF.open(tmp_FName);
-		if (!SF.is_open()) { SF.close(); cout << "\n\n ERROR CANNOT OPEN SAVE FILE " << tmp_FName;  system("PAUSE > NULL"); return; }
+		if (!SF.is_open()) { SF.close(); std::cout << "\n\n ERROR CANNOT OPEN SAVE FILE " << tmp_FName;  system("PAUSE > NULL"); return; }
 
 		//If it has gotten to this point then the loading was successful.
 		set_Name(p_FName);
 
-		string tmp_Input;
+		std::string tmp_Input;
 		int tmp_Dimension;
 		int tmp_X;
 		int tmp_Y;
 		int tmp_nX;
 		int tmp_nY;
 		int tmp_Type;
-		string tmp_Input_Name;
+		std::string tmp_Input_Name;
 		int tmp_Register_Count;
 
 		int tmp_Data_Pipe_Count;
@@ -1061,17 +1061,17 @@ public:
 		int tmp_Data_Pipe_To_Register;
 		int tmp_Data_Pipe_To_Index;
 
-		//Get the Register string and the number of registers.
+		//Get the Register std::string and the number of registers.
 		SF >> tmp_Input;
 		SF >> tmp_Register_Count;
-		/*7*/cout << "\n " << tmp_Input << " (" << tmp_Register_Count << ")";
+		/*7*/std::cout << "\n " << tmp_Input << " (" << tmp_Register_Count << ")";
 
 		//Loop through the registers reading them into the register based on the type they are.
 		for (int cou_Index = 0; cou_Index < tmp_Register_Count; cou_Index++)
 		{
 			SF >> Register_Type[cou_Index];
 			SF >> tmp_Input;
-			/*7*/cout << "\n " << cou_Index << " " << tmp_Register_Count << " " << tmp_Input << " " << Register_Type[cou_Index];
+			/*7*/std::cout << "\n " << cou_Index << " " << tmp_Register_Count << " " << tmp_Input << " " << Register_Type[cou_Index];
 
 			if ((Register_Type[cou_Index] == NT3INPUT1D) || (Register_Type[cou_Index] == NT3INPUT2D))
 			{
@@ -1086,7 +1086,7 @@ public:
 				SF >> tmp_Input;
 				SF >> tmp_Y;
 
-				/*7*/cout << " INPUT D " << tmp_Dimension << " X " << tmp_X << " Y " << tmp_Y;
+				/*7*/std::cout << " INPUT D " << tmp_Dimension << " X " << tmp_X << " Y " << tmp_Y;
 
 				create_Input(tmp_Dimension);
 				Inputs[Input_Count - 1].X = tmp_X;
@@ -1105,7 +1105,7 @@ public:
 				SF >> tmp_Input;
 				SF >> tmp_Y;
 
-				/*7*/cout << " OUTPUT D " << tmp_Dimension << " X " << tmp_X << " Y " << tmp_Y;
+				/*7*/std::cout << " OUTPUT D " << tmp_Dimension << " X " << tmp_X << " Y " << tmp_Y;
 
 				create_Output(tmp_Dimension);
 				Outputs[Output_Count - 1].X = tmp_X;
@@ -1133,7 +1133,7 @@ public:
 				SF >> tmp_Input;
 				SF >> tmp_Type;
 
-				/*7*/cout << " CONSTRUCT " << tmp_Input_Name << " X " << tmp_X << " Y " << tmp_Y << " T " << tmp_Type;
+				/*7*/std::cout << " CONSTRUCT " << tmp_Input_Name << " X " << tmp_X << " Y " << tmp_Y << " T " << tmp_Type;
 
 				//create_Construct(tmp_Input_Name, tmp_Type);
 				load_Construct(tmp_Input_Name, tmp_Type);
@@ -1154,7 +1154,7 @@ public:
 
 		SF >> tmp_Input;
 		SF >> tmp_Data_Pipe_Count;
-		cout << "\n Data_Pipes " << tmp_Data_Pipe_Count;
+		std::cout << "\n Data_Pipes " << tmp_Data_Pipe_Count;
 		for (int cou_Index = 0; cou_Index < tmp_Data_Pipe_Count; cou_Index++)
 		{
 			//From
@@ -1169,7 +1169,7 @@ public:
 			SF >> tmp_Input;
 			SF >> tmp_Data_Pipe_To_Index;
 
-			/*7*/cout << "\n From->" << tmp_Data_Pipe_From_Register << "." << tmp_Data_Pipe_From_Index << " To->" << tmp_Data_Pipe_To_Register << "." << tmp_Data_Pipe_To_Index;
+			/*7*/std::cout << "\n From->" << tmp_Data_Pipe_From_Register << "." << tmp_Data_Pipe_From_Index << " To->" << tmp_Data_Pipe_To_Register << "." << tmp_Data_Pipe_To_Index;
 			create_Connection(tmp_Data_Pipe_From_Register, tmp_Data_Pipe_From_Index, tmp_Data_Pipe_To_Register, tmp_Data_Pipe_To_Index);
 		}
 

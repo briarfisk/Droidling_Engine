@@ -6,8 +6,8 @@ class c_NT3_Command_Parser
 {
 protected:
 
-    //The whole string to collect during rcon.
-    string Command_String;
+    //The whole std::string to collect during rcon.
+    std::string Command_String;
 
     //The table used to build scripts before saving them to a dedicated table.
     c_Table_1D* CMD_Sandbox;
@@ -18,7 +18,7 @@ protected:
     //This flag represents whether or not there are undefined variables being used resulting in NULL values.
     int flg_Undefined;
 
-    //The flag allows for string inputs multiple tokens long.
+    //The flag allows for std::string inputs multiple tokens long.
     int flg_String;
 
     //Holds all of the variables and their values.
@@ -58,7 +58,7 @@ public:
 
     void init()
     {
-        cout << "\n c_NT3_Command_Parser()"; cout.flush();
+        std::cout << "\n c_NT3_Command_Parser()"; std::cout.flush();
 
         //Set the table handler.
         Tables = new c_Table_Handler;
@@ -74,7 +74,7 @@ public:
         flg_Undefined = 0;
         flg_Var_Pos = 0;
 
-        cout << " <>";
+        std::cout << " <>";
 
         //May use this feature in the future. For now it is commented out.
         //eval_Command_String("load_CMD_script autoexec");
@@ -84,20 +84,20 @@ public:
     //Allows for live input into the parser for debug and root control.
     void rcon()
     {
-        //Until the string "return" is found do not exit the command loop.
-        cout << "\n\n\t\t NeuroTox rcon";
-        cout << "\n\t\t   ->help -outputs information on available commands.";
-        cout << "\n\t\t   ->otables -shows all the tables.";
-        cout << "\n\t\t   ->return -exits the rcon.";
+        //Until the std::string "return" is found do not exit the command loop.
+        std::cout << "\n\n\t\t NeuroTox rcon";
+        std::cout << "\n\t\t   ->help -outputs information on available commands.";
+        std::cout << "\n\t\t   ->otables -shows all the tables.";
+        std::cout << "\n\t\t   ->return -exits the rcon.";
 
 
         while (1)
         {
-            cout << "\n\n";
+            std::cout << "\n\n";
 
-            cout << "\n\n\t ->";
+            std::cout << "\n\n\t ->";
 
-            getline(cin, Command_String);
+            getline(std::cin, Command_String);
 
             if (Command_String == "exit") { return; }
             if (Command_String == "otables") { Tables->output_Table(0); }
@@ -110,13 +110,13 @@ public:
 
     //This is used to search the table for labels and and submit them with their index to the Label_Tree.
     //Each instance of the table parser has its own labels.
-    string labelize_Command_Table(c_Table_1D* p_Command_Table, c_Lookup_Tree* p_Labels)
+    std::string labelize_Command_Table(c_Table_1D* p_Command_Table, c_Lookup_Tree* p_Labels)
     {
         //This keeps track of the current position in the table, it is passed to the parser for modification with goto statements.
         int EIP = 0;
 
         //The current command string.
-        string CMD_Line = "";
+        std::string CMD_Line = "";
 
         //Loop through each line in the command table evaluating them as it goes.
         for (EIP = 0; EIP < p_Command_Table->get_Row_Count(); EIP++)
@@ -134,8 +134,8 @@ public:
         return "LABELIZER_COMPLETED_TASK";
     }
 
-    //If the submitted string is a label then submit it to the p_Labels tree.
-    string labelize_Command_Text(string p_Command_Text, c_Lookup_Tree* p_Labels, int* p_EIP)
+    //If the submitted std::string is a label then submit it to the p_Labels tree.
+    std::string labelize_Command_Text(std::string p_Command_Text, c_Lookup_Tree* p_Labels, int* p_EIP)
     {
         if (!p_Command_Text.size()) { return "ERR_NO_TEXT_SUBMITTED->LABELIZE_COMMAND_STRING->p_Command_Text"; }
 
@@ -154,13 +154,13 @@ public:
     //By modifying the counter we can have jumps and loops within the table.
     //To avoid variable conflicts this will have its own Binary_Tree, however, it will be used to store labels and their positions.
     //Command tables will be one dimensional.
-    string eval_Command_Table(c_Table_1D* p_Command_Table)
+    std::string eval_Command_Table(c_Table_1D* p_Command_Table)
     {
         //This keeps track of the current position in the table, it is passed to the parser for modification with goto statements.
         int EIP = 0;
 
         //The current command string.
-        string CMD_Line = "";
+        std::string CMD_Line = "";
 
         //The labels for the current table.
         c_Lookup_Tree Labels;
@@ -179,10 +179,10 @@ public:
         return "COMMAND_PARSER->EVAL_COMMAND_TABLE_SUCCESS";
     }
 
-    //Overloaded for single string submission.
-    string eval_Command_String(string p_Command_Text)
+    //Overloaded for single std::string submission.
+    std::string eval_Command_String(std::string p_Command_Text)
     {
-        string tmp_Return = "";
+        std::string tmp_Return = "";
 
         int tmp_EIP = 0;
         c_Lookup_Tree tmp_Labels;
@@ -194,9 +194,9 @@ public:
     }
 
     //Same as eval_Command_String but shortened for the API.
-    string cmd(string p_Command_Text)
+    std::string cmd(std::string p_Command_Text)
     {
-        string tmp_Return = "";
+        std::string tmp_Return = "";
 
         int tmp_EIP = 0;
         c_Lookup_Tree tmp_Labels;
@@ -208,9 +208,9 @@ public:
     }
 
     //Overloaded for non-recursive submission.
-    string eval_Command_String(string p_Command_Text, int* p_EIP, c_Lookup_Tree* p_Labels)
+    std::string eval_Command_String(std::string p_Command_Text, int* p_EIP, c_Lookup_Tree* p_Labels)
     {
-        string tmp_Return = "";
+        std::string tmp_Return = "";
 
         c_Table_1D* Tokens = Tables->register_New_Table_1D("Token_Table");
         tmp_Return = eval_Command_String(p_Command_Text, p_EIP, p_Labels, Tokens);
@@ -222,15 +222,15 @@ public:
 
 
     //Evaluates a submitted string.
-    //It does this by breaking the string down into componets.
+    //It does this by breaking the std::string down into componets.
     //Each componet is stored in a separate string, in an array of strings.
     //Spaces act as deliminators between command componets, the semicolon acts as an eol character.
-    string eval_Command_String(string p_Command_Text, int* p_EIP, c_Lookup_Tree* p_Labels, c_Table_1D* p_Tokens)
+    std::string eval_Command_String(std::string p_Command_Text, int* p_EIP, c_Lookup_Tree* p_Labels, c_Table_1D* p_Tokens)
     {
         //Break the command text down into tokens.
         tokenize_Command_Text(p_Command_Text, p_Tokens);
 
-        //cout << "\n\n\t Tokens:";
+        //std::cout << "\n\n\t Tokens:";
         //p_Tokens->output_Table();
 
         //Replace the variables with their values.
@@ -240,12 +240,12 @@ public:
         return eval_Tokens(p_EIP, p_Labels, p_Tokens);
 
 
-        //cout << "\n\n\t Var_Lookup_Tree:";
+        //std::cout << "\n\n\t Var_Lookup_Tree:";
         //Var_Lookup_Tree.output_Tree();
     }
 
-    //Breaks the command string down into tokens.
-    void tokenize_Command_Text(string p_Command_Text, c_Table_1D* p_Tokens)
+    //Breaks the command std::string down into tokens.
+    void tokenize_Command_Text(std::string p_Command_Text, c_Table_1D* p_Tokens)
     {
         //Prep for new submission.
         p_Tokens->reset_Table();
@@ -255,7 +255,7 @@ public:
         //Loop through the command text finding variable identifiers and extracting them.
         for (unsigned int cou_Index = 0; cou_Index < p_Command_Text.size(); cou_Index++)
         {
-            //cout << "\n\t p_Command_Text[" << cou_Index << "]->" << p_Command_Text[cou_Index];
+            //std::cout << "\n\t p_Command_Text[" << cou_Index << "]->" << p_Command_Text[cou_Index];
 
 
             //This allows for special characters to be read in, useful for setting table entries where a variable is needed.
@@ -270,7 +270,7 @@ public:
             if (p_Command_Text[cou_Index] == '"')
             {
 
-                //If a string is being read in then stop the reading.
+                //If a std::string is being read in then stop the reading.
                 if (flg_String)
                 {
                     flg_String = 0;
@@ -296,7 +296,7 @@ public:
                 continue;
             }
 
-            //If there is currently a string being read in then add to the current token irregardless of special characters, whitespace, or variables.
+            //If there is currently a std::string being read in then add to the current token irregardless of special characters, whitespace, or variables.
             if (flg_String)
             {
                 p_Tokens->push_Data_Bit_Into_Current_Cell_On_Current_Row_C(p_Command_Text[cou_Index]);
@@ -321,7 +321,7 @@ public:
             //If a '%' is encountered then check the flg_Var_Pos to determine if a new token is needed, or if the current token is ending.
             if (p_Command_Text[cou_Index] == '%' && flg_Var_Pos == 0)
             {
-                //cout << "\n\t Found a variable...";
+                //std::cout << "\n\t Found a variable...";
 
                 //If the current token does not contain whitespace then increment the current token.
                 if (p_Tokens->get_Set_State_For_Given_Cell_In_Current_Row(0))
@@ -336,7 +336,7 @@ public:
 
             if (p_Command_Text[cou_Index] == '%' && flg_Var_Pos == 1)
             {
-                //cout << "\n\t\t End of variable string, setting flag on cell...";
+                //std::cout << "\n\t\t End of variable string, setting flag on cell...";
                 p_Tokens->pop_Cell_In_Current_Row(); p_Tokens->push_Data_Bit_Into_Current_Cell_On_Current_Row_I(1);
                 if (cou_Index < (p_Command_Text.size() - 1)) { p_Tokens->pop_Row(); }
                 flg_Var_Pos = 0;
@@ -345,7 +345,7 @@ public:
 
             //Add the current character to the current token.
             p_Tokens->push_Data_Bit_Into_Current_Cell_On_Current_Row_C(p_Command_Text[cou_Index]);
-            //cout << "\n\t\t p_Command_Text[" << cou_Index << "]->" << int (p_Command_Text[cou_Index]);
+            //std::cout << "\n\t\t p_Command_Text[" << cou_Index << "]->" << int (p_Command_Text[cou_Index]);
 
             if (cou_Index == (p_Command_Text.size() - 1) && p_Tokens->get_Set_State_For_Given_Cell_In_Current_Row(0)) { p_Tokens->pop_Cell_In_Current_Row(); p_Tokens->push_Data_Bit_Into_Current_Cell_On_Current_Row_I(0); }
 
@@ -365,32 +365,32 @@ public:
         //Temp for current var type.
         int tmp_Var_Type = 0;
 
-        //Temps string for the variable name.
-        string tmp_Var_Name = "";
+        //Temps std::string for the variable name.
+        std::string tmp_Var_Name = "";
 
         //Stores the temporary data. 
-        string tmp_Var_Data = "";
+        std::string tmp_Var_Data = "";
 
         //Loop through the tokens querying the lookup tree for the values. If no variable yet exists with that name then it is added to the table and a null value returned. The undefined error is thrown.
         for (int cou_Index = 0; cou_Index < p_Tokens->get_Row_Count(); cou_Index++)
         {
-            //cout << "\n\t p_Tokens->get_Data_Bit_At_Given_Index_In_Given_Cell_In_Given_Row_I(cou_Index, 1, 0)->" << p_Tokens->get_Data_Bit_At_Given_Index_In_Given_Cell_In_Given_Row_I(cou_Index, 1, 0); 
+            //std::cout << "\n\t p_Tokens->get_Data_Bit_At_Given_Index_In_Given_Cell_In_Given_Row_I(cou_Index, 1, 0)->" << p_Tokens->get_Data_Bit_At_Given_Index_In_Given_Cell_In_Given_Row_I(cou_Index, 1, 0); 
 
-            //cout << "\n\n\n\tconvert_Variables_To_Values();";
+            //std::cout << "\n\n\n\tconvert_Variables_To_Values();";
             //p_Tokens->output_Table();
 
             if (p_Tokens->get_Data_Bit_At_Given_Index_In_Given_Cell_In_Given_Row_I(cou_Index, 1, 0) == 1)
             {
-                //cout << "\n\n\t Variable Detected, Token Number " << cou_Index << "...";
+                //std::cout << "\n\n\t Variable Detected, Token Number " << cou_Index << "...";
                 //Get the variable name.
                 p_Tokens->get_Data_Chunk_From_Given_Cell_In_Given_Row_Passed_S(cou_Index, 0, &tmp_Var_Name);
 
-                //cout << "\n\t Variable Name->" << tmp_Var_Name;
+                //std::cout << "\n\t Variable Name->" << tmp_Var_Name;
 
                 //Google it.
                 tmp_Var_Type = Var_Lookup_Tree.get_Var_Type(tmp_Var_Name);
 
-                //cout << "\n\t Variable Type->" << tmp_Var_Type;
+                //std::cout << "\n\t Variable Type->" << tmp_Var_Type;
 
 
                 //Replace the variable with the data found.
@@ -400,9 +400,9 @@ public:
                 //if (tmp_Var_Type == 3){ p_Tokens->set_Data_Bit_For_Given_Cell_In_Given_Row_NR(cou_Index, 0, Var_Lookup_Tree.get_reference(tmp_Var_Name)); }
                 if (tmp_Var_Type == 4) { tmp_Var_Data = bool2str(Var_Lookup_Tree.get_bool(tmp_Var_Name)); }
 
-                //cout << "\n\t Variable Data->" << tmp_Var_Data; 
+                //std::cout << "\n\t Variable Data->" << tmp_Var_Data; 
 
-                //cout << "\n\t Setting Cell[0] in Row[" << cou_Index << "] to Data->" << tmp_Var_Data;
+                //std::cout << "\n\t Setting Cell[0] in Row[" << cou_Index << "] to Data->" << tmp_Var_Data;
                 p_Tokens->set_Data_Chunk_For_Given_Cell_In_Given_Row_S(cou_Index, 0, tmp_Var_Data);
             }
         }
@@ -410,11 +410,11 @@ public:
     }
 
     //Checks a token to determine if it is a command or callback. If so it is evaluated and the value returned.
-    string test_Command_Token(string p_Token, int* p_EIP, c_Lookup_Tree* p_Labels, c_Table_1D* p_Tokens)
+    std::string test_Command_Token(std::string p_Token, int* p_EIP, c_Lookup_Tree* p_Labels, c_Table_1D* p_Tokens)
     {
-        string tmp_Token = "";
+        std::string tmp_Token = "";
 
-        //If the first character is a tilde then extract the rest of the string and evaluate_Command_Text(), returning the returned value, otherwise return the token.
+        //If the first character is a tilde then extract the rest of the std::string and evaluate_Command_Text(), returning the returned value, otherwise return the token.
         if (p_Token[0] == '~')
         {
             //Gather the token.
@@ -432,16 +432,16 @@ public:
     }
 
     //Evaluates the tokens in the token table.
-    string eval_Tokens(int* p_EIP, c_Lookup_Tree* p_Labels, c_Table_1D* p_Tokens)
+    std::string eval_Tokens(int* p_EIP, c_Lookup_Tree* p_Labels, c_Table_1D* p_Tokens)
     {
-        //The temporary string for the token being evaluated.
-        string tmp_Token[100];
+        //The temporary std::string for the token being evaluated.
+        std::string tmp_Token[100];
 
         //Debug
-        //cout << "\n\n\n\t eval_Tokens()";
+        //std::cout << "\n\n\n\t eval_Tokens()";
         //p_Tokens->output_Table();
 
-        //Get the current token in string format.
+        //Get the current token in std::string format.
         p_Tokens->get_Data_Chunk_From_Given_Cell_In_Given_Row_Passed_S(0, 0, &tmp_Token[0]);
 
 
@@ -483,7 +483,7 @@ public:
     }
 
     //Separates the tokens.
-    string CMD_Separate_Tokens(int* p_EIP, c_Lookup_Tree* p_Labels, c_Table_1D* p_Tokens, string* p_Tmp_Tokens)
+    std::string CMD_Separate_Tokens(int* p_EIP, c_Lookup_Tree* p_Labels, c_Table_1D* p_Tokens, std::string* p_Tmp_Tokens)
     {
         //Gather all the tokens up to the limit of 10.
         for (int cou_Index = 0; cou_Index < p_Tokens->get_Row_Count(); cou_Index++)
@@ -491,7 +491,7 @@ public:
             if (cou_Index >= 100) { break; }
             p_Tokens->get_Data_Chunk_From_Given_Cell_In_Given_Row_Passed_S(cou_Index, 0, &(p_Tmp_Tokens[cou_Index]));
             p_Tmp_Tokens[cou_Index] = test_Command_Token(p_Tmp_Tokens[cou_Index], p_EIP, p_Labels, p_Tokens);
-            //cout << "\n\t p_Tmp_Tokens[" << cou_Index << "]->" << p_Tmp_Tokens[cou_Index];
+            //std::cout << "\n\t p_Tmp_Tokens[" << cou_Index << "]->" << p_Tmp_Tokens[cou_Index];
         }
         return "CMD_Separate_Tokens";
     }
@@ -499,13 +499,13 @@ public:
     //--     CMD FUNCTIONS
 
 
-    string CMD_echo(int* p_EIP, c_Lookup_Tree* p_Labels, c_Table_1D* p_Tokens)
+    std::string CMD_echo(int* p_EIP, c_Lookup_Tree* p_Labels, c_Table_1D* p_Tokens)
     {
-        string tmp_echo_Token;
+        std::string tmp_echo_Token;
 
         //p_Tokens->output_Table();
 
-        cout << "\n\t\t ->";
+        std::cout << "\n\t\t ->";
         for (int cou_Index = 1; cou_Index < p_Tokens->get_Row_Count(); cou_Index++)
         {
             p_Tokens->get_Data_Chunk_From_Given_Cell_In_Given_Row_Passed_S(cou_Index, 0, &tmp_echo_Token);
@@ -513,17 +513,17 @@ public:
             //Checks for command tokens.
             tmp_echo_Token = test_Command_Token(tmp_echo_Token, p_EIP, p_Labels, p_Tokens);
 
-            cout << tmp_echo_Token << " ";
+            std::cout << tmp_echo_Token << " ";
         }
         return "1";
     }
 
 
-    //cin Var_Name / = 
+    //std::cin Var_Name / = 
     // 0     1     2 3
-    string CMD_cin(int* p_EIP, c_Lookup_Tree* p_Labels, c_Table_1D* p_Tokens)
+    std::string CMD_cin(int* p_EIP, c_Lookup_Tree* p_Labels, c_Table_1D* p_Tokens)
     {
-        string tmp_Token[10];
+        std::string tmp_Token[10];
 
         p_Tokens->get_Data_Chunk_From_Given_Cell_In_Given_Row_Passed_S(1, 0, &tmp_Token[1]);
         tmp_Token[1] = test_Command_Token(tmp_Token[1], p_EIP, p_Labels, p_Tokens);
@@ -537,11 +537,11 @@ public:
         p_Tokens->get_Data_Chunk_From_Given_Cell_In_Given_Row_Passed_S(4, 0, &tmp_Token[4]);
         tmp_Token[4] = test_Command_Token(tmp_Token[4], p_EIP, p_Labels, p_Tokens);
 
-        cout << "\n\n\t" << tmp_Token[4];
-        string tmp_Input = "";
-        getline(cin, tmp_Input);
+        std::cout << "\n\n\t" << tmp_Token[4];
+        std::string tmp_Input = "";
+        getline(std::cin, tmp_Input);
 
-        //cout << "\n\n\t tmp_Token[2]->" << tmp_Token[2] << "  tmp_Token[3]->" << tmp_Token[3] << "  tmp_Token[4]->" << tmp_Token[4];
+        //std::cout << "\n\n\t tmp_Token[2]->" << tmp_Token[2] << "  tmp_Token[3]->" << tmp_Token[3] << "  tmp_Token[4]->" << tmp_Token[4];
 
         //Simple assignment.
         if (tmp_Token[1] == "/s") { if (tmp_Token[3] == "=") { Var_Lookup_Tree.set_string(tmp_Token[2], tmp_Input); } }
@@ -568,18 +568,18 @@ public:
 
         //References will be treated as integers.
         //if (tmp_Token[1] == "/r"){ Var_Lookup_Tree.set_reference(tmp_Token[1], tmp_Token[3]);
-        //cout << "\n\n\n\t ";
+        //std::cout << "\n\n\n\t ";
         //Var_Lookup_Tree.output_Current_Node();
         return "1";
     }
 
 
-    string CMD_set(int* p_EIP, c_Lookup_Tree* p_Labels, c_Table_1D* p_Tokens)
+    std::string CMD_set(int* p_EIP, c_Lookup_Tree* p_Labels, c_Table_1D* p_Tokens)
     {
-        string tmp_Token[100];
+        std::string tmp_Token[100];
         CMD_Separate_Tokens(p_EIP, p_Labels, p_Tokens, tmp_Token);
 
-        //cout << "\n\n\t tmp_Token[2]->" << tmp_Token[2] << "  tmp_Token[3]->" << tmp_Token[3] << "  tmp_Token[4]->" << tmp_Token[4];
+        //std::cout << "\n\n\t tmp_Token[2]->" << tmp_Token[2] << "  tmp_Token[3]->" << tmp_Token[3] << "  tmp_Token[4]->" << tmp_Token[4];
 
         //Simple assignment.
         if (tmp_Token[1] == "/s") { if (tmp_Token[3] == "=") { Var_Lookup_Tree.set_string(tmp_Token[2], tmp_Token[4]); } }
@@ -610,22 +610,22 @@ public:
 
         //References will be treated as integers.
         //if (tmp_Token[1] == "/r"){ Var_Lookup_Tree.set_reference(tmp_Token[1], tmp_Token[3]);
-        //cout << "\n\n\n\t ";
+        //std::cout << "\n\n\n\t ";
         //Var_Lookup_Tree.output_Current_Node();
         return "1";
     }
 
     //The good ol 'if' command. Essential to almost all algorithms.
-    string CMD_if(int* p_EIP, c_Lookup_Tree* p_Labels, c_Table_1D* p_Tokens)
+    std::string CMD_if(int* p_EIP, c_Lookup_Tree* p_Labels, c_Table_1D* p_Tokens)
     {
 
         //The result of the comparision being performed.
         bool flg_Result = false;
 
-        //The temporary command string to submit for eval.
-        string tmp_Command_Text = "";
+        //The temporary command std::string to submit for eval.
+        std::string tmp_Command_Text = "";
 
-        string tmp_Token[100];
+        std::string tmp_Token[100];
 
         //Gather all the tokens up to the limit of 10.
         for (int cou_Index = 0; cou_Index < p_Tokens->get_Row_Count(); cou_Index++)
@@ -633,7 +633,7 @@ public:
             if (cou_Index >= 100) { break; }
             p_Tokens->get_Data_Chunk_From_Given_Cell_In_Given_Row_Passed_S(cou_Index, 0, &tmp_Token[cou_Index]);
             tmp_Token[cou_Index] = test_Command_Token(tmp_Token[cou_Index], p_EIP, p_Labels, p_Tokens);
-            //cout << "\n\t tmp_Token[" << cou_Index << "]->" << tmp_Token[cou_Index];
+            //std::cout << "\n\t tmp_Token[" << cou_Index << "]->" << tmp_Token[cou_Index];
         }
 
         //if TYPE ( F1 Op F2 ) EVAL
@@ -681,9 +681,9 @@ public:
             if (tmp_Token[4] == "<") { flg_Result = (tmp_bool[0] < tmp_bool[1]); }
         }
 
-        cout << "\n\n\t\t (" << tmp_Token[3] << " " << tmp_Token[4] << " " << tmp_Token[5] << ") " << flg_Result;
+        std::cout << "\n\n\t\t (" << tmp_Token[3] << " " << tmp_Token[4] << " " << tmp_Token[5] << ") " << flg_Result;
 
-        //If true then format the remaining tokens into a string and evaluate them.
+        //If true then format the remaining tokens into a std::string and evaluate them.
         if (flg_Result)
         {
             for (int cou_Index = 7; cou_Index < p_Tokens->get_Row_Count(); cou_Index++)
@@ -702,9 +702,9 @@ public:
     }
 
 
-    string CMD_table(int* p_EIP, c_Lookup_Tree* p_Labels, c_Table_1D* p_Tokens)
+    std::string CMD_table(int* p_EIP, c_Lookup_Tree* p_Labels, c_Table_1D* p_Tokens)
     {
-        string tmp_Token[100];
+        std::string tmp_Token[100];
 
         //Gather all the tokens up to the limit of 10.
         for (int cou_Index = 0; cou_Index < p_Tokens->get_Row_Count(); cou_Index++)
@@ -712,7 +712,7 @@ public:
             if (cou_Index >= 100) { break; }
             p_Tokens->get_Data_Chunk_From_Given_Cell_In_Given_Row_Passed_S(cou_Index, 0, &tmp_Token[cou_Index]);
             tmp_Token[cou_Index] = test_Command_Token(tmp_Token[cou_Index], p_EIP, p_Labels, p_Tokens);
-            //cout << "\n\t tmp_Token[" << cou_Index << "]->" << tmp_Token[cou_Index];
+            //std::cout << "\n\t tmp_Token[" << cou_Index << "]->" << tmp_Token[cou_Index];
         }
 
         //Do the right thing.
@@ -725,7 +725,7 @@ public:
         //Sets a given rows cell to the given data.
         //set_X( Table_ID, Row, Cell, Data)
         //Simple assignment.
-        string tmp_String = "";
+        std::string tmp_String = "";
         if (tmp_Token[1] == "set_string")
         {
             tmp_String = tmp_Token[5];
@@ -806,7 +806,7 @@ public:
         //table-0 copy-1 from_Tbl-2 from_Row-3 from_Cell-4 To_Tbl-5 To_Row-6 To_Cell-7
         if (tmp_Token[1] == "copy_cell")
         {
-            if (p_Tokens->get_Row_Count() < 7) { cout << "\n\n\n\t SYN_ERR_TABLE_COPY: #tokens = " << p_Tokens->get_Row_Count(); return "SYN_ERR_TABLE_COPY"; }
+            if (p_Tokens->get_Row_Count() < 7) { std::cout << "\n\n\n\t SYN_ERR_TABLE_COPY: #tokens = " << p_Tokens->get_Row_Count(); return "SYN_ERR_TABLE_COPY"; }
 
             //Holds the cell to help with reading the code.
             void* tmp_Cell = Tables->get_Table_Cell_Reference(tmp_Token[2], str2int(tmp_Token[3]), str2int(tmp_Token[4]));
@@ -816,7 +816,7 @@ public:
         }
         if (tmp_Token[1] == "bcopy_cell")
         {
-            if (p_Tokens->get_Row_Count() < 7) { cout << "\n\n\n\t SYN_ERR_TABLE_COPY: #tokens = " << p_Tokens->get_Row_Count(); return "SYN_ERR_TABLE_COPY"; }
+            if (p_Tokens->get_Row_Count() < 7) { std::cout << "\n\n\n\t SYN_ERR_TABLE_COPY: #tokens = " << p_Tokens->get_Row_Count(); return "SYN_ERR_TABLE_COPY"; }
 
             //Holds the cell to help with reading the code.
             void* tmp_Cell = Tables->get_Table_Cell_Reference(str2int(tmp_Token[2]), str2int(tmp_Token[3]), str2int(tmp_Token[4]));
@@ -829,7 +829,7 @@ public:
         //  0       1        2          3      4        5
         if (tmp_Token[1] == "copy_row")
         {
-            if (p_Tokens->get_Row_Count() < 5) { cout << "\n\n\n\t SYN_ERR_TABLE_COPY: #tokens = " << p_Tokens->get_Row_Count(); return "SYN_ERR_TABLE_COPY"; }
+            if (p_Tokens->get_Row_Count() < 5) { std::cout << "\n\n\n\t SYN_ERR_TABLE_COPY: #tokens = " << p_Tokens->get_Row_Count(); return "SYN_ERR_TABLE_COPY"; }
 
             //Holds the row to help with reading the code.
             void* tmp_Row = Tables->get_Table_Row_Reference(tmp_Token[2], str2int(tmp_Token[3]));
@@ -839,7 +839,7 @@ public:
         }
         if (tmp_Token[1] == "bcopy_row")
         {
-            if (p_Tokens->get_Row_Count() < 5) { cout << "\n\n\n\t SYN_ERR_TABLE_COPY: #tokens = " << p_Tokens->get_Row_Count(); return "SYN_ERR_TABLE_COPY"; }
+            if (p_Tokens->get_Row_Count() < 5) { std::cout << "\n\n\n\t SYN_ERR_TABLE_COPY: #tokens = " << p_Tokens->get_Row_Count(); return "SYN_ERR_TABLE_COPY"; }
 
             //Holds the row to help with reading the code.
             void* tmp_Row = Tables->get_Table_Row_Reference(str2int(tmp_Token[2]), str2int(tmp_Token[3]));
@@ -877,7 +877,7 @@ public:
             void* tmp_Current_Row = NULL;
 
             //From table.
-            string tmp_From_Table = tmp_Token[2];
+            std::string tmp_From_Table = tmp_Token[2];
 
             //Starting index to copy from.
             int tmp_Starting_Copy_Index = str2int(tmp_Token[3]);
@@ -886,7 +886,7 @@ public:
             int tmp_Ending_Copy_Index = str2int(tmp_Token[4]);
 
             //To Table
-            string tmp_To_Table = tmp_Token[5];
+            std::string tmp_To_Table = tmp_Token[5];
 
             //Offset.
             int tmp_To_Offset = str2int(tmp_Token[6]);
@@ -940,13 +940,13 @@ public:
         {
 
             //From table.
-            string tmp_From_Table = tmp_Token[2];
+            std::string tmp_From_Table = tmp_Token[2];
 
             //Starting index to copy from.
             int tmp_Row_To_Translate = str2int(tmp_Token[3]);
 
             //To Table
-            string tmp_To_Table = tmp_Token[4];
+            std::string tmp_To_Table = tmp_Token[4];
 
             //Offset.
             int tmp_To_Offset = str2int(tmp_Token[5]);
@@ -959,7 +959,7 @@ public:
             {
                 //Holds the current cell in the row.
                 tmp_Cell = Tables->get_Table_Cell_Reference(tmp_From_Table, tmp_Row_To_Translate, cou_Index);
-                //cout << "\n\n\t Current_Cell->";
+                //std::cout << "\n\n\t Current_Cell->";
 
                 Tables->copy(tmp_To_Table, (cou_Index + tmp_To_Offset), 0, tmp_Cell);
             }
@@ -988,7 +988,7 @@ public:
             {
                 //Holds the current cell in the row.
                 tmp_Cell = Tables->get_Table_Cell_Reference(tmp_From_Table, tmp_Row_To_Translate, cou_Index);
-                //cout << "\n\n\t Current_Cell->";
+                //std::cout << "\n\n\t Current_Cell->";
 
                 Tables->copy(tmp_To_Table, (cou_Index + tmp_To_Offset), 0, tmp_Cell);
             }
@@ -1000,7 +1000,7 @@ public:
         {
 
             //From table.
-            string tmp_Table = tmp_Token[2];
+            std::string tmp_Table = tmp_Token[2];
 
             //Starting index to copy from.
             int tmp_Column_To_Shift = str2int(tmp_Token[3]);
@@ -1027,7 +1027,7 @@ public:
                 //Holds the current cell in the row.
                 tmp_Cell = Tables->get_Table_Cell_Reference(tmp_Table, cou_Index, tmp_Column_To_Shift);
 
-                //cout << "\n\n\t Current_Cell->";
+                //std::cout << "\n\n\t Current_Cell->";
 
                 Tables->copy(tmp_Table, cou_Index, (tmp_Column_To_Shift + 1), tmp_Cell);
 
@@ -1131,9 +1131,9 @@ public:
 
 
     //creates a new CMD table and registers it with the CMD tables.
-    string CMD_New(int* p_EIP, c_Lookup_Tree* p_Labels, c_Table_1D* p_Tokens)
+    std::string CMD_New(int* p_EIP, c_Lookup_Tree* p_Labels, c_Table_1D* p_Tokens)
     {
-        string tmp_Token[100];
+        std::string tmp_Token[100];
 
         CMD_Separate_Tokens(p_EIP, p_Labels, p_Tokens, tmp_Token);
 
@@ -1149,12 +1149,12 @@ public:
         return "TABLE_NEW_CMD";
     }
 
-    string CMD_goto(int* p_EIP, c_Lookup_Tree* p_Labels, c_Table_1D* p_Tokens)
+    std::string CMD_goto(int* p_EIP, c_Lookup_Tree* p_Labels, c_Table_1D* p_Tokens)
     {
 
         //if (p_Tokens->get_Row_Count() < 2){ return "ERR_INVALID_TOKEN_COUNT->CMD_goto"; }
 
-        string tmp_Label = "";
+        std::string tmp_Label = "";
 
         //Check for callbacks.
         tmp_Label = test_Command_Token(tmp_Label, p_EIP, p_Labels, p_Tokens);
@@ -1173,10 +1173,10 @@ public:
         return "1";
     }
 
-    string CMD_eval(int* p_EIP, c_Lookup_Tree* p_Labels, c_Table_1D* p_Tokens)
+    std::string CMD_eval(int* p_EIP, c_Lookup_Tree* p_Labels, c_Table_1D* p_Tokens)
     {
 
-        string tmp_Table = "";
+        std::string tmp_Table = "";
 
         p_Tokens->get_Data_Chunk_From_Given_Cell_In_Given_Row_Passed_S(1, 0, &tmp_Table);
 
@@ -1192,11 +1192,11 @@ public:
         return "1";
     }
 
-    string CMD_beval(int* p_EIP, c_Lookup_Tree* p_Labels, c_Table_1D* p_Tokens)
+    std::string CMD_beval(int* p_EIP, c_Lookup_Tree* p_Labels, c_Table_1D* p_Tokens)
     {
         if (p_Tokens->get_Row_Count() < 2) { return "0"; }
 
-        string tmp_Table = "";
+        std::string tmp_Table = "";
 
         p_Tokens->get_Data_Chunk_From_Given_Cell_In_Given_Row_Passed_S(1, 0, &tmp_Table);
 
@@ -1209,10 +1209,10 @@ public:
     }
 
     //Handles all the outputs.
-    string CMD_output(int* p_EIP, c_Lookup_Tree* p_Labels, c_Table_1D* p_Tokens)
+    std::string CMD_output(int* p_EIP, c_Lookup_Tree* p_Labels, c_Table_1D* p_Tokens)
     {
         //The temporary tokens to use.
-        string tmp_Token[100];
+        std::string tmp_Token[100];
 
         //Gather all the tokens up to the limit of 10.
         for (int cou_Index = 0; cou_Index < p_Tokens->get_Row_Count(); cou_Index++)
@@ -1222,7 +1222,7 @@ public:
 
             //Callback checking.
             tmp_Token[cou_Index] = test_Command_Token(tmp_Token[cou_Index], p_EIP, p_Labels, p_Tokens);
-            //cout << "\n\t tmp_Token[" << cou_Index << "]->" << tmp_Token[cou_Index];
+            //std::cout << "\n\t tmp_Token[" << cou_Index << "]->" << tmp_Token[cou_Index];
         }
 
         //Find the appropriate output and do it.
@@ -1308,9 +1308,9 @@ public:
     //==--      LOADING FUNCTION FOR COMMAND SCRIPTS
     //Loads a command script.
     //It reads each line of the script into a CMD_Table labeled the same as the file.
-    string CMD_load_script(int* p_EIP, c_Lookup_Tree* p_Labels, c_Table_1D* p_Tokens)
+    std::string CMD_load_script(int* p_EIP, c_Lookup_Tree* p_Labels, c_Table_1D* p_Tokens)
     {
-        string tmp_Token[100];
+        std::string tmp_Token[100];
 
         //Gather all the tokens up to the limit of 10.
         for (int cou_Index = 0; cou_Index < p_Tokens->get_Row_Count(); cou_Index++)
@@ -1318,33 +1318,33 @@ public:
             if (cou_Index >= 100) { break; }
             p_Tokens->get_Data_Chunk_From_Given_Cell_In_Given_Row_Passed_S(cou_Index, 0, &tmp_Token[cou_Index]);
             tmp_Token[cou_Index] = test_Command_Token(tmp_Token[cou_Index], p_EIP, p_Labels, p_Tokens);
-            //cout << "\n\t tmp_Token[" << cou_Index << "]->" << tmp_Token[cou_Index];
+            //std::cout << "\n\t tmp_Token[" << cou_Index << "]->" << tmp_Token[cou_Index];
         }
 
         //The temporary filename.
-        string tmp_DIR = tmp_Token[1] + "/";
-        string tmp_File = tmp_Token[2] + ".ntxs";
+        std::string tmp_DIR = tmp_Token[1] + "/";
+        std::string tmp_File = tmp_Token[2] + ".ntxs";
 
         return CMD_load_script(tmp_DIR, tmp_File);
     }
 
-    string CMD_load_script(string p_Dir, string p_File)
+    std::string CMD_load_script(std::string p_Dir, std::string p_File)
     {
         p_File += ".ntxs";
-        cout << "\n CMD_load_script(" << p_Dir << ", " << p_File << ")";
+        std::cout << "\n CMD_load_script(" << p_Dir << ", " << p_File << ")";
 
         //The stream for reading in the file.
-        ifstream Script_File;
+        std::ifstream Script_File;
 
         //The current line.
-        string Command_Text = "";
+        std::string Command_Text = "";
 
-        string tmp_Path = p_Dir + p_File;
+        std::string tmp_Path = p_Dir + p_File;
 
         Script_File.open(tmp_Path.c_str());
 
-        //This string is to extract the filename only for the table.
-        string tmp_Table_Name = "";
+        //This std::string is to extract the filename only for the table.
+        std::string tmp_Table_Name = "";
         int tmp_Table_Name_Offset = 0;
 
         if (Script_File.is_open())
@@ -1375,7 +1375,7 @@ public:
             while (!Script_File.eof())
             {
                 getline(Script_File, Command_Text);
-                cout << Command_Text << endl;
+                std::cout << Command_Text << std::endl;
                 if (Command_Text.size())
                 {
                     tmp_Table->push_Data_Set_S(Command_Text);
@@ -1384,15 +1384,15 @@ public:
         }
         Script_File.close();
 
-        //cout << "\n\n\t Done Loading scriptfile(" << p_File << ") into Table->" << tmp_Table_Name;
+        //std::cout << "\n\n\t Done Loading scriptfile(" << p_File << ") into Table->" << tmp_Table_Name;
         return "Done";
     }
 
     //Reloads a command script.
     //It reads each line of the script into a CMD_Table labeled the same as the file.
-    string CMD_reload_script(int* p_EIP, c_Lookup_Tree* p_Labels, c_Table_1D* p_Tokens)
+    std::string CMD_reload_script(int* p_EIP, c_Lookup_Tree* p_Labels, c_Table_1D* p_Tokens)
     {
-        string tmp_Token[100];
+        std::string tmp_Token[100];
 
         //Gather all the tokens up to the limit of 10.
         for (int cou_Index = 0; cou_Index < p_Tokens->get_Row_Count(); cou_Index++)
@@ -1400,33 +1400,33 @@ public:
             if (cou_Index >= 100) { break; }
             p_Tokens->get_Data_Chunk_From_Given_Cell_In_Given_Row_Passed_S(cou_Index, 0, &tmp_Token[cou_Index]);
             tmp_Token[cou_Index] = test_Command_Token(tmp_Token[cou_Index], p_EIP, p_Labels, p_Tokens);
-            //cout << "\n\t tmp_Token[" << cou_Index << "]->" << tmp_Token[cou_Index];
+            //std::cout << "\n\t tmp_Token[" << cou_Index << "]->" << tmp_Token[cou_Index];
         }
 
         //The temporary filename.
-        //string tmp_DIR = tmp_Token[1] + "/";
-        string tmp_File = tmp_Token[1];
+        //std::string tmp_DIR = tmp_Token[1] + "/";
+        std::string tmp_File = tmp_Token[1];
 
         return CMD_reload_script(tmp_File);
     }
 
-    string CMD_reload_script(string p_File)
+    std::string CMD_reload_script(std::string p_File)
     {
         p_File += ".ntxs";
-        cout << "\n CMD_load_script(" << Sandbox.DIR << p_File << ")";
+        std::cout << "\n CMD_load_script(" << Sandbox.DIR << p_File << ")";
 
         //The stream for reading in the file.
-        ifstream Script_File;
+        std::ifstream Script_File;
 
         //The current line.
-        string Command_Text = "";
+        std::string Command_Text = "";
 
-        string tmp_Path = Sandbox.DIR + p_File;
+        std::string tmp_Path = Sandbox.DIR + p_File;
 
         Script_File.open(tmp_Path.c_str());
 
-        //This string is to extract the filename only for the table.
-        string tmp_Table_Name = "";
+        //This std::string is to extract the filename only for the table.
+        std::string tmp_Table_Name = "";
         int tmp_Table_Name_Offset = 0;
 
         if (Script_File.is_open())
@@ -1456,7 +1456,7 @@ public:
             while (!Script_File.eof())
             {
                 getline(Script_File, Command_Text);
-                cout << Command_Text << endl;
+                std::cout << Command_Text << std::endl;
                 if (Command_Text.size())
                 {
                     tmp_Table_Ref->push_Data_Set_S(Command_Text);
@@ -1465,25 +1465,25 @@ public:
         }
         Script_File.close();
 
-        //cout << "\n\n\t Done Loading scriptfile(" << p_File << ") into Table->" << tmp_Table_Name;
+        //std::cout << "\n\n\t Done Loading scriptfile(" << p_File << ") into Table->" << tmp_Table_Name;
         return "Done";
     }
 
     //This saves the command table, it is standalone so that a function can be made to save all tables in a single folder.
-    string CMD_save_script(string p_DIR, string p_Table)
+    std::string CMD_save_script(std::string p_DIR, std::string p_Table)
     {
 
         c_Table_1D* tmp_Table_Ref = (c_Table_1D*)Tables->get_Table_Reference(p_Table);
 
         if (tmp_Table_Ref == NULL) { return "0"; }
 
-        string tmp_DIR = "md \"" + p_DIR + "\"";
+        std::string tmp_DIR = "md \"" + p_DIR + "\"";
 
-        cout << "\n Making Dir: " << tmp_DIR;
+        std::cout << "\n Making Dir: " << tmp_DIR;
 
         system(tmp_DIR.c_str());
 
-        ofstream tmp_SF;
+        std::ofstream tmp_SF;
 
 
         //eval_Command_Table((c_Table_1D*) tmp_Table_Ref);
@@ -1492,14 +1492,14 @@ public:
         int EIP = 0;
 
         //The current command string.
-        string CMD_Line = "";
+        std::string CMD_Line = "";
 
-        string tmp_FName = p_DIR + tmp_Table_Ref->get_Table_Name() + ".ntxs";
-        //string tmp_FName = p_DIR + "/" + tmp_Table_Ref->get_Table_Name() + ".ntxs";
-        cout << "\n saving file " << tmp_FName;
-        tmp_SF.open(tmp_FName, ios::trunc);
+        std::string tmp_FName = p_DIR + tmp_Table_Ref->get_Table_Name() + ".ntxs";
+        //std::string tmp_FName = p_DIR + "/" + tmp_Table_Ref->get_Table_Name() + ".ntxs";
+        std::cout << "\n saving file " << tmp_FName;
+        tmp_SF.open(tmp_FName, std::ios::trunc);
 
-        if (!tmp_SF.is_open()) { ostr(0, 12, "\n\n ERROR FAILE SAVING FILE "); cout << tmp_FName; }
+        if (!tmp_SF.is_open()) { ostr(0, 12, "\n\n ERROR FAILE SAVING FILE "); std::cout << tmp_FName; }
 
         //Loop through each line in the command table evaluating them as it goes.
         for (EIP = 0; EIP < tmp_Table_Ref->get_Row_Count(); EIP++)
@@ -1509,7 +1509,7 @@ public:
             tmp_Table_Ref->get_Data_Chunk_From_Given_Cell_In_Given_Row_Passed_S(EIP, 0, &CMD_Line);
             //eval_Command_String(CMD_Line, &EIP, &Labels);
             if (EIP) { tmp_SF << "\n"; }
-            cout << "\n CMD_Line: \"" << CMD_Line << "\" " << (CMD_Line != " ");
+            std::cout << "\n CMD_Line: \"" << CMD_Line << "\" " << (CMD_Line != " ");
             if ((EIP != 0) && (CMD_Line != " ")) { tmp_SF << CMD_Line; }
 
         }
@@ -1521,9 +1521,9 @@ public:
 
     //This function saves a command table.
     //It reads each line of the script into a CMD_Table labeled the same as the file.
-    string CMD_save_script(int* p_EIP, c_Lookup_Tree* p_Labels, c_Table_1D* p_Tokens)
+    std::string CMD_save_script(int* p_EIP, c_Lookup_Tree* p_Labels, c_Table_1D* p_Tokens)
     {
-        string tmp_Token[100];
+        std::string tmp_Token[100];
 
         //Gather all the tokens up to the limit of 10.
         for (int cou_Index = 0; cou_Index < p_Tokens->get_Row_Count(); cou_Index++)
@@ -1531,13 +1531,13 @@ public:
             if (cou_Index >= 100) { break; }
             p_Tokens->get_Data_Chunk_From_Given_Cell_In_Given_Row_Passed_S(cou_Index, 0, &tmp_Token[cou_Index]);
             tmp_Token[cou_Index] = test_Command_Token(tmp_Token[cou_Index], p_EIP, p_Labels, p_Tokens);
-            //cout << "\n\t tmp_Token[" << cou_Index << "]->" << tmp_Token[cou_Index];
+            //std::cout << "\n\t tmp_Token[" << cou_Index << "]->" << tmp_Token[cou_Index];
         }
 
-        string tmp_DIRName = tmp_Token[1];
+        std::string tmp_DIRName = tmp_Token[1];
 
 
-        string tmp_Table = tmp_Token[2];
+        std::string tmp_Table = tmp_Token[2];
 
         //Callback checking.
         tmp_Table = test_Command_Token(tmp_Table, p_EIP, p_Labels, p_Tokens);
@@ -1549,10 +1549,10 @@ public:
 
     //Saves all of the scripts in the script registry under a single title.
     //The exception is the autoexec file.
-    string save_Realm(int* p_EIP, c_Lookup_Tree* p_Labels, c_Table_1D* p_Tokens)
+    std::string save_Realm(int* p_EIP, c_Lookup_Tree* p_Labels, c_Table_1D* p_Tokens)
     {
 
-        string tmp_Token[100];
+        std::string tmp_Token[100];
         c_Table_1D* tmp_Scripts = ((c_Table_1D*)(Tables->get_Table_Reference(0)));
 
         //Gather all the tokens up to the limit of 10.
@@ -1561,7 +1561,7 @@ public:
             if (cou_Index >= 100) { break; }
             p_Tokens->get_Data_Chunk_From_Given_Cell_In_Given_Row_Passed_S(cou_Index, 0, &tmp_Token[cou_Index]);
             tmp_Token[cou_Index] = test_Command_Token(tmp_Token[cou_Index], p_EIP, p_Labels, p_Tokens);
-            //cout << "\n\t tmp_Token[" << cou_Index << "]->" << tmp_Token[cou_Index];
+            //std::cout << "\n\t tmp_Token[" << cou_Index << "]->" << tmp_Token[cou_Index];
         }
 
         if (!Sandbox.flg_Initialized)
@@ -1569,14 +1569,14 @@ public:
             Sandbox.create_Sandbox(tmp_Token[1]);
         }
 
-        string tmp_DIR = "NT3.Save/" + tmp_Token[1] + "/";
+        std::string tmp_DIR = "NT3.Save/" + tmp_Token[1] + "/";
 
-        string tmp_MD = "md \"" + tmp_DIR + "\"";
-        cout << "\n system:"; ostr(0, 12, tmp_MD);
+        std::string tmp_MD = "md \"" + tmp_DIR + "\"";
+        std::cout << "\n system:"; ostr(0, 12, tmp_MD);
         system(tmp_MD.c_str());
 
         Sandbox.Save(tmp_Token[1]);
-        cout << "\n\n\n CMD_Script_Registry->get_Row_Count() ->" << tmp_Scripts->get_Row_Count();
+        std::cout << "\n\n\n CMD_Script_Registry->get_Row_Count() ->" << tmp_Scripts->get_Row_Count();
 
         //Save the registry table to refer to when loading.
         CMD_save_script(tmp_DIR, tmp_Scripts->get_Table_Name());
@@ -1584,7 +1584,7 @@ public:
         //We start on 4 because tables 0-3 are system tables.
         for (int cou_Index = 4; cou_Index < Tables->get_Table_Count(); cou_Index++)
         {
-            cout << "\n " << tmp_DIR << " " << Tables->get_Table_Name(cou_Index);
+            std::cout << "\n " << tmp_DIR << " " << Tables->get_Table_Name(cou_Index);
             CMD_save_script(tmp_DIR, Tables->get_Table_Name(cou_Index));
         }
 
@@ -1594,11 +1594,11 @@ public:
 
     //This function saves a command table.
     //It reads each line of the script into a CMD_Table labeled the same as the file.
-    string load_Realm(int* p_EIP, c_Lookup_Tree* p_Labels, c_Table_1D* p_Tokens)
+    std::string load_Realm(int* p_EIP, c_Lookup_Tree* p_Labels, c_Table_1D* p_Tokens)
     {
-        string tmp_Token[100];
-        ifstream Script_Registry;
-        string tmp_Table_Name;
+        std::string tmp_Token[100];
+        std::ifstream Script_Registry;
+        std::string tmp_Table_Name;
 
         //Gather all the tokens up to the limit of 10.
         for (int cou_Index = 0; cou_Index < p_Tokens->get_Row_Count(); cou_Index++)
@@ -1606,14 +1606,14 @@ public:
             if (cou_Index >= 100) { break; }
             p_Tokens->get_Data_Chunk_From_Given_Cell_In_Given_Row_Passed_S(cou_Index, 0, &tmp_Token[cou_Index]);
             tmp_Token[cou_Index] = test_Command_Token(tmp_Token[cou_Index], p_EIP, p_Labels, p_Tokens);
-            //cout << "\n\t tmp_Token[" << cou_Index << "]->" << tmp_Token[cou_Index];
+            //std::cout << "\n\t tmp_Token[" << cou_Index << "]->" << tmp_Token[cou_Index];
         }
 
-        if (tmp_Token[1] == "list") { cout << "\n\n\nDIR"; system("DIR \"NT3.Save\\\""); return "COMMAND_PARSER->SAVE_COMMAND_DIR_SAVES"; }
+        if (tmp_Token[1] == "list") { std::cout << "\n\n\nDIR"; system("DIR \"NT3.Save\\\""); return "COMMAND_PARSER->SAVE_COMMAND_DIR_SAVES"; }
 
-        string tmp_DIRName = "NT3.Save/" + tmp_Token[1] + "/";
+        std::string tmp_DIRName = "NT3.Save/" + tmp_Token[1] + "/";
 
-        string tmp_SR = tmp_DIRName + "Table_Registry.ntxs";
+        std::string tmp_SR = tmp_DIRName + "Table_Registry.ntxs";
 
         Script_Registry.open(tmp_SR);
 
@@ -1622,15 +1622,15 @@ public:
         {
             tmp_Tracker++;
             getline(Script_Registry, tmp_Table_Name);
-            cout << "\n " << tmp_Table_Name;
-            if (tmp_Tracker < 4) { cout << ": Skipped"; continue; }
+            std::cout << "\n " << tmp_Table_Name;
+            if (tmp_Tracker < 4) { std::cout << ": Skipped"; continue; }
             CMD_load_script(tmp_DIRName, tmp_Table_Name);
         }
         Script_Registry.close();
 
-        string tmp_Realm = tmp_Token[1];
+        std::string tmp_Realm = tmp_Token[1];
 
-        cout << "\n\n";
+        std::cout << "\n\n";
         ostr(0, 12, "\n Loading Sandbox:");
         Sandbox.Load(tmp_Realm);
 
@@ -1638,18 +1638,18 @@ public:
         return "COMMAND_PARSER->SAVE_COMMAND_TABLE_SUCCESS";
     }
 
-    string CMD_operation(int* p_EIP, c_Lookup_Tree* p_Labels, c_Table_1D* p_Tokens)
+    std::string CMD_operation(int* p_EIP, c_Lookup_Tree* p_Labels, c_Table_1D* p_Tokens)
     {
-        string tmp_Token[100];
+        std::string tmp_Token[100];
         bool tmp_Token_Done[100];
 
         p_Tokens->output_Table();
 
         //This flag is set when searching for assignment operators, when nothing is left to evaluate the result is returned.
         int flg_Done = 0;
-        string flg_Datatype = "int";
-        string tmp_Datatype = "int";
-        string tmp_Data = "";
+        std::string flg_Datatype = "int";
+        std::string tmp_Datatype = "int";
+        std::string tmp_Data = "";
         int tmp_Number_Of_Tokens = p_Tokens->get_Row_Count();
         int tmp_Token_Offset = 0;
 
@@ -1679,13 +1679,13 @@ public:
             //Test the datatypes and set to higher type if found.
             tmp_Datatype = CMD_get_datatype(tmp_Token[cou_Index]);
 
-            ////cout << "\n\t\t tmp_Token[" << cou_Index << "]->" << tmp_Token[cou_Index] << " tmp_Data_Type->" << tmp_Datatype;
+            ////std::cout << "\n\t\t tmp_Token[" << cou_Index << "]->" << tmp_Token[cou_Index] << " tmp_Data_Type->" << tmp_Datatype;
 
             if (tmp_Datatype == "string") { flg_Datatype = "string"; }
             if (tmp_Datatype == "float" && flg_Datatype == "int") { flg_Datatype = "float"; }
         }
 
-        ////cout << "\n\n\t DataType->" << flg_Datatype;
+        ////std::cout << "\n\n\t DataType->" << flg_Datatype;
 
         if (flg_Datatype == "string")
         {
@@ -1921,14 +1921,14 @@ public:
         return -1;
     }
 
-    string CMD_get_datatype(int* p_EIP, c_Lookup_Tree* p_Labels, c_Table_1D* p_Tokens)
+    std::string CMD_get_datatype(int* p_EIP, c_Lookup_Tree* p_Labels, c_Table_1D* p_Tokens)
     {
-        string tmp_Data;
+        std::string tmp_Data;
         p_Tokens->get_Data_Chunk_From_Given_Cell_In_Given_Row_Passed_S(1, 0, &tmp_Data);
         return CMD_get_datatype(tmp_Data);
     }
 
-    string CMD_get_datatype(string p_Data)
+    std::string CMD_get_datatype(std::string p_Data)
     {
         // > 57 = char
         // < 48 && !46 = char
@@ -1954,7 +1954,7 @@ public:
 
 
     //Allows for setting an input to a given string.
-    void set_Input_String(int p_Input, string p_Data)
+    void set_Input_String(int p_Input, std::string p_Data)
     {
         Sandbox.set_Input_String(p_Input, p_Data);
     }
@@ -1968,7 +1968,7 @@ public:
     }
 
     //Gets a given outputs data as a string.
-    string get_Output_String(int p_Output)
+    std::string get_Output_String(int p_Output)
     {
         return Sandbox.get_Output_String(p_Output);
     }
@@ -1977,9 +1977,9 @@ public:
     //--      Externally Defined Members      --//
 
 
-    string NT_Sand(int* p_EIP, c_Lookup_Tree* p_Labels, c_Table_1D* p_Tokens);
+    std::string NT_Sand(int* p_EIP, c_Lookup_Tree* p_Labels, c_Table_1D* p_Tokens);
 
-    string NT_Callback(string p_Message);
+    std::string NT_Callback(std::string p_Message);
 };
 
 
@@ -2042,9 +2042,9 @@ public:
 
 
 
-string c_NT3_Command_Parser::NT_Callback(string p_Message)
+std::string c_NT3_Command_Parser::NT_Callback(std::string p_Message)
 {
-    cout << "\n CALLBACK RECEIVED: " << p_Message;
+    std::cout << "\n CALLBACK RECEIVED: " << p_Message;
     return p_Message;
 }
 
@@ -2057,9 +2057,9 @@ string c_NT3_Command_Parser::NT_Callback(string p_Message)
 
 
 //This handles the callbacks for the Sandbox.
-string c_NT3_Command_Parser::NT_Sand(int* p_EIP, c_Lookup_Tree* p_Labels, c_Table_1D* p_Tokens)
+std::string c_NT3_Command_Parser::NT_Sand(int* p_EIP, c_Lookup_Tree* p_Labels, c_Table_1D* p_Tokens)
 {
-    string tmp_Token[100];
+    std::string tmp_Token[100];
     int tmp_Token_Count = 0;
     //Gather all the tokens up to the limit of 10.
     for (int cou_Index = 0; cou_Index < p_Tokens->get_Row_Count(); cou_Index++)
@@ -2067,7 +2067,7 @@ string c_NT3_Command_Parser::NT_Sand(int* p_EIP, c_Lookup_Tree* p_Labels, c_Tabl
         if (cou_Index >= 100) { break; }
         p_Tokens->get_Data_Chunk_From_Given_Cell_In_Given_Row_Passed_S(cou_Index, 0, &tmp_Token[cou_Index]);
         tmp_Token[cou_Index] = test_Command_Token(tmp_Token[cou_Index], p_EIP, p_Labels, p_Tokens);
-        //cout << "\n\t tmp_Token[" << cou_Index << "]->" << tmp_Token[cou_Index];
+        //std::cout << "\n\t tmp_Token[" << cou_Index << "]->" << tmp_Token[cou_Index];
         tmp_Token_Count++;
     }
 
@@ -2108,7 +2108,7 @@ string c_NT3_Command_Parser::NT_Sand(int* p_EIP, c_Lookup_Tree* p_Labels, c_Tabl
             Sandbox.create_Construct(tmp_Token[1], str2int(tmp_Token[2]));
             return "construct_created";
         }
-        cout << "\n   ERROR: Invalid Number of Arguments: create_construct [string:NAME] [int:TYPE]";
+        std::cout << "\n   ERROR: Invalid Number of Arguments: create_construct [string:NAME] [int:TYPE]";
     }
 
     //Creates a new new_Input of the given type.
@@ -2136,14 +2136,14 @@ string c_NT3_Command_Parser::NT_Sand(int* p_EIP, c_Lookup_Tree* p_Labels, c_Tabl
 
     if (tmp_Token[0] == "move_Construct")
     {
-        cout << "\n moving construct ";
+        std::cout << "\n moving construct ";
         if (tmp_Token_Count < 3)
         {
             return "Move:FAIL:NOTENOUGHARGS";
         }
 
         Sandbox.move_Construct(str2int(tmp_Token[1]), str2int(tmp_Token[2]), str2int(tmp_Token[3]));
-        cout << "\n " << tmp_Token[1] << " to (" << tmp_Token[2] << ", " << tmp_Token[3] << ")";
+        std::cout << "\n " << tmp_Token[1] << " to (" << tmp_Token[2] << ", " << tmp_Token[3] << ")";
         return "Move";
     }
 
@@ -2163,14 +2163,14 @@ string c_NT3_Command_Parser::NT_Sand(int* p_EIP, c_Lookup_Tree* p_Labels, c_Tabl
         if (tmp_Token_Count == 2)
         {
             Sandbox.Build(str2int(tmp_Token[1]));
-            //cout << "\n Build(" << tmp_Token[1] << ")";
+            //std::cout << "\n Build(" << tmp_Token[1] << ")";
             return "BUILD";
         }
     }
 
     if (tmp_Token[0] == "eval")
     {
-        //*---cout << "\n Eval()";
+        //*---std::cout << "\n Eval()";
         if (tmp_Token_Count == 1)
         {
             Sandbox.Eval(0);
@@ -2179,20 +2179,20 @@ string c_NT3_Command_Parser::NT_Sand(int* p_EIP, c_Lookup_Tree* p_Labels, c_Tabl
         if (tmp_Token_Count == 2)
         {
             Sandbox.Eval(str2int(tmp_Token[1]));
-            //cout << "\n Eval(" << tmp_Token[1] << ")";
+            //std::cout << "\n Eval(" << tmp_Token[1] << ")";
             return "EVAL";
         }
         if (tmp_Token_Count == 3)
         {
             Sandbox.Eval(str2int(tmp_Token[1]), str2int(tmp_Token[2]));
-            //cout << "\n Eval(" << tmp_Token[1] << ", " << tmp_Token[2] << ")";
+            //std::cout << "\n Eval(" << tmp_Token[1] << ", " << tmp_Token[2] << ")";
             return "EVAL";
         }
     }
 
     if (tmp_Token[0] == "discharge")
     {
-        //*---cout << "\n Discharge()";
+        //*---std::cout << "\n Discharge()";
         if (tmp_Token_Count == 1)
         {
             Sandbox.Discharge(0);
@@ -2201,7 +2201,7 @@ string c_NT3_Command_Parser::NT_Sand(int* p_EIP, c_Lookup_Tree* p_Labels, c_Tabl
         if (tmp_Token_Count == 2)
         {
             Sandbox.Discharge(str2int(tmp_Token[1]));
-            //cout << "\n Discharge(" << tmp_Token[1] << ")";
+            //std::cout << "\n Discharge(" << tmp_Token[1] << ")";
             return "EVAL";
         }
     }
@@ -2335,18 +2335,18 @@ string c_NT3_Command_Parser::NT_Sand(int* p_EIP, c_Lookup_Tree* p_Labels, c_Tabl
     {
         //Outputs the node network for a given construct to an HTML file that uses javascript to display the nodes.
         // [1]: Construct, [2]: Directory, [3]: Filename, [4]: X padding, [5]: Y padding
-        if (tmp_Token_Count <= 5) { cout << "output_HTML::FAILED_ARGUMENTS_INSUFFICIENT"; return "output_HTML::FAILED_ARGUMENTS_INSUFFICIENT"; }
+        if (tmp_Token_Count <= 5) { std::cout << "output_HTML::FAILED_ARGUMENTS_INSUFFICIENT"; return "output_HTML::FAILED_ARGUMENTS_INSUFFICIENT"; }
 
         Sandbox.output_Nodes_As_HTML(str2int(tmp_Token[1]), tmp_Token[2], tmp_Token[3], str2int(tmp_Token[4]), str2int(tmp_Token[5]));
     }
 
-    //Submits a string to the given input.
+    //Submits a std::string to the given input.
     if (tmp_Token[0] == "in")
     {
         Sandbox.set_Input_String(str2int(tmp_Token[1]), tmp_Token[2]);
     }
 
-    //Submits a string to the given input.
+    //Submits a std::string to the given input.
     if (tmp_Token[0] == "add")
     {
         Sandbox.add_Input_String(str2int(tmp_Token[1]), tmp_Token[2]);
@@ -2361,11 +2361,11 @@ string c_NT3_Command_Parser::NT_Sand(int* p_EIP, c_Lookup_Tree* p_Labels, c_Tabl
     }
 
 
-    //Submits a string to the given input.
+    //Submits a std::string to the given input.
     if (tmp_Token[0] == "forge")
     {
-        string tmp_UInput;
-        string tmp_Name;
+        std::string tmp_UInput;
+        std::string tmp_Name;
         int tmp_From = 0;
         int tmp_To = 0;
         //int tmp_From_Index = 0;
@@ -2377,27 +2377,27 @@ string c_NT3_Command_Parser::NT_Sand(int* p_EIP, c_Lookup_Tree* p_Labels, c_Tabl
 
         while (!(Sandbox.flg_Initialized))
         {
-            cout << "\n --Create a new network or load an old one.";
-            cout << "\n Create New Network: new";
-            cout << "\n Load: load";
-            cout << "\n ->";
-            cin >> tmp_UInput;
+            std::cout << "\n --Create a new network or load an old one.";
+            std::cout << "\n Create New Network: new";
+            std::cout << "\n Load: load";
+            std::cout << "\n ->";
+            std::cin >> tmp_UInput;
 
             if (tmp_UInput == "new")
             {
-                cout << "\n Name->";
-                cin >> tmp_Name;
+                std::cout << "\n Name->";
+                std::cin >> tmp_Name;
 
                 Sandbox.create_Sandbox(tmp_Name);
                 break;
             }
             if (tmp_UInput == "load")
             {
-                cout << "\n Name->";
-                cin >> tmp_Name;
+                std::cout << "\n Name->";
+                std::cin >> tmp_Name;
 
                 //Sandbox.Load("NT3.Save/SANDBOX/", tmp_Name);
-                string tmp_CMD_Text = "lrealm " + tmp_Name;
+                std::string tmp_CMD_Text = "lrealm " + tmp_Name;
                 eval_Command_String(tmp_CMD_Text);
                 break;
             }
@@ -2406,42 +2406,42 @@ string c_NT3_Command_Parser::NT_Sand(int* p_EIP, c_Lookup_Tree* p_Labels, c_Tabl
         while (1)
         {
             Sandbox.output_Raw();
-            cout << "\n --After selecting the command you will be requested to give parameters. This is a menu.";
-            cout << "\n Create Input: mkinput";
-            cout << "\n Create Output: mkoutput";
-            cout << "\n Create Connection: mklink";
-            cout << "\n Create Raw Construct: mkraw";
-            cout << "\n Create MSC Construct: mkMSC";
-            cout << "\n Move Construct: move";
-            cout << "\n Save: save";
-            cout << "\n Load: load";
-            cout << "\n ->";
-            cin >> tmp_UInput;
+            std::cout << "\n --After selecting the command you will be requested to give parameters. This is a menu.";
+            std::cout << "\n Create Input: mkinput";
+            std::cout << "\n Create Output: mkoutput";
+            std::cout << "\n Create Connection: mklink";
+            std::cout << "\n Create Raw Construct: mkraw";
+            std::cout << "\n Create MSC Construct: mkMSC";
+            std::cout << "\n Move Construct: move";
+            std::cout << "\n Save: save";
+            std::cout << "\n Load: load";
+            std::cout << "\n ->";
+            std::cin >> tmp_UInput;
 
             if (tmp_UInput == "mkinput")
             {
-                cout << "\n Dimension->";
-                cin >> tmp_Dimension;
+                std::cout << "\n Dimension->";
+                std::cin >> tmp_Dimension;
                 Sandbox.create_Input(tmp_Dimension);
                 continue;
             }
             if (tmp_UInput == "mkoutput")
             {
-                cout << "\n Dimension->";
-                cin >> tmp_Dimension;
+                std::cout << "\n Dimension->";
+                std::cin >> tmp_Dimension;
                 Sandbox.create_Output(tmp_Dimension);
                 continue;
             }
             if (tmp_UInput == "mklink")
             {
-                cout << "\n From->";
-                cin >> tmp_From;
-                //cout << "\n From_Index->";
-                //cin >> tmp_From_Index;
-                cout << "\n To->";
-                cin >> tmp_To;
-                //cout << "\n To_Index->";
-                //cin >> tmp_To_Index;
+                std::cout << "\n From->";
+                std::cin >> tmp_From;
+                //std::cout << "\n From_Index->";
+                //std::cin >> tmp_From_Index;
+                std::cout << "\n To->";
+                std::cin >> tmp_To;
+                //std::cout << "\n To_Index->";
+                //std::cin >> tmp_To_Index;
 
                 //Sandbox.create_Connection(tmp_From, tmp_From_Index, tmp_To, tmp_To_Index);
                 Sandbox.create_Connection(tmp_From, 0, tmp_To, 0);
@@ -2449,54 +2449,54 @@ string c_NT3_Command_Parser::NT_Sand(int* p_EIP, c_Lookup_Tree* p_Labels, c_Tabl
             }
             if (tmp_UInput == "mkraw")
             {
-                cout << "\n Name->";
-                cin >> tmp_Name;
+                std::cout << "\n Name->";
+                std::cin >> tmp_Name;
 
                 Sandbox.create_Construct(tmp_Name, 1, 1);
                 continue;
             }
             if (tmp_UInput == "mkMSC")
             {
-                cout << "\n Name->";
-                cin >> tmp_Name;
+                std::cout << "\n Name->";
+                std::cin >> tmp_Name;
 
-                cout << "\n Tier->";
-                cin >> tmp_Tier;
+                std::cout << "\n Tier->";
+                std::cin >> tmp_Tier;
 
                 Sandbox.create_Construct(tmp_Name, 0, tmp_Tier);
                 continue;
             }
             if (tmp_UInput == "move")
             {
-                cout << "\n Construct ID->";
-                cin >> tmp_From;
+                std::cout << "\n Construct ID->";
+                std::cin >> tmp_From;
 
-                cout << "\n X->";
-                cin >> tmp_X;
+                std::cout << "\n X->";
+                std::cin >> tmp_X;
 
-                cout << "\n Y->";
-                cin >> tmp_Y;
+                std::cout << "\n Y->";
+                std::cin >> tmp_Y;
 
                 Sandbox.move_Construct(tmp_From, tmp_X, tmp_Y);
                 continue;
             }
             if (tmp_UInput == "save")
             {
-                cout << "\n Name->";
-                cin >> tmp_Name;
+                std::cout << "\n Name->";
+                std::cin >> tmp_Name;
 
                 //Sandbox.Save("NT3.Save/SANDBOX/", tmp_Name);
-                string tmp_CMD_Text = "srealm " + tmp_Name;
+                std::string tmp_CMD_Text = "srealm " + tmp_Name;
                 eval_Command_String(tmp_CMD_Text);
                 continue;
             }
             if (tmp_UInput == "load")
             {
-                cout << "\n Name->";
-                cin >> tmp_Name;
+                std::cout << "\n Name->";
+                std::cin >> tmp_Name;
 
                 //Sandbox.Load("NT3.Save/SANDBOX/", tmp_Name);
-                string tmp_CMD_Text = "lrealm " + tmp_Name;
+                std::string tmp_CMD_Text = "lrealm " + tmp_Name;
                 eval_Command_String(tmp_CMD_Text);
                 continue;
             }

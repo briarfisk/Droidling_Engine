@@ -24,9 +24,9 @@ public:
      //Outputs the linked list.
      void output_LL()
      {
-          cout << " [";
-          cout << State.C;
-          cout << " $" << Charge.I << "]  ";
+          std::cout << " [";
+          std::cout << State.C;
+          std::cout << " $" << Charge.I << "]  ";
           if (Next != NULL){ Next->output_LL(); }
      }
 };
@@ -162,26 +162,26 @@ private:
           int query_Node(c_NT3_Vision_Buffer_Node_MMap *&p_Node, u_Data_3 p_Data, int p_Shift)
           {
                tmp_Data.U = p_Data.U >> p_Shift;
-               //cout << "\n\n\n tmp_Data.U = " << tmp_Data.U << " p_Shift = " << p_Shift;
+               //std::cout << "\n\n\n tmp_Data.U = " << tmp_Data.U << " p_Shift = " << p_Shift;
                
                
-               //cout << "\n\n\t __QN__ tmp_Data.U->" << tmp_Data.U << " p_Data.U->" << p_Data.U;
+               //std::cout << "\n\n\t __QN__ tmp_Data.U->" << tmp_Data.U << " p_Data.U->" << p_Data.U;
                
                if (p_Node == NULL)
                {      
-                    //cout << "\n\t   Node is NULL";
+                    //std::cout << "\n\t   Node is NULL";
                     p_Node = new c_NT3_Vision_Buffer_Node_MMap;
                     p_Node->Right = NULL;
                     p_Node->Center = NULL;
                     p_Node->Left = NULL;
                     if (p_Shift > 1)
                     {
-                         //cout << "\n\t   tmp_Data.U > 1";
+                         //std::cout << "\n\t   tmp_Data.U > 1";
                          p_Node->Data = tmp_Data;
                     }
                     else 
                     {
-                         //cout << "\n\t   tmp_Data.U !> 1";
+                         //std::cout << "\n\t   tmp_Data.U !> 1";
                          p_Node->Data = p_Data;
                          Current = &p_Node; 
                          flg_Foundit = false;
@@ -192,9 +192,9 @@ private:
                //If the current data matches the tmp data then another depth is explored.
                if (p_Node->Data.U == tmp_Data.U && p_Shift > 0)
                {
-                    //cout << "\n\t   p_Node->Data.U (" << p_Node->Data.U << ") == tmp_Data.U (" << tmp_Data.U << ")";
+                    //std::cout << "\n\t   p_Node->Data.U (" << p_Node->Data.U << ") == tmp_Data.U (" << tmp_Data.U << ")";
                     
-                    //cout << "\t tmp_Data.U = " << tmp_Data.U;
+                    //std::cout << "\t tmp_Data.U = " << tmp_Data.U;
                     
                     query_Node(p_Node->Center, p_Data, (p_Shift - 4));
                     return 0;  
@@ -203,7 +203,7 @@ private:
                //If the node data matches the given data exactly the node has been found.
                if (p_Node->Data.U == p_Data.U)
                {
-                    //cout << "\n\t    p_Node->Data.NR(" << p_Node->Data.NR << ") == p_Data.NR(" << p_Data.NR << ")";
+                    //std::cout << "\n\t    p_Node->Data.NR(" << p_Node->Data.NR << ") == p_Data.NR(" << p_Data.NR << ")";
                     Current = &p_Node;  
                     flg_Foundit = true;
                     return 1;
@@ -212,13 +212,13 @@ private:
                
                if (tmp_Data.U < p_Node->Data.U)
                {
-                    //cout << "\n\t    tmp_Data.U (" << tmp_Data.U << ") < p_Node->Data.U(" << p_Node->Data.U << ")";
+                    //std::cout << "\n\t    tmp_Data.U (" << tmp_Data.U << ") < p_Node->Data.U(" << p_Node->Data.U << ")";
                     query_Node(p_Node->Left, p_Data, p_Shift);
                     return 0;
                }
                if (tmp_Data.U > p_Node->Data.U)
                {
-                    //cout << "\n\t    tmp_Data.U (" << tmp_Data.U << ") > p_Node->Data.U(" << p_Node->Data.U << ")";
+                    //std::cout << "\n\t    tmp_Data.U (" << tmp_Data.U << ") > p_Node->Data.U(" << p_Node->Data.U << ")";
                     query_Node(p_Node->Right, p_Data, p_Shift);
                     return 0;
                }
@@ -234,13 +234,13 @@ private:
           {
                if (p_Node == NULL){ return; }
                output_Node(p_Node->Left, (p_Tab));
-               cout << "\n";
+               std::cout << "\n";
                for (int cou_Index=0;cou_Index<p_Tab;cou_Index++)
                {
-                    cout << "  ";
+                    std::cout << "  ";
                }
-               cout << (p_Node->Data).I;
-               if (p_Node->LL != NULL){ cout << "->" << (p_Node->LL->State.C); }
+               std::cout << (p_Node->Data).I;
+               if (p_Node->LL != NULL){ std::cout << "->" << (p_Node->LL->State.C); }
                output_Node(p_Node->Center, (p_Tab + 1));
                output_Node(p_Node->Right, (p_Tab));
           }
@@ -398,24 +398,24 @@ public:
      //Outputs the Current_Charge_LL.
      void output_Charge_LL()
      {
-          cout << "\n\t Current_Charge_LL->";
-          if (Current_Charge.Root == NULL){ cout << "empty..."; return; }
+          std::cout << "\n\t Current_Charge_LL->";
+          if (Current_Charge.Root == NULL){ std::cout << "empty..."; return; }
           Current_Charge.Root->output_LL();
      }
      
      //Outputs the Output_LL.
      void output_Output_LL()
      {
-          cout << "\n\t Output_LL->";
-          if (Output.Root == NULL){ cout << "empty..."; return; }
+          std::cout << "\n\t Output_LL->";
+          if (Output.Root == NULL){ std::cout << "empty..."; return; }
           Output.Root->output_LL();
      }
      
      //Outputs the Treetops.
      void output_Treetops()
      {
-          cout << "\n\t Treetops_LL->";
-          if (Treetops.Root == NULL){ cout << "empty..."; return; }
+          std::cout << "\n\t Treetops_LL->";
+          if (Treetops.Root == NULL){ std::cout << "empty..."; return; }
           Treetops.Root->output_LL();
      }
 };

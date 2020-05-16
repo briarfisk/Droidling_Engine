@@ -121,12 +121,12 @@ public:
      ~c_NT3_Node_MMap_1D()
      {
           /*
-          cout << "\n   ~c_NT3_Node_MMap_1D " << this << " NID->" << NID.U; cout.flush();
-          cout << " Axons_L->" << Axons_L; cout.flush();
-          cout << " Axon_Count_L->" << Axon_Count_L; cout.flush();
-          cout << " Axons_R->" << Axons_R; cout.flush();
-          cout << " Axon_Count_R->" << Axon_Count_R; cout.flush();
-          cout << " Next->" << Next; cout.flush();
+          std::cout << "\n   ~c_NT3_Node_MMap_1D " << this << " NID->" << NID.U; std::cout.flush();
+          std::cout << " Axons_L->" << Axons_L; std::cout.flush();
+          std::cout << " Axon_Count_L->" << Axon_Count_L; std::cout.flush();
+          std::cout << " Axons_R->" << Axons_R; std::cout.flush();
+          std::cout << " Axon_Count_R->" << Axon_Count_R; std::cout.flush();
+          std::cout << " Next->" << Next; std::cout.flush();
           */
           
           if (Axons_L != NULL)
@@ -152,7 +152,7 @@ public:
           Dendrite_L = NULL;
           Dendrite_R = NULL;
           
-          //cout << " delete Next->" << Next; cout.flush();
+          //std::cout << " delete Next->" << Next; std::cout.flush();
           //delete Next; //This one.
           Next = NULL;
           
@@ -329,10 +329,10 @@ public:
      //Initiates a backpropagation that outputs to the given table with the given index.
      void bp_O() 
      {
-          cout << "<";
-          if (Dendrite_L != NULL){ Dendrite_L->bp_L(); } else { cout << "(LNULL)"; }
-          if (Dendrite_R != NULL){ Dendrite_R->bp_R(); } else { cout << "(RNULL)"; }
-          cout << ">";
+          std::cout << "<";
+          if (Dendrite_L != NULL){ Dendrite_L->bp_L(); } else { std::cout << "(LNULL)"; }
+          if (Dendrite_R != NULL){ Dendrite_R->bp_R(); } else { std::cout << "(RNULL)"; }
+          std::cout << ">";
      }
      
      //bp_Output the left node.
@@ -353,7 +353,7 @@ public:
                     if (tmp_State == char (9)){ tmp_State = '9'; }
                     if (tmp_State == char (10)){ tmp_State = 'a'; }
                     if (tmp_State == char (13)){ tmp_State = 'd'; }
-                    cout << tmp_State;
+                    std::cout << tmp_State;
           }
      }
      
@@ -374,7 +374,7 @@ public:
                     if (tmp_State == char (9)){ tmp_State = '9'; }
                     if (tmp_State == char (10)){ tmp_State = 'a'; }
                     if (tmp_State == char (13)){ tmp_State = 'd'; }
-                    cout << tmp_State;
+                    std::cout << tmp_State;
           }
      }
 };
@@ -418,7 +418,7 @@ public:
      
      ~c_NT3_State_Node_MMap_1D()
      {
-          //cout << " ~c_NT3_State_Node_MMap_1D " << this << " NID->" << NID.U; cout.flush();
+          //std::cout << " ~c_NT3_State_Node_MMap_1D " << this << " NID->" << NID.U; std::cout.flush();
           
           if (Axons_L != NULL)
           {
@@ -443,11 +443,11 @@ public:
           Dendrite_L = NULL;
           Dendrite_R = NULL;
           
-          //cout << " delete Next->" << Next; cout.flush();
+          //std::cout << " delete Next->" << Next; std::cout.flush();
           
           delete Next; //This one.
           
-          //cout << "   ~~~c_NT3_State_Node_MMap_1D " << this << " NID->" << NID.U; cout.flush();
+          //std::cout << "   ~~~c_NT3_State_Node_MMap_1D " << this << " NID->" << NID.U; std::cout.flush();
           
           Ref = NULL;
      }
@@ -621,9 +621,9 @@ public:
      //Initiates a backpropagation that outputs to the given table with the given index.
      void bp_O() 
      {
-          cout << "~<";
-          cout << State.C;
-          cout << ">~";
+          std::cout << "~<";
+          std::cout << State.C;
+          std::cout << ">~";
      }
      
      //bp_Output the left node.
@@ -644,7 +644,7 @@ public:
                if (tmp_State == char (9)){ tmp_State = '?'; }
                if (tmp_State == char (10)){ tmp_State = '?'; }
                if (tmp_State == char (13)){ tmp_State = '?'; }
-               cout << tmp_State;
+               std::cout << tmp_State;
           }
      }
      
@@ -665,7 +665,7 @@ public:
                if (tmp_State == char (9)){ tmp_State = '?'; }
                if (tmp_State == char (10)){ tmp_State = '?'; }
                if (tmp_State == char (13)){ tmp_State = '?'; }
-               cout << tmp_State;
+               std::cout << tmp_State;
           }
      }
 };

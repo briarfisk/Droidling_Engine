@@ -6,8 +6,8 @@ class c_NT3_NodeDB_Header
 public:
      
      //The header file is opened using a traditional stream as it will be extremely small.
-     ifstream LF;
-     ofstream SF;
+     std::ifstream LF;
+     std::ofstream SF;
      
      //The current node the network is on, same as CNID.
      unsigned long long int Node_Count;
@@ -28,7 +28,7 @@ public:
      long int Tier_Depth[32768];
      
      //Name of the network to open, not neccesary the same as the filename.
-     string Network_Name;
+     std::string Network_Name;
      
      c_NT3_NodeDB_Header()
      {
@@ -54,19 +54,19 @@ public:
      }
      
      //Sets up a new DB header file.
-     void new_File(string p_Dir, string p_Name, bool p_Disp_Output = 1)
+     void new_File(std::string p_Dir, std::string p_Name, bool p_Disp_Output = 1)
      {
-          if (p_Disp_Output){ cout << "\n --== new_File() " << p_Dir << "/" << p_Name; }
+          if (p_Disp_Output){ std::cout << "\n --== new_File() " << p_Dir << "/" << p_Name; }
           
           if (SF.is_open()){ SF.close(); }
-          string tmp_fName = p_Dir + "/" + p_Name + ".header.dat";
+          std::string tmp_fName = p_Dir + "/" + p_Name + ".header.dat";
           
           //Try to create the file.
-          SF.open(tmp_fName, ios::app);
+          SF.open(tmp_fName, std::ios::app);
           
           if (!SF.is_open())
           {
-               cout << "\n No luck, abandon ship.";
+               std::cout << "\n No luck, abandon ship.";
                SF.close();
                return;
           }
@@ -81,33 +81,33 @@ public:
           SF << "\nTier_Current_Depth " << Tier_Current_Depth;
           SF << "\nTier " << 0 << " " << 0;
                
-          if (p_Disp_Output){ cout << "\n Network " << Network_Name << " with " << Node_Count << " has been saved..."; }
+          if (p_Disp_Output){ std::cout << "\n Network " << Network_Name << " with " << Node_Count << " has been saved..."; }
           
           SF.close();
      }
      
      //Loads a DB header file.
-     void load_File(string p_Dir, string p_Name)
+     void load_File(std::string p_Dir, std::string p_Name)
      {
           //Throwaway ASCII junk.
-          string tmp_Input;
+          std::string tmp_Input;
           
-          cout << "\n --==" << p_Dir << "/" << p_Name;
+          std::cout << "\n --==" << p_Dir << "/" << p_Name;
           
           //Can't hurt to make sure. That may not be true.
           
           if (LF.is_open()){ LF.close(); }
-          string tmp_fName = p_Dir + "/" + p_Name + ".header.dat";
+          std::string tmp_fName = p_Dir + "/" + p_Name + ".header.dat";
           LF.open(tmp_fName);
           
           if (!LF.is_open())
           {
-               cout << "\n Header file \"" << p_Name << "\" did not open...";
+               std::cout << "\n Header file \"" << p_Name << "\" did not open...";
           }
           
           if ((LF.peek() != std::ifstream::traits_type::eof()))
           {
-               cout << "\n Header file found, loading...";
+               std::cout << "\n Header file found, loading...";
                
                //File is in IDENTIFIER VALUE format, so throw away ident and load value.
                LF >> tmp_Input;
@@ -135,7 +135,7 @@ public:
                LF >> tmp_Input;
                LF >> Tier_Current_Depth;
                
-               cout << "\n\n Tier_Current_Depth:" << Tier_Current_Depth;
+               std::cout << "\n\n Tier_Current_Depth:" << Tier_Current_Depth;
                for (int cou_T=0;cou_T<(Tier_Current_Depth);cou_T++)
                {
                     //The "Tier"
@@ -143,22 +143,22 @@ public:
                     //The Tier Value
                     LF >> tmp_Input;
                     LF >> Tier_Depth[cou_T];
-                    cout << "\n ---- Tier_Depth[" << cou_T << ":" << Tier_Depth[cou_T];
+                    std::cout << "\n ---- Tier_Depth[" << cou_T << ":" << Tier_Depth[cou_T];
                }
           
 
-			   cout << "\n Network_Name:" << Network_Name;
-			   cout << "\n Node_Count:" << Node_Count;
-			   cout << "\n Axon_Current_Block_L:" << Axon_Current_Block_L;
-			   cout << "\n Axon_Current_Block_R:" << Axon_Current_Block_R;
-			   cout << "\n Node_File_Size:" << Node_File_Size;
-			   cout << "\n Axon_File_Size_L:" << Axon_File_Size_L;
-			   cout << "\n Axon_File_Size_R:" << Axon_File_Size_R;
-			   cout << "\n Tier_Current_Depth:" << Tier_Current_Depth;
+			   std::cout << "\n Network_Name:" << Network_Name;
+			   std::cout << "\n Node_Count:" << Node_Count;
+			   std::cout << "\n Axon_Current_Block_L:" << Axon_Current_Block_L;
+			   std::cout << "\n Axon_Current_Block_R:" << Axon_Current_Block_R;
+			   std::cout << "\n Node_File_Size:" << Node_File_Size;
+			   std::cout << "\n Axon_File_Size_L:" << Axon_File_Size_L;
+			   std::cout << "\n Axon_File_Size_R:" << Axon_File_Size_R;
+			   std::cout << "\n Tier_Current_Depth:" << Tier_Current_Depth;
           }
           else
           {
-               cout << "\n Header file not found, creating new datas...";
+               std::cout << "\n Header file not found, creating new datas...";
                Network_Name = p_Name;
                Node_Count = 1;
                Axon_Current_Block_R = 0;
@@ -171,29 +171,29 @@ public:
                Axon_File_Size_L = 1;
                Axon_File_Size_R = 1;
           }
-          cout << "\n Network " << Network_Name << " with " << Node_Count << " has been loaded...";
+          std::cout << "\n Network " << Network_Name << " with " << Node_Count << " has been loaded...";
           LF.close();
      }
      
      //Saves a DB header file.
-     void save_File(string p_Dir, string p_Name, bool p_Disp_Output = 1)
+     void save_File(std::string p_Dir, std::string p_Name, bool p_Disp_Output = 1)
      {
-          if (p_Disp_Output){ cout << "\n --==" << p_Dir << "/" << p_Name; }
+          if (p_Disp_Output){ std::cout << "\n --==" << p_Dir << "/" << p_Name; }
           
           if (SF.is_open()){ SF.close(); }
-          string tmp_fName = p_Dir + "/" + p_Name + ".header.dat";
-          SF.open(tmp_fName, ios::trunc);
+          std::string tmp_fName = p_Dir + "/" + p_Name + ".header.dat";
+          SF.open(tmp_fName, std::ios::trunc);
           
           if (!SF.is_open())
           {
-               cout << "\n Header file \"" << tmp_fName << "\" did not open for saving, attempting creation...";
+               std::cout << "\n Header file \"" << tmp_fName << "\" did not open for saving, attempting creation...";
                
                //Try to create the file.
                SF.close();
-               SF.open(tmp_fName, ios::app);
+               SF.open(tmp_fName, std::ios::app);
                if (!SF.is_open())
                {
-                    cout << "\n No luck, abandon ship.";
+                    std::cout << "\n No luck, abandon ship.";
                     SF.close();
                     return;
                }
@@ -213,7 +213,7 @@ public:
                SF << "\nTier " << cou_T << " " << Tier_Depth[cou_T];
           }
           
-          if (p_Disp_Output){ cout << "\n Network " << Network_Name << " with " << Node_Count << " has been saved..."; }
+          if (p_Disp_Output){ std::cout << "\n Network " << Network_Name << " with " << Node_Count << " has been saved..."; }
           
           SF.close();
      }
@@ -314,22 +314,22 @@ public:
      
      void set_Axon_Count_L(long int p_Axon_Count_L)
      { 
-          //ostr(0, 11, "\n -->set_Axon_Count_L"); cout << " " << p_Axon_Count_L << " NID " << NID.U;
+          //ostr(0, 11, "\n -->set_Axon_Count_L"); std::cout << " " << p_Axon_Count_L << " NID " << NID.U;
           Axon_Count_L = p_Axon_Count_L; 
      }
      void set_Axon_Block_L(unsigned long long int p_Axon_Block_L)
      { 
-          //ostr(0, 11, "\n -->set_Axon_Block_L"); cout << " " << p_Axon_Block_L << " NID " << NID.U;
+          //ostr(0, 11, "\n -->set_Axon_Block_L"); std::cout << " " << p_Axon_Block_L << " NID " << NID.U;
           Axon_Block_L.U = p_Axon_Block_L; 
      }
      void set_Axon_Count_R(long int p_Axon_Count_R)
      { 
-          //ostr(0, 11, "\n -->set_Axon_Count_R"); cout << " " << p_Axon_Count_R << " NID " << NID.U;
+          //ostr(0, 11, "\n -->set_Axon_Count_R"); std::cout << " " << p_Axon_Count_R << " NID " << NID.U;
           Axon_Count_R = p_Axon_Count_R; 
      }
      void set_Axon_Block_R(unsigned long long int p_Axon_Block_R)
      { 
-          //ostr(0, 11, "\n -->set_Axon_Block_R"); cout << " " << p_Axon_Block_R << " NID " << NID.U;
+          //ostr(0, 11, "\n -->set_Axon_Block_R"); std::cout << " " << p_Axon_Block_R << " NID " << NID.U;
           Axon_Block_R.U = p_Axon_Block_R; 
      }
      
@@ -382,58 +382,58 @@ public:
           
           int tmp_Offset = 0;
           
-          //*-----cout << "\n\n Compile()";
+          //*-----std::cout << "\n\n Compile()";
           
           //Whether or not the node is a state node.
           tmp_Data[0] = Type;
           tmp_Offset += sizeof(Type);
-          //*-----cout << "\n\n Type-->" << tmp_Offset;
+          //*-----std::cout << "\n\n Type-->" << tmp_Offset;
           
           //Dendrites.
           *reinterpret_cast<long long unsigned int*> (tmp_Data + tmp_Offset) = Dendrite_L.U;
           tmp_Offset += sizeof(Dendrite_L);
-          //*-----cout << "\n Dendrite_L-->" << tmp_Offset;
+          //*-----std::cout << "\n Dendrite_L-->" << tmp_Offset;
           *reinterpret_cast<unsigned long long int*> (tmp_Data + tmp_Offset) = Dendrite_R.U;
           tmp_Offset += sizeof(Dendrite_R);
-          //*-----cout << "\n Dendrite_R-->" << tmp_Offset;
+          //*-----std::cout << "\n Dendrite_R-->" << tmp_Offset;
      
           //Axons and their counters.
           *reinterpret_cast<unsigned long long int*> (tmp_Data + tmp_Offset) = Axon_Count_L;
           tmp_Offset += sizeof(Axon_Count_L);
-          //*-----cout << "\n Axon_Count_L-->" << tmp_Offset;
+          //*-----std::cout << "\n Axon_Count_L-->" << tmp_Offset;
           
           *reinterpret_cast<unsigned long long int*> (tmp_Data + tmp_Offset) = Axon_Count_R;
           tmp_Offset += sizeof(Axon_Count_R);
-          //*-----cout << "\n Axon_Count_R-->" << tmp_Offset;
+          //*-----std::cout << "\n Axon_Count_R-->" << tmp_Offset;
      
           //Axons and their counters.
           *reinterpret_cast<unsigned long long int*> (tmp_Data + tmp_Offset) = Axon_Block_L.U;
           tmp_Offset += sizeof(Axon_Block_L);
-          //*-----cout << "\n Axon_Block_L-->" << tmp_Offset;
+          //*-----std::cout << "\n Axon_Block_L-->" << tmp_Offset;
           
           *reinterpret_cast<unsigned long long int*> (tmp_Data + tmp_Offset) = Axon_Block_R.U;
           tmp_Offset += sizeof(Axon_Block_R);
-          //*-----cout << "\n Axon_Block_R-->" << tmp_Offset;
+          //*-----std::cout << "\n Axon_Block_R-->" << tmp_Offset;
           
           //Reinforcement Counters.
           *reinterpret_cast<double*> (tmp_Data + tmp_Offset) = RC_Lvl;
           tmp_Offset += sizeof(RC_Lvl);
-          //*-----cout << "\n RC_Lvl-->" << tmp_Offset;
+          //*-----std::cout << "\n RC_Lvl-->" << tmp_Offset;
           
           //The Tier.
           *reinterpret_cast<long int*> (tmp_Data + tmp_Offset) = Tier;
           tmp_Offset += sizeof(Tier);
-          //*-----cout << "\n Tier-->" << tmp_Offset << " Tier: " << Tier;
+          //*-----std::cout << "\n Tier-->" << tmp_Offset << " Tier: " << Tier;
           
           //The Index the Tier Falls Upon.
 		  *reinterpret_cast<long int*> (tmp_Data + tmp_Offset) = Tier_Index;
 		  tmp_Offset += sizeof(Tier_Index);
-		  //*-----cout << "\n Tier_Index-->" << tmp_Offset << " Tier_Index: " << Tier_Index;
+		  //*-----std::cout << "\n Tier_Index-->" << tmp_Offset << " Tier_Index: " << Tier_Index;
 
 		  //The Index the Tier Falls Upon.
 		  *reinterpret_cast<bool*> (tmp_Data + tmp_Offset) = flg_Double_Legged;
 		  tmp_Offset += sizeof(flg_Double_Legged);
-		  //*-----cout << "\n flg_Double_Legged-->" << tmp_Offset << " flg_Double_Legged: " << flg_Double_Legged;
+		  //*-----std::cout << "\n flg_Double_Legged-->" << tmp_Offset << " flg_Double_Legged: " << flg_Double_Legged;
           
           *reinterpret_cast<unsigned long long int*> (tmp_Data + 110) = State.U;
      }
@@ -441,60 +441,60 @@ public:
      //Extracts the data from the string.
      void extract()
      {
-          //*-----cout << "\n\n extract()";
+          //*-----std::cout << "\n\n extract()";
           
           int tmp_Offset = 0;
           
           //Whether or not the node is a state node.
           Type = tmp_Data[0];
           tmp_Offset += sizeof(Type);
-          //*-----cout << "\n\n Type-->" << tmp_Offset;
+          //*-----std::cout << "\n\n Type-->" << tmp_Offset;
           
           //Dendrites.
           Dendrite_L.U = *reinterpret_cast<long long unsigned int*> (tmp_Data + tmp_Offset);
           tmp_Offset += sizeof(Dendrite_L);
-          //*-----cout << "\n Dendrite_L-->" << tmp_Offset << " Dendrite_L.U: " << Dendrite_L.U;
+          //*-----std::cout << "\n Dendrite_L-->" << tmp_Offset << " Dendrite_L.U: " << Dendrite_L.U;
           Dendrite_R.U = *reinterpret_cast<long long unsigned int*> (tmp_Data + tmp_Offset);
           tmp_Offset += sizeof(Dendrite_R);
-          //*-----cout << "\n Dendrite_R-->" << tmp_Offset << " Dendrite_R.U: " << Dendrite_R.U;
+          //*-----std::cout << "\n Dendrite_R-->" << tmp_Offset << " Dendrite_R.U: " << Dendrite_R.U;
           
           //Axons and their counters.
           Axon_Count_L = long(*reinterpret_cast<unsigned long long int*> (tmp_Data + tmp_Offset));
           tmp_Offset += sizeof(Axon_Count_L);
-          //*-----cout << "\n Axon_Count_L-->" << tmp_Offset << " Axon_Count_L: " << Axon_Count_L;
+          //*-----std::cout << "\n Axon_Count_L-->" << tmp_Offset << " Axon_Count_L: " << Axon_Count_L;
           
           Axon_Count_R = *reinterpret_cast<unsigned long long int*>(tmp_Data + tmp_Offset);
           tmp_Offset += sizeof(Axon_Count_R);
-          //*-----cout << "\n Axon_Count_R-->" << tmp_Offset << " Axon_Count_R: " << Axon_Count_R;
+          //*-----std::cout << "\n Axon_Count_R-->" << tmp_Offset << " Axon_Count_R: " << Axon_Count_R;
           
           //Axons and their counters.
           Axon_Block_L.U = *reinterpret_cast<unsigned long long int*> (tmp_Data + tmp_Offset);
           tmp_Offset += sizeof(Axon_Block_L);
-          //*-----cout << "\n Axon_Block_L-->" << tmp_Offset << " Axon_Block_L: " << Axon_Block_L.U;
+          //*-----std::cout << "\n Axon_Block_L-->" << tmp_Offset << " Axon_Block_L: " << Axon_Block_L.U;
           
           Axon_Block_R.U = *reinterpret_cast<unsigned long long int*>(tmp_Data + tmp_Offset);
           tmp_Offset += sizeof(Axon_Block_R);
-          //*-----cout << "\n Axon_Block_R-->" << tmp_Offset << " Axon_Block_R.U: " << Axon_Block_R.U;
+          //*-----std::cout << "\n Axon_Block_R-->" << tmp_Offset << " Axon_Block_R.U: " << Axon_Block_R.U;
           
           //Reinforcement Counters.
           RC_Lvl = *reinterpret_cast<double*> (tmp_Data + tmp_Offset);
           tmp_Offset += sizeof(RC_Lvl);
-          //*-----cout << "\n RC_Lvl-->" << tmp_Offset << " RC_Lvl: " << RC_Lvl;
+          //*-----std::cout << "\n RC_Lvl-->" << tmp_Offset << " RC_Lvl: " << RC_Lvl;
           
           //The Tier.
           Tier = *reinterpret_cast<long int*> (tmp_Data + tmp_Offset);
           tmp_Offset += sizeof(Tier);
-          //*-----cout << "\n Tier-->" << tmp_Offset << " Tier: " << Tier;
+          //*-----std::cout << "\n Tier-->" << tmp_Offset << " Tier: " << Tier;
           
           //The Index the Tier Falls Upon.
 		  Tier_Index = *reinterpret_cast<long int*> (tmp_Data + tmp_Offset);
 		  tmp_Offset += sizeof(Tier_Index);
-		  //*-----cout << "\n Tier_Index-->" << tmp_Offset << " Tier_Index: " << Tier_Index;
+		  //*-----std::cout << "\n Tier_Index-->" << tmp_Offset << " Tier_Index: " << Tier_Index;
           
           //The Index the Tier Falls Upon.
 		  flg_Double_Legged = *reinterpret_cast<bool*> (tmp_Data + tmp_Offset);
 		  tmp_Offset += sizeof(flg_Double_Legged);
-		  //*-----cout << "\n flg_Double_Legged-->" << tmp_Offset << " flg_Double_Legged: " << Tier_Index;
+		  //*-----std::cout << "\n flg_Double_Legged-->" << tmp_Offset << " flg_Double_Legged: " << Tier_Index;
           
           State.U = *reinterpret_cast<unsigned long long int*> (tmp_Data + 110);
      }
@@ -503,89 +503,89 @@ public:
      void output_Condensed()
      {
           //Whether or not the node is a state node.
-          cout << "\n Type-->" << Type;
+          std::cout << "\n Type-->" << Type;
           
           //Axons and their counters.
-          cout << " A_Cou_L-->" << Axon_Count_L;
-          cout << " A_Cou_R-->" << Axon_Count_R;
+          std::cout << " A_Cou_L-->" << Axon_Count_L;
+          std::cout << " A_Cou_R-->" << Axon_Count_R;
           
           //Axons and their counters.
-          cout << " A_Blo_L-->" << Axon_Block_L.U;
-          cout << " A_Blo_R-->" << Axon_Block_R.U;
+          std::cout << " A_Blo_L-->" << Axon_Block_L.U;
+          std::cout << " A_Blo_R-->" << Axon_Block_R.U;
           
           //Dendrites.
-          cout << " D_L-->" << Dendrite_L.U;
-          cout << " D_R-->" << Dendrite_R.U;
+          std::cout << " D_L-->" << Dendrite_L.U;
+          std::cout << " D_R-->" << Dendrite_R.U;
      
           //Reinforcement Counters.
-          cout << " RC_Lvl-->" << RC_Lvl;
+          std::cout << " RC_Lvl-->" << RC_Lvl;
           
-          cout << " State-->" << char(State.U);
+          std::cout << " State-->" << char(State.U);
      }
      
      //Outputs a node.
      void output()
      {
           //Whether or not the node is a state node.
-          cout << "\n\n Type-->" << Type;
+          std::cout << "\n\n Type-->" << Type;
           
           //Axons and their counters.
-          cout << "\n Axon_Count_L-->" << Axon_Count_L;
-          cout << "\n Axon_Count_R-->" << Axon_Count_R;
+          std::cout << "\n Axon_Count_L-->" << Axon_Count_L;
+          std::cout << "\n Axon_Count_R-->" << Axon_Count_R;
           
           //Dendrites.
-          cout << "\n Dendrite_L-->" << Dendrite_L.U;
-          cout << "\n Dendrite_R-->" << Dendrite_R.U;
+          std::cout << "\n Dendrite_L-->" << Dendrite_L.U;
+          std::cout << "\n Dendrite_R-->" << Dendrite_R.U;
      
           //Reinforcement Counters.
-          cout << "\n RC_Lvl-->" << RC_Lvl;
+          std::cout << "\n RC_Lvl-->" << RC_Lvl;
           
-          cout << "\n State-->" << char(State.U);
+          std::cout << "\n State-->" << char(State.U);
           
-          cout << "\n tmp_Data::int-->\n";
+          std::cout << "\n tmp_Data::int-->\n";
           for (int cou_Index=0;cou_Index<128;cou_Index++)
           {
-               if (!(cou_Index % 16)){ cout << "\n"; }
-               cout << "." << int(tmp_Data[cou_Index]);
+               if (!(cou_Index % 16)){ std::cout << "\n"; }
+               std::cout << "." << int(tmp_Data[cou_Index]);
           }
-          cout << "\n tmp_Data::char-->\n";
+          std::cout << "\n tmp_Data::char-->\n";
           for (int cou_Index=0;cou_Index<128;cou_Index++)
           {
-               if (!(cou_Index % 16)){ cout << "\n"; }
-               cout << "." << tmp_Data[cou_Index];
+               if (!(cou_Index % 16)){ std::cout << "\n"; }
+               std::cout << "." << tmp_Data[cou_Index];
           }
      }
      
      //Outputs a node.
-     void output_HTML(ofstream * p_File)
+     void output_HTML(std::ofstream * p_File)
      {
           
           //Whether or not the node is a state node.
-          //cout << "\n Type-->" << Type;
+          //std::cout << "\n Type-->" << Type;
           
           //Axons and their counters.
-          //cout << " A_Cou_L-->" << Axon_Count_L;
-          //cout << " A_Cou_R-->" << Axon_Count_R;
+          //std::cout << " A_Cou_L-->" << Axon_Count_L;
+          //std::cout << " A_Cou_R-->" << Axon_Count_R;
           
           //Axons and their counters.
-          //cout << " A_Blo_L-->" << Axon_Block_L.U;
-          //cout << " A_Blo_R-->" << Axon_Block_R.U;
+          //std::cout << " A_Blo_L-->" << Axon_Block_L.U;
+          //std::cout << " A_Blo_R-->" << Axon_Block_R.U;
           
           //Dendrites.
-          cout << " D_L-->" << Dendrite_L.U;
-          cout << " D_R-->" << Dendrite_R.U;
+          std::cout << " D_L-->" << Dendrite_L.U;
+          std::cout << " D_R-->" << Dendrite_R.U;
           
           //Get Coords of dendrites to link them.
           
      
           //Reinforcement Counters.
-          cout << " RC_Lvl-->" << RC_Lvl;
+          std::cout << " RC_Lvl-->" << RC_Lvl;
           
-          cout << " State-->" << char(State.U);
+          std::cout << " State-->" << char(State.U);
           
-          cout << " Tier-->" << char(State.U);
+          std::cout << " Tier-->" << char(State.U);
           
-          cout << " Tier_Index-->" << char(State.U);
+          std::cout << " Tier_Index-->" << char(State.U);
           //ctx.strokeStyle="#00FF00";
 
           //ctx.beginPath();
@@ -604,37 +604,37 @@ public:
 		 int tmp_Offset = 0;
 
 		 tmp_Offset += sizeof(Type);
-		 cout << "\n\n Type-->" << tmp_Offset;
+		 std::cout << "\n\n Type-->" << tmp_Offset;
 
 		 tmp_Offset += sizeof(Dendrite_L);
-		 cout << "\n Dendrite_L-->" << tmp_Offset << " Dendrite_L.U: " << Dendrite_L.U;
+		 std::cout << "\n Dendrite_L-->" << tmp_Offset << " Dendrite_L.U: " << Dendrite_L.U;
 
 		 tmp_Offset += sizeof(Dendrite_R);
-		 cout << "\n Dendrite_R-->" << tmp_Offset << " Dendrite_R.U: " << Dendrite_R.U;
+		 std::cout << "\n Dendrite_R-->" << tmp_Offset << " Dendrite_R.U: " << Dendrite_R.U;
 
 		 tmp_Offset += sizeof(Axon_Count_L);
-		 cout << "\n Axon_Count_L-->" << tmp_Offset << " Axon_Count_L: " << Axon_Count_L;
+		 std::cout << "\n Axon_Count_L-->" << tmp_Offset << " Axon_Count_L: " << Axon_Count_L;
 
 		 tmp_Offset += sizeof(Axon_Count_R);
-		 cout << "\n Axon_Count_R-->" << tmp_Offset << " Axon_Count_R: " << Axon_Count_R;
+		 std::cout << "\n Axon_Count_R-->" << tmp_Offset << " Axon_Count_R: " << Axon_Count_R;
 
 		 tmp_Offset += sizeof(Axon_Block_L);
-		 cout << "\n Axon_Block_L-->" << tmp_Offset << " Axon_Block_L: " << Axon_Block_L.U;
+		 std::cout << "\n Axon_Block_L-->" << tmp_Offset << " Axon_Block_L: " << Axon_Block_L.U;
 
 		 tmp_Offset += sizeof(Axon_Block_R);
-		 cout << "\n Axon_Block_R-->" << tmp_Offset << " Axon_Block_R.U: " << Axon_Block_R.U;
+		 std::cout << "\n Axon_Block_R-->" << tmp_Offset << " Axon_Block_R.U: " << Axon_Block_R.U;
 
 		 tmp_Offset += sizeof(RC_Lvl);
-		 cout << "\n RC_Lvl-->" << tmp_Offset << " RC_Lvl: " << RC_Lvl;
+		 std::cout << "\n RC_Lvl-->" << tmp_Offset << " RC_Lvl: " << RC_Lvl;
 
 		 tmp_Offset += sizeof(Tier);
-		 cout << "\n Tier-->" << tmp_Offset << " Tier: " << Tier;
+		 std::cout << "\n Tier-->" << tmp_Offset << " Tier: " << Tier;
 
 		 tmp_Offset += sizeof(Tier_Index);
-		 cout << "\n Tier_Index-->" << tmp_Offset << " Tier_Index: " << Tier_Index;
+		 std::cout << "\n Tier_Index-->" << tmp_Offset << " Tier_Index: " << Tier_Index;
 
 		 tmp_Offset += sizeof(flg_Double_Legged);
-		 cout << "\n flg_Double_Legged-->" << tmp_Offset << " flg_Double_Legged: " << flg_Double_Legged;
+		 std::cout << "\n flg_Double_Legged-->" << tmp_Offset << " flg_Double_Legged: " << flg_Double_Legged;
 
 	 }
      
@@ -658,10 +658,10 @@ public:
      c_MMap Axons_R;
      
      //The filename of the construct to load.
-     string p_Filename;
+     std::string p_Filename;
 
 	 //The log file.
-	 ofstream LOGLOG;
+     std::ofstream LOGLOG;
      
      //Size in bytes of the block.
      int block_Size;
@@ -688,8 +688,8 @@ public:
      unsigned long long int Axon_Current_Max_Block_Count_L;
      unsigned long long int Axon_Current_Max_Block_Count_R;
      
-     //The temporary string to stuff the 128 bytes of info into.
-     string current_Node_Data;
+     //The temporary std::string to stuff the 128 bytes of info into.
+     std::string current_Node_Data;
      
      //The node to temporarily hold all the data for the node.
      c_NT3_NodeDB_Node current_Node;
@@ -766,7 +766,7 @@ public:
      }
      
      //Sets the files up for a new network.
-     int new_Network(string p_Dir, string p_Filename)
+     int new_Network(std::string p_Dir, std::string p_Filename)
      {
           NodeDB_Header.new_File(p_Dir, p_Filename);
           
@@ -779,26 +779,26 @@ public:
           Axon_Current_Max_Block_Count_L = ((((NodeDB_Header.Axon_File_Size_L * 1024) * 1024) / 128)) - 1;
           Axon_Current_Max_Block_Count_R = ((((NodeDB_Header.Axon_File_Size_R * 1024) * 1024) / 128)) - 1;
           
-          ostr(0, 7, "\n Max_Node_Count: "); cout << Nodes_Current_Max_Node_Count;
-          ostr(0, 7, "\n Max_Axon_L_Count: "); cout << Axon_Current_Max_Block_Count_L;
-          ostr(0, 7, "\n Max_Axon_R_Count: "); cout << Axon_Current_Max_Block_Count_R;
+          ostr(0, 7, "\n Max_Node_Count: "); std::cout << Nodes_Current_Max_Node_Count;
+          ostr(0, 7, "\n Max_Axon_L_Count: "); std::cout << Axon_Current_Max_Block_Count_L;
+          ostr(0, 7, "\n Max_Axon_R_Count: "); std::cout << Axon_Current_Max_Block_Count_R;
           
-          string p_FName = p_Dir + "/" + p_Filename;
+          std::string p_FName = p_Dir + "/" + p_Filename;
           flg_Initialized = MMap.open_File((p_FName + "_Nodes.dat"), NodeDB_Header.Node_File_Size);
           flg_Initialized = Axons_L.open_File((p_FName + "_Axons_L.dat"), NodeDB_Header.Axon_File_Size_L);
           flg_Initialized = Axons_R.open_File((p_FName + "_Axons_R.dat"), NodeDB_Header.Axon_File_Size_R);
 
-		  string tmp_LOGName = p_Dir + "/" + p_Filename + ".Log.dat";
-		  LOGLOG.open(tmp_LOGName, ios::app);
+		  std::string tmp_LOGName = p_Dir + "/" + p_Filename + ".Log.dat";
+		  LOGLOG.open(tmp_LOGName, std::ios::app);
 
           return flg_Initialized;
      }
      
-     int load_Network(string p_Dir, string p_Filename="NULL")
+     int load_Network(std::string p_Dir, std::string p_Filename="NULL")
      {
           if (p_Filename == "NULL"){ return 0; }
           
-		  ostr(0, 13, "\n load_Network("); cout << p_Dir; ostr(0, 13, ", "); cout << p_Filename; ostr(0, 13, ")");
+		  ostr(0, 13, "\n load_Network("); std::cout << p_Dir; ostr(0, 13, ", "); std::cout << p_Filename; ostr(0, 13, ")");
 
           NodeDB_Header.load_File(p_Dir, p_Filename);
           
@@ -811,23 +811,23 @@ public:
           Axon_Current_Max_Block_Count_L = ((((NodeDB_Header.Axon_File_Size_L * 1024) * 1024) / 128)) - 1;
           Axon_Current_Max_Block_Count_R = ((((NodeDB_Header.Axon_File_Size_R * 1024) * 1024) / 128)) - 1;
           
-          ostr(0, 7, "\n Max_Node_Count: "); cout << Nodes_Current_Max_Node_Count;
-          ostr(0, 7, "\n Max_Axon_L_Count: "); cout << Axon_Current_Max_Block_Count_L;
-          ostr(0, 7, "\n Max_Axon_R_Count: "); cout << Axon_Current_Max_Block_Count_R;
+          ostr(0, 7, "\n Max_Node_Count: "); std::cout << Nodes_Current_Max_Node_Count;
+          ostr(0, 7, "\n Max_Axon_L_Count: "); std::cout << Axon_Current_Max_Block_Count_L;
+          ostr(0, 7, "\n Max_Axon_R_Count: "); std::cout << Axon_Current_Max_Block_Count_R;
           
-          string p_FName = p_Dir + "/" + p_Filename;
+          std::string p_FName = p_Dir + "/" + p_Filename;
           flg_Initialized = MMap.open_File((p_FName + "_Nodes.dat"), NodeDB_Header.Node_File_Size);
           flg_Initialized = Axons_L.open_File((p_FName + "_Axons_L.dat"), NodeDB_Header.Axon_File_Size_L);
           flg_Initialized = Axons_R.open_File((p_FName + "_Axons_R.dat"), NodeDB_Header.Axon_File_Size_R);
 
-		  string tmp_LOGName = p_Dir + "/" + p_Filename + ".Log.dat";
-		  LOGLOG.open(tmp_LOGName, ios::app);
+		  std::string tmp_LOGName = p_Dir + "/" + p_Filename + ".Log.dat";
+		  LOGLOG.open(tmp_LOGName, std::ios::app);
 
           return flg_Initialized;
      }
      
      //Saves a network header.
-     void save_Network(string p_Dir, string p_Filename="NULL", bool p_Disp_Output = 1)
+     void save_Network(std::string p_Dir, std::string p_Filename="NULL", bool p_Disp_Output = 1)
      {
           if (p_Filename == "NULL"){ p_Filename = NodeDB_Header.Network_Name; }
           
@@ -849,13 +849,13 @@ public:
           //The new filesize is the int (current * 1.5)
           NodeDB_Header.Node_File_Size = (((unsigned long long int) (NodeDB_Header.Node_File_Size * 1.1)) + 1);
           
-          ostr(0, 12, "\n Expanding Node File To "); cout << (NodeDB_Header.Node_File_Size + 1);
-          ostr(0, 12, "\n ---Current Nodes_Current_Max_Node_Count "); cout << Nodes_Current_Max_Node_Count;
+          ostr(0, 12, "\n Expanding Node File To "); std::cout << (NodeDB_Header.Node_File_Size + 1);
+          ostr(0, 12, "\n ---Current Nodes_Current_Max_Node_Count "); std::cout << Nodes_Current_Max_Node_Count;
           
           if (MMap.expand(NodeDB_Header.Node_File_Size))
           {
                Nodes_Current_Max_Node_Count = ((((NodeDB_Header.Node_File_Size * 1024) * 1024) / 128)) - 1;
-               ostr(0, 12, "\n -----New Nodes_Current_Max_Node_Count = "); cout << Nodes_Current_Max_Node_Count << "\n";
+               ostr(0, 12, "\n -----New Nodes_Current_Max_Node_Count = "); std::cout << Nodes_Current_Max_Node_Count << "\n";
                return 1;
           }
           else
@@ -884,13 +884,13 @@ public:
           //The new filesize is the int (current * 1.5)
           NodeDB_Header.Axon_File_Size_L = (((unsigned long long int) (NodeDB_Header.Axon_File_Size_L * 1.1)) + 1);
           
-          ostr(0, 12, "\n Expanding Axon_L File To "); cout << (NodeDB_Header.Axon_File_Size_L + 1);
-          ostr(0, 12, "\n ---Current Axon_Current_Max_Block_Count_L "); cout << Axon_Current_Max_Block_Count_L;
+          ostr(0, 12, "\n Expanding Axon_L File To "); std::cout << (NodeDB_Header.Axon_File_Size_L + 1);
+          ostr(0, 12, "\n ---Current Axon_Current_Max_Block_Count_L "); std::cout << Axon_Current_Max_Block_Count_L;
           
           if (Axons_L.expand(NodeDB_Header.Axon_File_Size_L))
           {
                Axon_Current_Max_Block_Count_L = ((((NodeDB_Header.Axon_File_Size_L * 1024) * 1024) / 128)) - 1;
-               ostr(0, 12, "\n -----New Axon_Current_Max_Block_Count_L = "); cout << Axon_Current_Max_Block_Count_L << "\n";
+               ostr(0, 12, "\n -----New Axon_Current_Max_Block_Count_L = "); std::cout << Axon_Current_Max_Block_Count_L << "\n";
 
 			   if (LOGLOG.is_open())
 			   {
@@ -925,13 +925,13 @@ public:
           //The new filesize is the int (current * 1.5)
           NodeDB_Header.Axon_File_Size_R = (((unsigned long long int) (NodeDB_Header.Axon_File_Size_R * 1.1)) + 1);
           
-          ostr(0, 12, "\n Expanding Axon_R File To "); cout << (NodeDB_Header.Axon_File_Size_R + 1);
-          ostr(0, 12, "\n ---Current Axon_Current_Max_Block_Count_R "); cout << Axon_Current_Max_Block_Count_R;
+          ostr(0, 12, "\n Expanding Axon_R File To "); std::cout << (NodeDB_Header.Axon_File_Size_R + 1);
+          ostr(0, 12, "\n ---Current Axon_Current_Max_Block_Count_R "); std::cout << Axon_Current_Max_Block_Count_R;
           
           if (Axons_R.expand(NodeDB_Header.Axon_File_Size_R))
           {
                Axon_Current_Max_Block_Count_R = ((((NodeDB_Header.Axon_File_Size_R * 1024) * 1024) / 128)) - 1;
-               ostr(0, 12, "\n -----New Axon_Current_Max_Block_Count_R = "); cout << Axon_Current_Max_Block_Count_R << "\n";
+               ostr(0, 12, "\n -----New Axon_Current_Max_Block_Count_R = "); std::cout << Axon_Current_Max_Block_Count_R << "\n";
 
 			   if (LOGLOG.is_open())
 			   {
@@ -956,7 +956,7 @@ public:
      //Creates a new node using the CNID to determine the position.
      unsigned long long int new_Node(int p_Tier, bool p_Save_YN = 1)
      {
-          //*-----ostr(0, 13, "\n new_Node "); cout << CNID.U << " ";
+          //*-----ostr(0, 13, "\n new_Node "); std::cout << CNID.U << " ";
           
           
           if ((CNID.U + 1) >= Nodes_Current_Max_Node_Count)
@@ -999,7 +999,7 @@ public:
           
           //current_Node_Data
           
-          //*-----cout << " node creation complete...";
+          //*-----std::cout << " node creation complete...";
           //system("PAUSE > NULL");
           //Faulture
           return CNID.U - 1;
@@ -1030,9 +1030,9 @@ public:
      unsigned long long int does_Upper_Tier_Connection_Exist(unsigned long long int p_L, unsigned long long int p_R)
      {
           //*-----ostr(0, 14, "\n\n does_Upper_Tier_Connection_Exist( p_L.U ");
-          //*-----cout << p_L;
+          //*-----std::cout << p_L;
           //*-----ostr(0, 14, ", p_R.U ");
-          //*-----cout << p_R;
+          //*-----std::cout << p_R;
           //*-----ostr(0, 14, ");");
           
           //Gather the axons from the left node
@@ -1042,10 +1042,10 @@ public:
           unsigned long long int tmp_Axon_Count = current_Node.get_Axon_Count_L();
           
           //If no axons return.
-          //*-----cout << "\n Axon Count:" << tmp_Axon_Count;
+          //*-----std::cout << "\n Axon Count:" << tmp_Axon_Count;
           if (tmp_Axon_Count == 0){ return 0; }
           
-          //*-----ostr(0, 15, "\n Gathering Axons..."); cout << tmp_Axon_Count;
+          //*-----ostr(0, 15, "\n Gathering Axons..."); std::cout << tmp_Axon_Count;
           
           goto_Axon_Block_L(current_Node.get_Axon_Block_L(), tmp_Axon_Count);
           
@@ -1054,13 +1054,13 @@ public:
           {
                
                goto_Node(Axon_List_L[cou_A].U);
-               //*-----ostr(0, 15, "\n    Testing Axon "); cout << "Axon_List[" << cou_A << "].U " << Axon_List_L[cou_A].U;
-               //*-----ostr(0, 12, "     current_Node.Dendrite_R.U = "); cout << current_Node.Dendrite_R.U;
-               //if (current_Node.Dendrite_R.U == p_R.U){ cout << " connection found"; return Axon_List_L[cou_A].U; }
+               //*-----ostr(0, 15, "\n    Testing Axon "); std::cout << "Axon_List[" << cou_A << "].U " << Axon_List_L[cou_A].U;
+               //*-----ostr(0, 12, "     current_Node.Dendrite_R.U = "); std::cout << current_Node.Dendrite_R.U;
+               //if (current_Node.Dendrite_R.U == p_R.U){ std::cout << " connection found"; return Axon_List_L[cou_A].U; }
                if (current_Node.Dendrite_R.U == p_R){ return Axon_List_L[cou_A].U; }
           }
           
-          //*-----cout << " no connection found";
+          //*-----std::cout << " no connection found";
           //Faulture
           return 0;
      }
@@ -1069,7 +1069,7 @@ public:
      {
           //*-----ostr(0, 9, "\n\n\n get_Upper_Tier_Connection(");
           //*-----oint(0, 14, p_L);
-          //*-----cout << ", ";
+          //*-----std::cout << ", ";
           //*-----oint(0, 14, p_R);
           //*-----ostr(0, 15, ")");
           
@@ -1097,14 +1097,14 @@ public:
           current_Node.Dendrite_R.U = p_R;
 
 		  //Check for and set the flag if the node is double legged.
-		  if (p_L == p_R) { current_Node.flg_Double_Legged = 1; }// cout << "\n Double legged node found:" << p_L << " " << p_R; }
+		  if (p_L == p_R) { current_Node.flg_Double_Legged = 1; }// std::cout << "\n Double legged node found:" << p_L << " " << p_R; }
           
           //current_Node.compile();
           save_Node();
           
           add_Axon_L(p_L, tmp_NID.U);
           add_Axon_R(p_R, tmp_NID.U);
-          //*-----cout << "\n  finished gathering_Upper_Tier_Connection()"; cout.flush();
+          //*-----std::cout << "\n  finished gathering_Upper_Tier_Connection()"; std::cout.flush();
           return tmp_NID.U;
      }
      
@@ -1117,7 +1117,7 @@ public:
      //Used for linking nodes together.
      int add_Axon_L(unsigned long long int  p_From, unsigned long long int  p_To)
      {
-          //*-----ostr(0, 7, "\n add_Axon_L("); cout << p_From << ", " << p_To << ")";
+          //*-----ostr(0, 7, "\n add_Axon_L("); std::cout << p_From << ", " << p_To << ")";
           goto_Node(p_From);
           
           //Goes to the axon block that holds the index wanted.
@@ -1131,7 +1131,7 @@ public:
      
      int add_Axon_R(unsigned long long int  p_From, unsigned long long int  p_To)
      {          
-          //*-----ostr(0, 7, "\n add_Axon_R("); cout << p_From << ", " << p_To << ")";
+          //*-----ostr(0, 7, "\n add_Axon_R("); std::cout << p_From << ", " << p_To << ")";
           goto_Node(p_From);
           
           //Goes to the axon block that holds the index wanted.
@@ -1159,7 +1159,7 @@ public:
      
      void goto_Node(unsigned long long int p_Node)
      {
-          //*-----ostr(0, 7, "\ngoto_Node("); cout << p_Node << ")";
+          //*-----ostr(0, 7, "\ngoto_Node("); std::cout << p_Node << ")";
           current_Node.reset();
           MMap.create_Mapping_View(p_Node * 128);
           MMap.get_Data(current_Node.tmp_Data);
@@ -1171,7 +1171,7 @@ public:
      //Goes to a node but does not load it, used for creating new nodes.
      void goto_Node_No_Load(unsigned long long int p_Node)
      {
-          //ostr(0, 7, "\ngoto_Node_No_Load("); cout << p_Node << ")";
+          //ostr(0, 7, "\ngoto_Node_No_Load("); std::cout << p_Node << ")";
           MMap.create_Mapping_View(p_Node * 128);
           current_Node.NID.U = p_Node;
      }
@@ -1202,7 +1202,7 @@ public:
      //Goes to axon chunk. Used for checking axonic connections in does_Upper_Tier_Connection_Exist().
      void goto_Axon_Block_L(unsigned long long int p_Axon_Block, unsigned long long int p_Axon_Count)
      {
-          //*-----ostr(0, 7, "\n\n goto_Axon_Block_L(p_Axon_Block "); cout << p_Axon_Block; ostr(0, 7, ", p_Axon_Count "); cout << p_Axon_Count << ")";
+          //*-----ostr(0, 7, "\n\n goto_Axon_Block_L(p_Axon_Block "); std::cout << p_Axon_Block; ostr(0, 7, ", p_Axon_Count "); std::cout << p_Axon_Count << ")";
           
           //Go to the starting block.
           Axons_L.create_Mapping_View(p_Axon_Block * 128);
@@ -1218,30 +1218,30 @@ public:
           //This assumes that u_Data_3 is 8 bytes.
           for (int cou_A=0;cou_A<p_Axon_Count;cou_A++)
           {
-               //*-----cout << "\n A:" << cou_A;
+               //*-----std::cout << "\n A:" << cou_A;
                
                //Axons and their counters.
                Axon_List_L[cou_A].U = *reinterpret_cast<unsigned long long int*> (tmp_Axons + tmp_Offset);
-               //*-----cout << "     --offset>" << tmp_Offset; cout << " " << (cou_A / 8);
+               //*-----std::cout << "     --offset>" << tmp_Offset; std::cout << " " << (cou_A / 8);
                
                //Check to see if it is the last index in the block, if so move the axon block too it. 
                if ((tmp_Block_Index) == 15)
                {
-                    //*-----cout << " --load_Next_Block>"; 
+                    //*-----std::cout << " --load_Next_Block>"; 
                     
-                    //*-----cout << " cou_A:" << cou_A;
+                    //*-----std::cout << " cou_A:" << cou_A;
                     //*-----ostr(0, 13, " Datas jmp data:");
-                    //*-----cout << Axon_List_L[cou_A].U;
+                    //*-----std::cout << Axon_List_L[cou_A].U;
                     
                     //Reset the offset to avoid bounding errors.
                     tmp_Offset = 0;
                     
                     //Move the mapping view to the next block. Do not change cou_A, we want it to track it as if nothing had happened.
-                    //*-----cout << " Axons_L.create_Mapping_View(" << Axon_List_L[cou_A].U << " * 128);";
+                    //*-----std::cout << " Axons_L.create_Mapping_View(" << Axon_List_L[cou_A].U << " * 128);";
                     Axons_L.create_Mapping_View(Axon_List_L[cou_A].U * 128);
                     Axons_L.get_Data(tmp_Axons);
                     
-                    //*-----cout << Axon_List_L[cou_A].U;
+                    //*-----std::cout << Axon_List_L[cou_A].U;
                     
                     //Now that we have the new offset and tmp_Axons data set we can extract the current axons NID.
                     Axon_List_L[cou_A].U = *reinterpret_cast<unsigned long long int*> (tmp_Axons + tmp_Offset);
@@ -1251,20 +1251,20 @@ public:
                     continue;
                }
                
-               //*-----cout << " cou_A:" << cou_A;
+               //*-----std::cout << " cou_A:" << cou_A;
                //*-----ostr(0, 12, " Datas:");
-               //*-----cout << Axon_List_L[cou_A].U;
-               //*-----cout << " block_Index:" << tmp_Block_Index;
+               //*-----std::cout << Axon_List_L[cou_A].U;
+               //*-----std::cout << " block_Index:" << tmp_Block_Index;
                tmp_Offset += 8;
                tmp_Block_Index++;
           }
-          //*-----cout << "\n Axon_Block_L_Visited"; cout.flush();
+          //*-----std::cout << "\n Axon_Block_L_Visited"; std::cout.flush();
      }
      
      //Goes to axon chunk. Used for checking axonic connections in does_Upper_Tier_Connection_Exist().
      void goto_Axon_Block_R(unsigned long long int p_Axon_Block, long int p_Axon_Count)
      {
-          //*-----ostr(0, 7, "\n\n goto_Axon_Block_L(p_Axon_Block "); cout << p_Axon_Block; ostr(0, 7, ", p_Axon_Count "); cout << p_Axon_Count << ")";
+          //*-----ostr(0, 7, "\n\n goto_Axon_Block_L(p_Axon_Block "); std::cout << p_Axon_Block; ostr(0, 7, ", p_Axon_Count "); std::cout << p_Axon_Count << ")";
           
           //Go to the starting block.
           Axons_R.create_Mapping_View(p_Axon_Block * 128);
@@ -1280,30 +1280,30 @@ public:
           //This assumes that u_Data_3 is 8 bytes.
           for (int cou_A=0;cou_A<p_Axon_Count;cou_A++)
           {
-               //*-----cout << "\n A:" << cou_A;
+               //*-----std::cout << "\n A:" << cou_A;
                
                //Axons and their counters.
                Axon_List_R[cou_A].U = *reinterpret_cast<unsigned long long int*> (tmp_Axons + tmp_Offset);
-               //*-----cout << "     --offset>" << tmp_Offset; cout << " " << (cou_A / 8);
+               //*-----std::cout << "     --offset>" << tmp_Offset; std::cout << " " << (cou_A / 8);
                
                //Check to see if it is the last index in the block, if so move the axon block too it. 
                if ((tmp_Block_Index) == 15)
                {
-                    //*-----cout << " --load_Next_Block>"; 
+                    //*-----std::cout << " --load_Next_Block>"; 
                     
-                    //*-----cout << " cou_A:" << cou_A;
+                    //*-----std::cout << " cou_A:" << cou_A;
                     //*-----ostr(0, 13, " Datas jmp data:");
-                    //*-----cout << Axon_List_R[cou_A].U;
+                    //*-----std::cout << Axon_List_R[cou_A].U;
                     
                     //Reset the offset to avoid bounding errors.
                     tmp_Offset = 0;
                     
                     //Move the mapping view to the next block. Do not change cou_A, we want it to track it as if nothing had happened.
-                    //*-----cout << " Axons_R.create_Mapping_View(" << Axon_List_R[cou_A].U << " * 128);";
+                    //*-----std::cout << " Axons_R.create_Mapping_View(" << Axon_List_R[cou_A].U << " * 128);";
                     Axons_R.create_Mapping_View(Axon_List_R[cou_A].U * 128);
                     Axons_R.get_Data(tmp_Axons);
                     
-                    //*-----cout << Axon_List_R[cou_A].U;
+                    //*-----std::cout << Axon_List_R[cou_A].U;
                     
                     //Now that we have the new offset and tmp_Axons data set we can extract the current axons NID.
                     Axon_List_R[cou_A].U = *reinterpret_cast<unsigned long long int*> (tmp_Axons + tmp_Offset);
@@ -1313,22 +1313,22 @@ public:
                     continue;
                }
                
-               //*-----cout << " cou_A:" << cou_A;
+               //*-----std::cout << " cou_A:" << cou_A;
                //*-----ostr(0, 12, " Datas:");
-               //*-----cout << Axon_List_R[cou_A].U;
-               //*-----cout << " block_Index:" << tmp_Block_Index;
+               //*-----std::cout << Axon_List_R[cou_A].U;
+               //*-----std::cout << " block_Index:" << tmp_Block_Index;
                
                tmp_Offset += 8;
                tmp_Block_Index++;
           }
-          //*-----cout << "\n Axon_Block_R_Visited"; cout.flush();
+          //*-----std::cout << "\n Axon_Block_R_Visited"; std::cout.flush();
      }
      
      
      //Goes to axon chunk. Used for checking axonic connections in does_Upper_Tier_Connection_Exist().
      void goto_Axon_Block_And_Set_Index_L(unsigned long long int p_Axon_Block, unsigned long long int p_Axon)
      {
-          //*-----ostr(0, 11, "\n\n goto_Axon_Block_And_Set_Index_L(p_Axon_Block "); cout << p_Axon_Block << ", p_Axon " << p_Axon << ")";
+          //*-----ostr(0, 11, "\n\n goto_Axon_Block_And_Set_Index_L(p_Axon_Block "); std::cout << p_Axon_Block << ", p_Axon " << p_Axon << ")";
           
           unsigned long long int tmp_Current_Position = p_Axon_Block;
           
@@ -1356,24 +1356,24 @@ public:
                tmp_Index = tmp_Count - (tmp_Blocks_To_Skip * Nodes_Per_Block);
           }
           
-          //*-----ostr(0, 11, "\n Current_NID = "); cout <<  current_Node.NID.U;
-          //*-----ostr(0, 11, "\n tmp_Count = "); cout <<  tmp_Count << ";";
-          //*-----ostr(0, 11, "\n tmp_Blocks_To_Skip =  "); cout << tmp_Blocks_To_Skip;
-          //*-----ostr(0, 11, "\n tmp_Index = "); cout << tmp_Index;
+          //*-----ostr(0, 11, "\n Current_NID = "); std::cout <<  current_Node.NID.U;
+          //*-----ostr(0, 11, "\n tmp_Count = "); std::cout <<  tmp_Count << ";";
+          //*-----ostr(0, 11, "\n tmp_Blocks_To_Skip =  "); std::cout << tmp_Blocks_To_Skip;
+          //*-----ostr(0, 11, "\n tmp_Index = "); std::cout << tmp_Index;
           
           //Loop through the blocks until we get the one we need.
           //Iterate to (Blocks_To_Skip - 1) because this gatheres and jumps to the next block. So going until the 
           //number of blocks to skip has been reached would actually get (Blocks_To_Skip + 1).
           for (unsigned int cou_Block=0;cou_Block<tmp_Blocks_To_Skip;cou_Block++)
           {
-               //*-----cout << "\n cou_Block->" << cou_Block;
+               //*-----std::cout << "\n cou_Block->" << cou_Block;
                
                //Check to see if the end of the block has been reached, if so then assign the next block.
                if (((tmp_Blocks_To_Skip - cou_Block) == 1) && (tmp_Index == 0))
                {
                     *reinterpret_cast<unsigned long long int*> (tmp_Axons + ((Nodes_Per_Block) * Bytes_Per_Node)) = Axon_Current_Block_L;
                     //*-----ostr(0, 9, "\n     *reinterpret_cast<unsigned long long int*> (tmp_Axons + (Nodes_Per_Block * Bytes_Per_Node)) = Axon_Current_Block_L;");
-                    //*-----cout << "\n     *reinterpret_cast<unsigned long long int*> (tmp_Axons + " << ((Nodes_Per_Block) * Bytes_Per_Node) << ") = " << Axon_Current_Block_L << ";";
+                    //*-----std::cout << "\n     *reinterpret_cast<unsigned long long int*> (tmp_Axons + " << ((Nodes_Per_Block) * Bytes_Per_Node) << ") = " << Axon_Current_Block_L << ";";
                     Axon_Current_Block_L++;
                     Axons_L.set_Data(tmp_Axons, 128);
                     Axons_L.save_Data();
@@ -1393,7 +1393,7 @@ public:
                //Gather the last index.
                tmp_Current_Position = *reinterpret_cast<unsigned long long int*> (tmp_Axons + ((Nodes_Per_Block) * Bytes_Per_Node));
                
-               //*-----cout << "\n    tmp_Current_Position->" << tmp_Current_Position;
+               //*-----std::cout << "\n    tmp_Current_Position->" << tmp_Current_Position;
                
                Axons_L.create_Mapping_View(tmp_Current_Position * 128);
                Axons_L.get_Data(tmp_Axons);
@@ -1405,7 +1405,7 @@ public:
           //If we are at this point we should have the block with the index we want.
           *reinterpret_cast<unsigned long long int*> (tmp_Axons + (tmp_Index * Bytes_Per_Node)) = p_Axon;
           //*-----ostr(0, 12, "\n   *reinterpret_cast<unsigned long long int*> (tmp_Axons + (tmp_Index * Bytes_Per_Node)) = p_Axon;");
-          //*-----cout << "\n     *reinterpret_cast<unsigned long long int*> (tmp_Axons +  " << (tmp_Index * Bytes_Per_Node) << ") = " << p_Axon;
+          //*-----std::cout << "\n     *reinterpret_cast<unsigned long long int*> (tmp_Axons +  " << (tmp_Index * Bytes_Per_Node) << ") = " << p_Axon;
           
           //*-----output_Datas(current_Node.NID.U, tmp_Axons);
           Axons_L.set_Data(tmp_Axons, 128);
@@ -1417,7 +1417,7 @@ public:
      //Goes to axon chunk. Used for checking axonic connections in does_Upper_Tier_Connection_Exist().
      void goto_Axon_Block_And_Set_Index_R(unsigned long long int p_Axon_Block, unsigned long long int p_Axon)
      {
-          //*-----ostr(0, 11, "\n\n goto_Axon_Block_And_Set_Index_R(unsigned long long int "); cout << p_Axon_Block << ")";
+          //*-----ostr(0, 11, "\n\n goto_Axon_Block_And_Set_Index_R(unsigned long long int "); std::cout << p_Axon_Block << ")";
           
           unsigned long long int tmp_Current_Position = p_Axon_Block;
           
@@ -1443,17 +1443,17 @@ public:
                tmp_Index = tmp_Count - (tmp_Blocks_To_Skip * Nodes_Per_Block);
           }
           
-          //*-----ostr(0, 11, "\n Current_NID = "); cout <<  current_Node.NID.U;
-          //*-----ostr(0, 11, "\n tmp_Count = "); cout <<  current_Node.get_Axon_Count_R() << ";";
-          //*-----ostr(0, 11, "\n tmp_Blocks_To_Skip =  "); cout << tmp_Blocks_To_Skip;
-          //*-----ostr(0, 11, "\n tmp_Index = "); cout << tmp_Index;
+          //*-----ostr(0, 11, "\n Current_NID = "); std::cout <<  current_Node.NID.U;
+          //*-----ostr(0, 11, "\n tmp_Count = "); std::cout <<  current_Node.get_Axon_Count_R() << ";";
+          //*-----ostr(0, 11, "\n tmp_Blocks_To_Skip =  "); std::cout << tmp_Blocks_To_Skip;
+          //*-----ostr(0, 11, "\n tmp_Index = "); std::cout << tmp_Index;
           
           //Loop through the blocks until we get the one we need.
           //Iterate to (Blocks_To_Skip - 1) because this gatheres and jumps to the next block. So going until the 
           //number of blocks to skip has been reached would actually get (Blocks_To_Skip + 1).
           for (unsigned int cou_Block=0;cou_Block<tmp_Blocks_To_Skip;cou_Block++)
           {
-               //*-----cout << "\n cou_Block->" << cou_Block;
+               //*-----std::cout << "\n cou_Block->" << cou_Block;
                
                //Check to see if the end of the block has been reached, if so then assign the next block.
                if (((tmp_Blocks_To_Skip - cou_Block) == 1) && (tmp_Index == 0))
@@ -1461,7 +1461,7 @@ public:
                     //*reinterpret_cast<unsigned long long int*> (tmp_Axons + ((Nodes_Per_Block) * Bytes_Per_Node)) = Axon_Current_Block_R;
                     *reinterpret_cast<unsigned long long int*> (tmp_Axons + ((Nodes_Per_Block) * Bytes_Per_Node)) = Axon_Current_Block_R;
                     //*-----ostr(0, 9, "\n     *reinterpret_cast<unsigned long long int*> (tmp_Axons + (Nodes_Per_Block * Bytes_Per_Node)) = Axon_Current_Block_R;");
-                    //*-----cout << "\n     *reinterpret_cast<unsigned long long int*> (tmp_Axons + " << ((Nodes_Per_Block) * Bytes_Per_Node) << ") = " << Axon_Current_Block_R << ";";
+                    //*-----std::cout << "\n     *reinterpret_cast<unsigned long long int*> (tmp_Axons + " << ((Nodes_Per_Block) * Bytes_Per_Node) << ") = " << Axon_Current_Block_R << ";";
                     Axon_Current_Block_R++;
                     Axons_R.set_Data(tmp_Axons, 128);
                     Axons_R.save_Data();
@@ -1481,7 +1481,7 @@ public:
                //Gather the last index.
                tmp_Current_Position = *reinterpret_cast<unsigned long long int*> (tmp_Axons + ((Nodes_Per_Block) * Bytes_Per_Node));
                
-               //*-----cout << "\n    tmp_Current_Position->" << tmp_Current_Position;
+               //*-----std::cout << "\n    tmp_Current_Position->" << tmp_Current_Position;
                
                Axons_R.create_Mapping_View(tmp_Current_Position * 128);
                Axons_R.get_Data(tmp_Axons);
@@ -1506,7 +1506,7 @@ public:
      //Saves the node in the current position.
      void save_Node()
      {
-          //ostr(0, 9, "\n   SAVING NODE "); cout << current_Node.NID.U;
+          //ostr(0, 9, "\n   SAVING NODE "); std::cout << current_Node.NID.U;
           current_Node.compile();
           MMap.set_Data(current_Node.tmp_Data, 128);
           MMap.save_Data();
@@ -1580,30 +1580,30 @@ public:
      
      void get_Axons_L(unsigned long long int p_Node, u_Data_3 * p_Axons)
      {
-          //*-----ostr(0, 14, "\n get_Axons_L("); cout << p_Node;
+          //*-----ostr(0, 14, "\n get_Axons_L("); std::cout << p_Node;
           //Faulture
           goto_Node(p_Node);
           goto_Axon_Block_L(current_Node.get_Axon_Block_L(), current_Node.get_Axon_Count_L());
-          //*-----ostr(0, 14, "\n gathering axons "); cout << current_Node.get_Axon_Count_L() << "...";
+          //*-----ostr(0, 14, "\n gathering axons "); std::cout << current_Node.get_Axon_Count_L() << "...";
           for (int cou_Index=0;cou_Index<current_Node.get_Axon_Count_L();cou_Index++)
           {
                p_Axons[cou_Index].U = Axon_List_L[cou_Index].U;
-               //*-----cout << "\n     " << cou_Index << ": p_A" << p_Axons[cou_Index].U << " ALL:" << Axon_List_L[cou_Index].U;
+               //*-----std::cout << "\n     " << cou_Index << ": p_A" << p_Axons[cou_Index].U << " ALL:" << Axon_List_L[cou_Index].U;
           }
           //*-----ostr(0, 14, "\n Done Gathering Axons...");
      }
      
      void get_Axons_R(unsigned long long int p_Node, u_Data_3 * p_Axons)
      {
-          //*-----ostr(0, 14, "\n get_Axons_R("); cout << p_Node;
+          //*-----ostr(0, 14, "\n get_Axons_R("); std::cout << p_Node;
           //Faulture
           goto_Node(p_Node);
           goto_Axon_Block_R(current_Node.get_Axon_Block_R(), current_Node.get_Axon_Count_R());
-          //*-----ostr(0, 14, "\n gathering axons "); cout << current_Node.get_Axon_Count_R() << "...";
+          //*-----ostr(0, 14, "\n gathering axons "); std::cout << current_Node.get_Axon_Count_R() << "...";
           for (int cou_Index=0;cou_Index<current_Node.get_Axon_Count_R();cou_Index++)
           {
                p_Axons[cou_Index].U = Axon_List_R[cou_Index].U;
-               //*-----cout << "\n     " << cou_Index << ": p_A" << p_Axons[cou_Index].U << " ALR:" << Axon_List_R[cou_Index].U;
+               //*-----std::cout << "\n     " << cou_Index << ": p_A" << p_Axons[cou_Index].U << " ALR:" << Axon_List_R[cou_Index].U;
           }
           //*-----ostr(0, 14, "\n Done Gathering Axons...");
      }
@@ -1655,16 +1655,16 @@ public:
 						if (tmp_State == char(9)) { tmp_State = '9'; }
 						if (tmp_State == char(10)) { tmp_State = 'a'; }
 						if (tmp_State == char(13)) { tmp_State = 'd'; }
-						cout << tmp_State;
+						std::cout << tmp_State;
 					}
 					if (output_Type == 1)
 					{
-						cout << current_Node.State.F << " ";
+						std::cout << current_Node.State.F << " ";
 					}
                }
                if (current_Node.Type == 1)
                {
-                    cout << current_Node.State.U << " ";
+                    std::cout << current_Node.State.U << " ";
                }
           }
      }
@@ -1692,16 +1692,16 @@ public:
 					   if (tmp_State == char(9)) { tmp_State = '9'; }
 					   if (tmp_State == char(10)) { tmp_State = 'a'; }
 					   if (tmp_State == char(13)) { tmp_State = 'd'; }
-					   cout << tmp_State;
+					   std::cout << tmp_State;
 				   }
 				   if (output_Type == 1)
 				   {
-					   cout << current_Node.State.F << " ";
+					   std::cout << current_Node.State.F << " ";
 				   }
                }
                if (current_Node.Type == 1)
                {
-                    cout << current_Node.State.U << " ";
+                    std::cout << current_Node.State.U << " ";
                }
           }
      }
@@ -1712,7 +1712,7 @@ public:
      //Starts the Backprop procedures for output only.
      void bp(c_Raw_Table_1D * p_Pattern_Output, int p_Flat_Output, int p_Input, unsigned long long int p_Node)
      {
-          //cout << "\n\n void bp(c_Raw_Table_1D * " << p_Pattern_Output << ", int " << p_Flat_Output << ", int " << p_Input << ", unsigned long long int " << p_Node << ")";
+          //std::cout << "\n\n void bp(c_Raw_Table_1D * " << p_Pattern_Output << ", int " << p_Flat_Output << ", int " << p_Input << ", unsigned long long int " << p_Node << ")";
           //For when directly output the dendrites of a nodes on the base tier.
           if (p_Node == 0){ return; }
           
@@ -1730,7 +1730,7 @@ public:
      //bp_Output the left node.
      void bp_L(c_Raw_Table_1D * p_Pattern_Output, int p_Input, unsigned long long int p_Node)
      {
-          //cout << "\n   void bp_L(c_Raw_Table_1D * " << p_Pattern_Output << ", int " << p_Input << ", unsigned long long int " << p_Node << ")";
+          //std::cout << "\n   void bp_L(c_Raw_Table_1D * " << p_Pattern_Output << ", int " << p_Input << ", unsigned long long int " << p_Node << ")";
           goto_Node(p_Node);
           //If a left leg exists then initiate a backpropagation along it, then along the right side.
           if (current_Node.Dendrite_L.U != 0)
@@ -1749,7 +1749,7 @@ public:
      //bp_Output the right node.
      void bp_R(c_Raw_Table_1D * p_Pattern_Output, int p_Input, unsigned long long int p_Node)
      {
-          //cout << "\n      void bp_R(c_Raw_Table_1D * " << p_Pattern_Output << ", int " << p_Input << ", unsigned long long int " << p_Node << ")";
+          //std::cout << "\n      void bp_R(c_Raw_Table_1D * " << p_Pattern_Output << ", int " << p_Input << ", unsigned long long int " << p_Node << ")";
           goto_Node(p_Node);
           //If a right leg exists then initiate a backpropagation.
           if (current_Node.Dendrite_R.U != 0)
@@ -1769,10 +1769,10 @@ public:
      {
           for (int cou_Index=0;cou_Index<16;cou_Index++)
           {
-               cout << "\n" << cou_Index;
+               std::cout << "\n" << cou_Index;
                ostr(0, 7, " Datas:");
-               //cout << Axon_List_L[cou_A].U;
-               cout << *reinterpret_cast<unsigned long long int*> (p_Datas +  (cou_Index * 8));
+               //std::cout << Axon_List_L[cou_A].U;
+               std::cout << *reinterpret_cast<unsigned long long int*> (p_Datas +  (cou_Index * 8));
           }
      }
      
@@ -1782,19 +1782,19 @@ public:
           for (unsigned int cou_Index=0;cou_Index<CNID.U;cou_Index++)
           {
                goto_Node(cou_Index);
-               cout << "\n\n NID:" << cou_Index << "\n";
+               std::cout << "\n\n NID:" << cou_Index << "\n";
 
-               cout << "\n";
+               std::cout << "\n";
                for (int cou_Index=0;cou_Index<128;cou_Index+=32)
                {
-                    cout << "\n";
+                    std::cout << "\n";
                     for (int cou_U=0;cou_U<32;cou_U++)
                     {
                          ochr(8, 7, current_Node.tmp_Data[(cou_U + cou_Index)]);
                     }
                     for (int cou_U=0;cou_U<32;cou_U++)
                     {
-                         cout << " " << int(current_Node.tmp_Data[cou_U + cou_Index]);
+                         std::cout << " " << int(current_Node.tmp_Data[cou_U + cou_Index]);
                     }
                }
           }
@@ -1829,15 +1829,15 @@ public:
      //Outputs the nodes to a canvas HTML document.
      long int current_Highest_Depth;
      int tmp_Text_PX;
-     void output_Nodes_As_HTML(string p_Dir, string p_File, int p_X_Padd, int p_Y_Padd)
+     void output_Nodes_As_HTML(std::string p_Dir, std::string p_File, int p_X_Padd, int p_Y_Padd)
      {
-          ofstream SF;
-          string tmp_File = p_Dir + "/" + p_File;
-          SF.open(tmp_File, ios::ate);
+         std::ofstream SF;
+          std::string tmp_File = p_Dir + "/" + p_File;
+          SF.open(tmp_File, std::ios::ate);
           
           if (!SF.is_open())
           {
-               cout << "\n\n FILE " + tmp_File + " CANNOT BE OPENED!\n\n";
+               std::cout << "\n\n FILE " + tmp_File + " CANNOT BE OPENED!\n\n";
                return;
           }
           
@@ -1880,7 +1880,7 @@ public:
      
      //Outputs a single node to the canvas HTML document.
      //This is done from this level so that we can follow the dendrites.
-     void output_Node_As_HTML(ofstream * p_SF, int p_X_Padd, int p_Y_Padd)
+     void output_Node_As_HTML(std::ofstream * p_SF, int p_X_Padd, int p_Y_Padd)
      {
           *p_SF << "\n";
           unsigned long long int tmp_DL = 0;
@@ -1889,15 +1889,15 @@ public:
 		  unsigned long long int tmp_Y = 0;
           
           //Whether or not the node is a state node.
-          //cout << "\n Type-->" << Type;
+          //std::cout << "\n Type-->" << Type;
           
           //Axons and their counters.
-          //cout << " A_Cou_L-->" << Axon_Count_L;
-          //cout << " A_Cou_R-->" << Axon_Count_R;
+          //std::cout << " A_Cou_L-->" << Axon_Count_L;
+          //std::cout << " A_Cou_R-->" << Axon_Count_R;
           
           //Axons and their counters.
-          //cout << " A_Blo_L-->" << Axon_Block_L.U;
-          //cout << " A_Blo_R-->" << Axon_Block_R.U;
+          //std::cout << " A_Blo_L-->" << Axon_Block_L.U;
+          //std::cout << " A_Blo_R-->" << Axon_Block_R.U;
           
           long int tmp_Offset = (((long int) (current_Highest_Depth / 2)) - ((long int) (Tier_Depth[current_Node.Tier] / 2)));
           tmp_X = (((current_Node.Tier_Index + tmp_Offset) * p_X_Padd) + p_X_Padd);
@@ -1905,11 +1905,11 @@ public:
                
           if (current_Node.Type == 0)
           { 
-               //cout << " State-->" << char(current_Node.State.U); 
+               //std::cout << " State-->" << char(current_Node.State.U); 
                
-               //cout << " Tier-->" << current_Node.Tier;
+               //std::cout << " Tier-->" << current_Node.Tier;
                
-               //cout << " Tier_Index-->" << current_Node.Tier_Index;
+               //std::cout << " Tier_Index-->" << current_Node.Tier_Index;
                *p_SF << "\nctx.beginPath();";
                *p_SF << "\n\nctx.moveTo(" << tmp_X << ", " << tmp_Y << ");";
                *p_SF << "\nctx.strokeStyle=\"#0F0F0F\";";
@@ -1921,16 +1921,16 @@ public:
           else
           {
                //Dendrites.
-               //cout << " D_L-->" << current_Node.Dendrite_L.U;
-               //cout << " D_R-->" << current_Node.Dendrite_R.U;
+               //std::cout << " D_L-->" << current_Node.Dendrite_L.U;
+               //std::cout << " D_R-->" << current_Node.Dendrite_R.U;
                
                //Reinforcement Counters.
-               //cout << " RC_Lvl-->" << RC_Lvl;
+               //std::cout << " RC_Lvl-->" << RC_Lvl;
                
                
-               //cout << " Tier-->" << current_Node.Tier;
+               //std::cout << " Tier-->" << current_Node.Tier;
                
-               //cout << " Tier_Index-->" << current_Node.Tier_Index;
+               //std::cout << " Tier_Index-->" << current_Node.Tier_Index;
                
                *p_SF << "\nctx.beginPath();";
                *p_SF << "\n\nctx.moveTo(" << tmp_X << ", " << tmp_Y << ");";
@@ -1952,8 +1952,8 @@ public:
                long int tmp_DR_T = ((current_Node.Tier * p_Y_Padd) + p_Y_Padd);
                long int tmp_DR_TI = (((current_Node.Tier_Index + tmp_Offset) * p_X_Padd) + p_X_Padd);
                
-               //cout << "\n     [Left] (" << tmp_DL_T << ", " << tmp_DL_TI << ")";
-               //cout << "\n     [Right] (" << tmp_DR_T << ", " << tmp_DR_TI << ")";
+               //std::cout << "\n     [Left] (" << tmp_DL_T << ", " << tmp_DL_TI << ")";
+               //std::cout << "\n     [Right] (" << tmp_DR_T << ", " << tmp_DR_TI << ")";
                
                *p_SF << "\nctx.beginPath();"; 
                *p_SF << "\nctx.moveTo(" << tmp_X << ", " << tmp_Y << ");";
@@ -2041,7 +2041,7 @@ public:
      //During runtime new state nodes will be added to the list.
      //A save function can be called to flush the recently created nodes into the state nodes file.
      c_LoTd_Linked_List_Handler State_List;
-     string State_List_Filename;
+     std::string State_List_Filename;
      
      c_NT3_Node_Network_MMap_1D()
      {
@@ -2052,7 +2052,7 @@ public:
      
      ~c_NT3_Node_Network_MMap_1D()
      {
-          cout << "\n ~c_NT3_Node_Network_MMap_1D " << CNID.I << " " << this << ".........."; cout.flush();
+          std::cout << "\n ~c_NT3_Node_Network_MMap_1D " << CNID.I << " " << this << ".........."; std::cout.flush();
           //delete Root;
           
           /*
@@ -2072,11 +2072,11 @@ public:
           delete Root;
           Root = NULL;
           */
-          cout << "\n ~~~c_NT3_Node_Network_MMap_1D " << CNID.I << " " << this << ".........."; cout.flush();
+          std::cout << "\n ~~~c_NT3_Node_Network_MMap_1D " << CNID.I << " " << this << ".........."; std::cout.flush();
      }
      
      //Initializes the network with a file to use. Has to be done in order to use the network.
-     int init(string p_Dir, string p_File)
+     int init(std::string p_Dir, std::string p_File)
      {
           State_List_Filename = p_Dir + "/" + p_File + ".states.dat";
           State_List.reset();
@@ -2085,7 +2085,7 @@ public:
      }
      
 	 //Used for new networks.
-	 int new_Network(string p_Dir, string p_File)
+	 int new_Network(std::string p_Dir, std::string p_File)
 	 {
 		 State_List_Filename = p_Dir + "/" + p_File + ".states.dat";
 		 State_List.reset();
@@ -2162,7 +2162,7 @@ public:
           //Increment the node tracker.
           CNID.I++;
           
-          //If axon couts are given expand the axon arrays.
+          //If axon std::couts are given expand the axon arrays.
           if (p_A_L){ (*Current_Node)->expand_Axon_L(p_A_L); }
           if (p_A_R){ (*Current_Node)->expand_Axon_R(p_A_R); }
           
@@ -2450,7 +2450,7 @@ public:
      ////==---------------------------------+
      
      //Used to save the header updated info. Namely CNID
-     void update_Header(string p_Dir, string p_FName = "NULL")
+     void update_Header(std::string p_Dir, std::string p_FName = "NULL")
      {
           Nodes.save_Network(p_Dir, p_FName, 0);
           save_State_Nodes();
@@ -2459,10 +2459,10 @@ public:
      //Loads the state nodes.
      void load_State_Nodes()
      {
-          ifstream SF;
+          std::ifstream SF;
           SF.open(State_List_Filename);
           
-		  if (!SF.is_open()){ cout << "\n State Loading FAILED... File " << State_List_Filename << " could not be opened..."; return; }
+		  if (!SF.is_open()){ std::cout << "\n State Loading FAILED... File " << State_List_Filename << " could not be opened..."; return; }
           
           //The temp vars for loading all of the states.
           u_Data_3 tmp_State;
@@ -2482,7 +2482,7 @@ public:
                //Add it to the state tree, assuming that the current state has already been queried.
                State_Tree.set_Current_Node_NID(tmp_Node);
                
-               //cout << "\n" << tmp_Node.U << " " << tmp_State.U << " " << char (tmp_State.U);
+               //std::cout << "\n" << tmp_Node.U << " " << tmp_State.U << " " << char (tmp_State.U);
           }
           SF.close();
      }
@@ -2490,10 +2490,10 @@ public:
      //Saves teh state nodes.
      void save_State_Nodes()
      {
-          ofstream SF;
-          SF.open(State_List_Filename, ios::app);
+          std::ofstream SF;
+          SF.open(State_List_Filename, std::ios::app);
           
-		  if (!SF.is_open()) { cout << "\n State Saving FAILED... File " << State_List_Filename << " could not be opened..."; return; }
+		  if (!SF.is_open()) { std::cout << "\n State Saving FAILED... File " << State_List_Filename << " could not be opened..."; return; }
           
           c_LoTd_Linked_List * tmp_LL = State_List.Root;
           
@@ -2503,7 +2503,7 @@ public:
           {
                //State_List.new_LL(tmp_State, tmp_Node);
                SF << "\n" << tmp_LL->ID.U  << " " << tmp_LL->Data.U;
-               //cout << "\n" << tmp_LL->ID.U << " " << tmp_LL->Data.U << " " << char (tmp_LL->Data.U);
+               //std::cout << "\n" << tmp_LL->ID.U << " " << tmp_LL->Data.U << " " << char (tmp_LL->Data.U);
                tmp_LL = tmp_LL->Next;
           }
           tmp_LL = NULL;
@@ -2546,7 +2546,7 @@ public:
           while (tmp_LL != NULL)
           {
                tmp_LL_Next = tmp_LL->Next;
-               cout << "\n  ";
+               std::cout << "\n  ";
                tmp_LL->bp_O();
                tmp_LL = tmp_LL_Next;
           }
@@ -2554,7 +2554,7 @@ public:
      }
      
      //Oututs all of the nodes to a HTML file with a <canvas>
-     void output_Nodes_As_HTML(string p_DIR, string p_File, int p_X_Padd, int p_Y_Padd)
+     void output_Nodes_As_HTML(std::string p_DIR, std::string p_File, int p_X_Padd, int p_Y_Padd)
      {
           Nodes.output_Nodes_As_HTML(p_DIR, p_File, p_X_Padd, p_Y_Padd);
           /*
@@ -2566,7 +2566,7 @@ public:
           while (tmp_LL != NULL)
           {
                tmp_LL_Next = tmp_LL->Next;
-               cout << "\n  ";
+               std::cout << "\n  ";
                tmp_LL->bp_O();
                tmp_LL = tmp_LL_Next;
           }
@@ -2664,7 +2664,7 @@ private:
      
 public:
      
-     string file_Name;
+     std::string file_Name;
      
      void * MMap_Current_Position_Data;
      
@@ -2690,33 +2690,33 @@ public:
      
      void calculate_Mapping_Parameters(int p_Map_Size = 512)
      {
-          cout << "\n p_Map_Size->" << p_Map_Size;
+          std::cout << "\n p_Map_Size->" << p_Map_Size;
           
           //Get the system granulation.
           get_System_Granulation();
           
-          cout << "\n system_Granulation->" << system_Granulation;
+          std::cout << "\n system_Granulation->" << system_Granulation;
           
           //Get the MMap_Starting_Offset for where to start the mapping in the file grains.
           MMap_Starting_Offset = 0;//(p_File_Map_Start / system_Granulation) * system_Granulation;
           
-          cout << "\n MMap_Starting_Offset->" << MMap_Starting_Offset;
+          std::cout << "\n MMap_Starting_Offset->" << MMap_Starting_Offset;
           
           //Calculate the size of the mapping view.
           MMap_View_Size = CONST_BUFFER_SIZE;//(p_File_Map_Start % system_Granulation) + CONST_BUFFER_SIZE;
           
-          cout << "\n MMap_View_Size->" << MMap_View_Size;
+          std::cout << "\n MMap_View_Size->" << MMap_View_Size;
           
           //Figure size of the file mapping object.
           MMap_File_Map_Size = (p_Map_Size * (1024 * 1024)) + CONST_BUFFER_SIZE;
           
-          cout << "\n MMap_File_Map_Size->" << MMap_File_Map_Size;
+          std::cout << "\n MMap_File_Map_Size->" << MMap_File_Map_Size;
           
           //Find the current position of the data pointer to use when referencing file contents.
           //MMap_Current_Position = p_File_Map_Start - MMap_Starting_Offset;
           MMap_Current_Position = MMap_Starting_Offset;
           
-          cout << "\n MMap_Current_Position->" << MMap_Current_Position;
+          std::cout << "\n MMap_Current_Position->" << MMap_Current_Position;
      }
      
      //Maps the files, does not create the view.
@@ -2731,7 +2731,7 @@ public:
           
           if (MMap_File_Mapping == NULL)
           {
-               cout << "\n MMap_File_Mapping == NULL LastError():" << GetLastError();
+               std::cout << "\n MMap_File_Mapping == NULL LastError():" << GetLastError();
                return 2;
           }
           
@@ -2744,16 +2744,16 @@ public:
           //Get the MMap_Starting_Offset for where to start the mapping in the file grains.
           MMap_Starting_Offset = (p_Position / system_Granulation) * system_Granulation;
           
-          //cout << "\n MMap_Starting_Offset->" << MMap_Starting_Offset;
+          //std::cout << "\n MMap_Starting_Offset->" << MMap_Starting_Offset;
           
           //Calculate the size of the mapping view.
           MMap_View_Size = (p_Position % system_Granulation) + CONST_BUFFER_SIZE;
           
-          //cout << "\n MMap_View_Size->" << MMap_View_Size;
+          //std::cout << "\n MMap_View_Size->" << MMap_View_Size;
           
           MMap_Current_Position = p_Position;
           
-          cout << "\n MMap_Current_Position->" << MMap_Current_Position;
+          std::cout << "\n MMap_Current_Position->" << MMap_Current_Position;
      }
      
      //Creates a view at the given offset.
@@ -2765,7 +2765,7 @@ public:
           if (MMap_View != NULL)
           {
                UnmapViewOfFile(MMap_View);
-               //cout << "\n Unmapped MMap_View:" << GetLastError();
+               //std::cout << "\n Unmapped MMap_View:" << GetLastError();
                MMap_View = NULL;
           }
           
@@ -2783,7 +2783,7 @@ public:
                                    
           if (MMap_View == NULL)
           {
-               cout << "\n MMap_View == NULL LastError():" << GetLastError();
+               std::cout << "\n MMap_View == NULL LastError():" << GetLastError();
                return 3;
           }
           
@@ -2793,12 +2793,12 @@ public:
      
      //The p_File_Map_Start is the offset to use in the beginning. 
      //There will be a function for moving the view.
-     int open_File(string p_File_Name, int p_Map_Size_MB = 512)
+     int open_File(std::string p_File_Name, int p_Map_Size_MB = 512)
      {
           
           Data_File = NULL;
           
-          cout << "\n Opening " << p_File_Name;
+          std::cout << "\n Opening " << p_File_Name;
           
           calculate_Mapping_Parameters(p_Map_Size_MB);
           
@@ -2849,14 +2849,14 @@ public:
           char * tmp_Data = NULL;
           if (p_Mode == 0)
           {
-               cout << "\n -----------------------------------------------------------------------------\n";
+               std::cout << "\n -----------------------------------------------------------------------------\n";
                for (int cou_Index=0;cou_Index<CONST_BUFFER_SIZE;cou_Index++)
                {
                     tmp_Data = ((char*) MMap_View + MMap_Current_Position + cou_Index);
                     
-                    cout << (*tmp_Data);
+                    std::cout << (*tmp_Data);
                }
-               cout << "\n -----------------------------------------------------------------------------\n";
+               std::cout << "\n -----------------------------------------------------------------------------\n";
           }
           if (p_Mode == 1)
           {
@@ -2864,7 +2864,7 @@ public:
                {
                     tmp_Data = ((char*) MMap_View + MMap_Current_Position + cou_Index);
                     
-                    cout << "\n " << cou_Index << "->" << (*tmp_Data) << "<-  int->" << ((int) (*tmp_Data));
+                    std::cout << "\n " << cou_Index << "->" << (*tmp_Data) << "<-  int->" << ((int) (*tmp_Data));
                }
           }
      }
