@@ -1,1 +1,0 @@
--absolute functions rely on <cstdlib>
