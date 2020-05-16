@@ -72,7 +72,7 @@ private:
           
           void search(u_Data_3 p_Data)
           {
-               //---cout << "\n\n Fractal Search " << p_Data.U;
+               //---std::cout << "\n\n Fractal Search " << p_Data.U;
                flg_Foundit = false;
                
                tmp_Data.U = 0;
@@ -84,11 +84,11 @@ private:
           {
                tmp_Data.U = p_Data.U >> p_Shift;
                
-               //---cout << "\n\t __QN__ tmp_Data.U->" << tmp_Data.U << " p_Data.U->" << p_Data.U << " p_Shift->" << p_Shift;
+               //---std::cout << "\n\t __QN__ tmp_Data.U->" << tmp_Data.U << " p_Data.U->" << p_Data.U << " p_Shift->" << p_Shift;
                
                if (p_Node == NULL)
                {      
-                    //---cout << "\n\t   Node is NULL";
+                    //---std::cout << "\n\t   Node is NULL";
                     p_Node = new c_NT3_Fractal_State_Node_MMap;
                     p_Node->Right = NULL;
                     p_Node->Center = NULL;
@@ -96,12 +96,12 @@ private:
                     p_Node->NID.U = 0;
                     if (p_Shift >= 1)
                     {
-                         //---cout << "\n\t   p_Shift >= 1";
+                         //---std::cout << "\n\t   p_Shift >= 1";
                          p_Node->Data = tmp_Data;
                     }
                     else 
                     {
-                         //---cout << "\n\t   p_Shift == 1";
+                         //---std::cout << "\n\t   p_Shift == 1";
                          p_Node->Data = p_Data;
                          Current = &p_Node; 
                          flg_Foundit = false;
@@ -112,7 +112,7 @@ private:
                //If the current data matches the tmp data then another depth is explored.
                if (p_Node->Data.U == tmp_Data.U && p_Shift > 0)
                {
-                    //---cout << "\n\t   p_Node->Data.U (" << p_Node->Data.U << ") == tmp_Data.U (" << tmp_Data.U << ")";
+                    //---std::cout << "\n\t   p_Node->Data.U (" << p_Node->Data.U << ") == tmp_Data.U (" << tmp_Data.U << ")";
                     //if (p_Shift == 1){ query_Node(p_Node->Center, p_Data, 0); return 0; }
                     query_Node(p_Node->Center, p_Data, (p_Shift - 1));
                     return 0;  
@@ -121,7 +121,7 @@ private:
                //If the node data matches the given data exactly the node has been found.
                if (p_Node->Data.U == p_Data.U && p_Shift <= 0)
                {
-                    //---cout << "\n\t    p_Node->Data.NR(" << p_Node->Data.NR << ") == p_Data.NR(" << p_Data.NR << ")";
+                    //---std::cout << "\n\t    p_Node->Data.NR(" << p_Node->Data.NR << ") == p_Data.NR(" << p_Data.NR << ")";
                     Current = &p_Node;  
                     if (p_Node->NID.U != 0){ flg_Foundit = true; }
                     return 0;
@@ -130,13 +130,13 @@ private:
                
                if (tmp_Data.U < p_Node->Data.U)
                {
-                    //---cout << "\n\t    tmp_Data.U (" << tmp_Data.U << ") < p_Node->Data.U(" << p_Node->Data.U << ")";
+                    //---std::cout << "\n\t    tmp_Data.U (" << tmp_Data.U << ") < p_Node->Data.U(" << p_Node->Data.U << ")";
                     query_Node(p_Node->Left, p_Data, (p_Shift - 1));
                     return 0;
                }
                if (tmp_Data.U > p_Node->Data.U)
                {
-                    //---cout << "\n\t    tmp_Data.U (" << tmp_Data.U << ") > p_Node->Data.U(" << p_Node->Data.U << ")";
+                    //---std::cout << "\n\t    tmp_Data.U (" << tmp_Data.U << ") > p_Node->Data.U(" << p_Node->Data.U << ")";
                     query_Node(p_Node->Right, p_Data, (p_Shift - 1));
                     return 0;
                }
@@ -154,19 +154,19 @@ private:
           {
                if (p_Node == NULL){ return; }
                output_Node(p_Node->Left, (p_Tab));
-               cout << "\n";
+               std::cout << "\n";
                for (int cou_Index=0;cou_Index<p_Tab;cou_Index++)
                {
-                    cout << "  ";
+                    std::cout << "  ";
                }
-               cout << (p_Node->Data).I << "->" << (p_Node->NID.U);
+               std::cout << (p_Node->Data).I << "->" << (p_Node->NID.U);
                output_Node(p_Node->Center, (p_Tab + 1));
                output_Node(p_Node->Right, (p_Tab));
           }
           /*
           void output_Tree_BP()
           {
-               cout << "\n\t Fractal Tree Backpropagation Station";
+               std::cout << "\n\t Fractal Tree Backpropagation Station";
                output_Node_BP(Root);
           }
           
@@ -174,7 +174,7 @@ private:
           {
                if (p_Node == NULL){ return; }
                output_Node_BP(p_Node->Left);
-               if ((p_Node->NID.U) != NULL){ cout << "\n\t" << (p_Node->Data).I << "->" << (p_Node->NID); (p_Node->NID)->bp_O(); }
+               if ((p_Node->NID.U) != NULL){ std::cout << "\n\t" << (p_Node->Data).I << "->" << (p_Node->NID); (p_Node->NID)->bp_O(); }
                output_Node_BP(p_Node->Center);
                output_Node_BP(p_Node->Right);
           }

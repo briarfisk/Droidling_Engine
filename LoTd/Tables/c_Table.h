@@ -8,13 +8,13 @@ public:
      virtual ~c_Base_Table(){};
      
      virtual void set_Table_ID(int p_Table_ID)=0;
-     virtual void set_Table_Name(string p_Table_Name)=0;
-     virtual string get_Table_Name()=0;
+     virtual void set_Table_Name(std::string p_Table_Name)=0;
+     virtual std::string get_Table_Name()=0;
      virtual int get_Table_Dimension()=0;
      virtual int row_Is_Empty(int p_Row)=0;
      virtual int rowc_Is_Empty()=0;
      virtual int table_Is_Empty()=0;
-     virtual string get_Table_Data_Type()=0;
+     virtual std::string get_Table_Data_Type()=0;
      
      virtual void output_Table()=0;
      virtual void output_Table_Header()=0;
@@ -33,50 +33,50 @@ public:
      
      
      //Sets a given rows cell to the given data.
-     virtual void set_string(   int p_Row, int p_Cell, string p_String)=0;
+     virtual void set_string(   int p_Row, int p_Cell, std::string p_String)=0;
      virtual void set_int(      int p_Row, int p_Cell, int p_Int)=0;
      virtual void set_float(    int p_Row, int p_Cell, float p_Float)=0;
      virtual void set_reference(int p_Row, int p_Cell, void * p_Void)=0;
      virtual void set_bool(     int p_Row, int p_Cell, bool p_Bool)=0;
      
      //Pushes a data chunk onto the given row.
-     virtual void push_string(   int p_Row, string p_String)=0;
+     virtual void push_string(   int p_Row, std::string p_String)=0;
      virtual void push_int(      int p_Row, int p_Int)=0;
      virtual void push_float(    int p_Row, float p_Float)=0;
      virtual void push_reference(int p_Row, void * p_Void)=0;
      virtual void push_bool(     int p_Row, bool p_Bool)=0;
      
      //Pushes a data chunk onto the current row.
-     virtual void pushc_string(   string p_String)=0;
+     virtual void pushc_string(   std::string p_String)=0;
      virtual void pushc_int(      int p_Int)=0;
      virtual void pushc_float(    float p_Float)=0;
      virtual void pushc_reference(void * p_Void)=0;
      virtual void pushc_bool(     bool p_Bool)=0;
      
      //Pops the current row then pushes a data chunk onto the given row.
-     virtual void pop_push_string(   string p_String)=0;
+     virtual void pop_push_string(   std::string p_String)=0;
      virtual void pop_push_int(      int p_Int)=0;
      virtual void pop_push_float(    float p_Float)=0;
      virtual void pop_push_reference(void * p_Void)=0;
      virtual void pop_push_bool(     bool p_Bool)=0;
      
      //Pushes a data chunk onto the current row then pops it.
-     virtual void push_pop_string(   string p_String)=0;
+     virtual void push_pop_string(   std::string p_String)=0;
      virtual void push_pop_int(      int p_Int)=0;
      virtual void push_pop_float(    float p_Float)=0;
      virtual void push_pop_reference(void * p_Void)=0;
      virtual void push_pop_bool(     bool p_Bool)=0;
      
      //Gets a given cells data in a given row.
-     virtual string get_string(   int p_Row, int p_Cell)=0;
-     virtual int    get_int(      int p_Row, int p_Cell, int p_Index=0)=0;
-     virtual float  get_float(    int p_Row, int p_Cell, int p_Index=0)=0;
-     virtual void * get_reference(int p_Row, int p_Cell, int p_Index=0)=0;
-     virtual bool   get_bool(     int p_Row, int p_Cell, int p_Index=0)=0;
-     virtual u_Data get_data(     int p_Row, int p_Cell, int p_Index=0)=0;
+     virtual std::string get_string(   int p_Row, int p_Cell)=0;
+     virtual int         get_int(      int p_Row, int p_Cell, int p_Index=0)=0;
+     virtual float       get_float(    int p_Row, int p_Cell, int p_Index=0)=0;
+     virtual void *      get_reference(int p_Row, int p_Cell, int p_Index=0)=0;
+     virtual bool        get_bool(     int p_Row, int p_Cell, int p_Index=0)=0;
+     virtual u_Data      get_data(     int p_Row, int p_Cell, int p_Index=0)=0;
      
      //Gets a given cells data in a given row.
-     virtual string getc_string(   )=0;
+     virtual std::string getc_string(   )=0;
      virtual int    getc_int(      )=0;
      virtual float  getc_float(    )=0;
      virtual void * getc_reference()=0;
@@ -84,20 +84,20 @@ public:
      virtual u_Data getc_data(     )=0;
      
      //Copies the data from the submitted cell into itself.
-     virtual string copy_Cell(int p_Row, int p_Cell, void * p_Cell_To_Copy)=0;
-     virtual string copy_Row(int p_Row, void * p_Cell_To_Copy)=0;
-     virtual string copy_Row(void * p_Row_To_Overwrite, void * p_Row_To_Copy)=0;
-     virtual string copy_Table(void * p_Table_To_Copy)=0;
+     virtual std::string copy_Cell(int p_Row, int p_Cell, void * p_Cell_To_Copy)=0;
+     virtual std::string copy_Row(int p_Row, void * p_Cell_To_Copy)=0;
+     virtual std::string copy_Row(void * p_Row_To_Overwrite, void * p_Row_To_Copy)=0;
+     virtual std::string copy_Table(void * p_Table_To_Copy)=0;
      
-     virtual string swap_Row_Reference(int p_Row_One, int p_Row_Two)=0;
-     virtual string overlay_Row(int p_Row, int p_Index, void * p_Row_To_Copy)=0;
-     virtual string shift_Column(int p_Column_To_Shift)=0;
-     virtual string shift_All_Rows(int p_Index)=0;
-     virtual string translate_Row(void * p_From_Table, int p_Row, int p_Column, int p_Offset)=0;
-     virtual string translate_Column(void * p_From_Table, int p_Column, int p_Offset, int p_Depth, int p_Row)=0;
-     virtual string rotate_Table()=0;
+     virtual std::string swap_Row_Reference(int p_Row_One, int p_Row_Two)=0;
+     virtual std::string overlay_Row(int p_Row, int p_Index, void * p_Row_To_Copy)=0;
+     virtual std::string shift_Column(int p_Column_To_Shift)=0;
+     virtual std::string shift_All_Rows(int p_Index)=0;
+     virtual std::string translate_Row(void * p_From_Table, int p_Row, int p_Column, int p_Offset)=0;
+     virtual std::string translate_Column(void * p_From_Table, int p_Column, int p_Offset, int p_Depth, int p_Row)=0;
+     virtual std::string rotate_Table()=0;
      
-     virtual string convert_Table_To_String()=0;
+     virtual std::string convert_Table_To_String()=0;
      
      //Resets the table.
      virtual void reset_Table()=0;
@@ -126,14 +126,14 @@ protected:
      int Push_Index;
      
      //The name of the table.
-     string Table_Name;
+     std::string Table_Name;
      
      //The tables ID as an int.
      int Table_ID;
      
 public:
      
-     c_Table_1D(string p_Table_Name = "Generic_Table")
+     c_Table_1D(std::string p_Table_Name = "Generic_Table")
      {
           Table_Name = p_Table_Name;
           Rows = new c_Row_1D*[1];
@@ -192,13 +192,13 @@ public:
      int get_Table_Dimension(){ return 1; }
      
      //Sets the name of the table to the given name.
-     void set_Table_Name(string p_Table_Name)
+     void set_Table_Name(std::string p_Table_Name)
      {
           Table_Name = p_Table_Name;
      }
      
      //Gets the name of the table.
-     string get_Table_Name()
+     std::string get_Table_Name()
      {
           return Table_Name;
      }
@@ -214,7 +214,7 @@ public:
      
      
      //Pushes a data bit into the current cell in the current row.
-     void push_Data_Bit_Into_Current_Cell_On_Current_Row_S (string p_Data) { Rows[Push_Index]->push_Data_Bit_Into_Current_Cell_C(p_Data.at(0));  }
+     void push_Data_Bit_Into_Current_Cell_On_Current_Row_S (std::string p_Data) { Rows[Push_Index]->push_Data_Bit_Into_Current_Cell_C(p_Data.at(0));  }
      void push_Data_Bit_Into_Current_Cell_On_Current_Row_C (char p_Data)   { Rows[Push_Index]->push_Data_Bit_Into_Current_Cell_C(p_Data);        }
      void push_Data_Bit_Into_Current_Cell_On_Current_Row_I (int p_Data)    { Rows[Push_Index]->push_Data_Bit_Into_Current_Cell_I(p_Data);        }
      void push_Data_Bit_Into_Current_Cell_On_Current_Row_F (float p_Data)  { Rows[Push_Index]->push_Data_Bit_Into_Current_Cell_F(p_Data);        }
@@ -223,7 +223,7 @@ public:
      void push_Data_Bit_Into_Current_Cell_On_Current_Row   (u_Data p_Data, int p_Data_Type = 0){ Rows[Push_Index]->push_Data_Bit_Into_Current_Cell(p_Data, p_Data_Type); }
      
      //Pushes a bit of data into the current cell on the given row.
-     void push_Data_Bit_Into_Current_Cell_On_Given_Row_S (int p_Row, string p_Data) { xTble(p_Row + 1); Rows[p_Row]->push_Data_Bit_Into_Current_Cell_C(p_Data.at(0));  }
+     void push_Data_Bit_Into_Current_Cell_On_Given_Row_S (int p_Row, std::string p_Data) { xTble(p_Row + 1); Rows[p_Row]->push_Data_Bit_Into_Current_Cell_C(p_Data.at(0));  }
      void push_Data_Bit_Into_Current_Cell_On_Given_Row_C (int p_Row, char p_Data)   { xTble(p_Row + 1); Rows[p_Row]->push_Data_Bit_Into_Current_Cell_C(p_Data);        }
      void push_Data_Bit_Into_Current_Cell_On_Given_Row_I (int p_Row, int p_Data)    { xTble(p_Row + 1); Rows[p_Row]->push_Data_Bit_Into_Current_Cell_I(p_Data);        }
      void push_Data_Bit_Into_Current_Cell_On_Given_Row_F (int p_Row, float p_Data)  { xTble(p_Row + 1); Rows[p_Row]->push_Data_Bit_Into_Current_Cell_F(p_Data);        }
@@ -233,8 +233,8 @@ public:
      
      //--     PUSHING DATA ONTO THE CURRENT ROW ONE PIECE AT A TIME
      
-     //Pushes a string onto the current row.
-     void push_Data_Bit_Onto_Current_Row_S(string p_Data)  { Rows[Push_Index]->push_Data_Bit_S(p_Data);  }
+     //Pushes a std::string onto the current row.
+     void push_Data_Bit_Onto_Current_Row_S(std::string p_Data)  { Rows[Push_Index]->push_Data_Bit_S(p_Data);  }
      void push_Data_Bit_Onto_Current_Row_I(int p_Data)     { Rows[Push_Index]->push_Data_Bit_I(p_Data);  }
      void push_Data_Bit_Onto_Current_Row_F(float p_Data)   { Rows[Push_Index]->push_Data_Bit_F(p_Data);  }
      void push_Data_Bit_Onto_Current_Row_NR(void * p_Data) { Rows[Push_Index]->push_Data_Bit_NR(p_Data); }
@@ -244,7 +244,7 @@ public:
      //--     PUSHING DATASETS ONTO THE CURRENT ROW
      
      //Pushes a data set onto the current row.
-     void push_Data_Chunk_Onto_Current_Row_S(string p_Data)                      { Rows[Push_Index]->push_Data_Chunk_S(p_Data); }
+     void push_Data_Chunk_Onto_Current_Row_S(std::string p_Data)                      { Rows[Push_Index]->push_Data_Chunk_S(p_Data); }
      void push_Data_Chunk_Onto_Current_Row_I(int p_Data[], int p_Data_Depth)     { Rows[Push_Index]->push_Data_Chunk_I(p_Data, p_Data_Depth); }
      void push_Data_Chunk_Onto_Current_Row_F(float p_Data[], int p_Data_Depth)   { Rows[Push_Index]->push_Data_Chunk_F(p_Data, p_Data_Depth); }
      void push_Data_Chunk_Onto_Current_Row_NR(void * p_Data[], int p_Data_Depth) { Rows[Push_Index]->push_Data_Chunk_NR(p_Data, p_Data_Depth); }
@@ -254,7 +254,7 @@ public:
      //--     PUSHING DATA ONTO THE CURRENT ROW THEN POPPING THE ROW
      
      //Pushes a data set onto the current row and then pops it.
-     void push_Data_Set_S(string p_Data)                     { Rows[Push_Index]->push_Data_Chunk_S(p_Data);                  pop_Row(); }
+     void push_Data_Set_S(std::string p_Data)                     { Rows[Push_Index]->push_Data_Chunk_S(p_Data);                  pop_Row(); }
      void push_Data_Set_I(int p_Data[], int p_Data_Depth)    { Rows[Push_Index]->push_Data_Chunk_I(p_Data, p_Data_Depth);    pop_Row(); }
      void push_Data_Set_F(float p_Data[], int p_Data_Depth)  { Rows[Push_Index]->push_Data_Chunk_F(p_Data, p_Data_Depth);    pop_Row(); }
      void push_Data_Set_NR(void * p_Data[], int p_Data_Depth){ Rows[Push_Index]->push_Data_Chunk_NR(p_Data, p_Data_Depth);   pop_Row(); }
@@ -264,7 +264,7 @@ public:
      //--     SETTING A GIVEN CELLS DATA IN A GIVEN ROW, SINGLE VALUE
      
      //Sets a given cells data to a given value in a given row.
-     void set_Data_Bit_For_Given_Cell_In_Given_Row_S (int p_Row, int p_Cell,  string p_Data){ xTble(p_Row + 1); Rows[p_Row]->set_Given_Cell_Data_Bit_S(p_Cell, p_Data);  }
+     void set_Data_Bit_For_Given_Cell_In_Given_Row_S (int p_Row, int p_Cell,  std::string p_Data){ xTble(p_Row + 1); Rows[p_Row]->set_Given_Cell_Data_Bit_S(p_Cell, p_Data);  }
      void set_Data_Bit_For_Given_Cell_In_Given_Row_C (int p_Row, int p_Cell, char p_Data)   { xTble(p_Row + 1); Rows[p_Row]->set_Given_Cell_Data_Bit_C(p_Cell, p_Data);  }
      void set_Data_Bit_For_Given_Cell_In_Given_Row_I (int p_Row, int p_Cell, int p_Data)    { xTble(p_Row + 1); Rows[p_Row]->set_Given_Cell_Data_Bit_I(p_Cell, p_Data);  }
      void set_Data_Bit_For_Given_Cell_In_Given_Row_F (int p_Row, int p_Cell, float p_Data)  { xTble(p_Row + 1); Rows[p_Row]->set_Given_Cell_Data_Bit_F(p_Cell, p_Data);  }
@@ -274,7 +274,7 @@ public:
      
      //--     SETTING A GIVEN DATA SET FOR A GIVEN CELL IN A GIVEN ROW
      
-     void set_Data_Chunk_For_Given_Cell_In_Given_Row_S (int p_Row, int p_Cell, string p_Data){                      xTble(p_Row+1); Rows[p_Row]->set_Given_Cell_Data_Chunk_S (p_Cell, p_Data); }
+     void set_Data_Chunk_For_Given_Cell_In_Given_Row_S (int p_Row, int p_Cell, std::string p_Data){                      xTble(p_Row+1); Rows[p_Row]->set_Given_Cell_Data_Chunk_S (p_Cell, p_Data); }
      void set_Data_Chunk_For_Given_Cell_In_Given_Row_C (int p_Row, int p_Cell, char p_Data[],   int p_Data_Length){ xTble(p_Row+1); Rows[p_Row]->set_Given_Cell_Data_Chunk_C (p_Cell, p_Data, p_Data_Length); }
      void set_Data_Chunk_For_Given_Cell_In_Given_Row_I (int p_Row, int p_Cell, int p_Data[],    int p_Data_Length){ xTble(p_Row+1); Rows[p_Row]->set_Given_Cell_Data_Chunk_I (p_Cell, p_Data, p_Data_Length); }
      void set_Data_Chunk_For_Given_Cell_In_Given_Row_F (int p_Row, int p_Cell, float p_Data[],  int p_Data_Length){ xTble(p_Row+1); Rows[p_Row]->set_Given_Cell_Data_Chunk_F (p_Cell, p_Data, p_Data_Length); }
@@ -284,7 +284,7 @@ public:
      
      //--     PUSHES A Chunk ONTO CURRENT ROW
      
-     void push_Data_Chunk_Onto_Given_Row_S (int p_Row, string p_Data){                      xTble(p_Row+1); Rows[p_Row]->push_Data_Chunk_S (p_Data); }
+     void push_Data_Chunk_Onto_Given_Row_S (int p_Row, std::string p_Data){                      xTble(p_Row+1); Rows[p_Row]->push_Data_Chunk_S (p_Data); }
      void push_Data_Chunk_Onto_Given_Row_I (int p_Row, int p_Data[],    int p_Data_Length){ xTble(p_Row+1); Rows[p_Row]->push_Data_Chunk_I (p_Data, p_Data_Length); }
      void push_Data_Chunk_Onto_Given_Row_F (int p_Row, float p_Data[],  int p_Data_Length){ xTble(p_Row+1); Rows[p_Row]->push_Data_Chunk_F (p_Data, p_Data_Length); }
      void push_Data_Chunk_Onto_Given_Row_NR(int p_Row, void * p_Data[], int p_Data_Length){ xTble(p_Row+1); Rows[p_Row]->push_Data_Chunk_NR(p_Data, p_Data_Length); }
@@ -294,7 +294,7 @@ public:
      
      //--     PUSHES A BIT ONTO CURRENT ROW
      
-     void push_Data_Bit_Onto_Given_Row_S (int p_Row, string p_Data){ xTble(p_Row+1); Rows[p_Row]->push_Data_Bit_S (p_Data); }
+     void push_Data_Bit_Onto_Given_Row_S (int p_Row, std::string p_Data){ xTble(p_Row+1); Rows[p_Row]->push_Data_Bit_S (p_Data); }
      void push_Data_Bit_Onto_Given_Row_I (int p_Row, int p_Data)   { xTble(p_Row+1); Rows[p_Row]->push_Data_Bit_I (p_Data); }
      void push_Data_Bit_Onto_Given_Row_F (int p_Row, float p_Data) { xTble(p_Row+1); Rows[p_Row]->push_Data_Bit_F (p_Data); }
      void push_Data_Bit_Onto_Given_Row_NR(int p_Row, void * p_Data){ xTble(p_Row+1); Rows[p_Row]->push_Data_Bit_NR(p_Data); }
@@ -442,7 +442,7 @@ public:
      //Data aquired through these functions is by passing and array reference to it and setting the data.
      
      //String
-     void get_Data_Chunk_From_Given_Cell_In_Given_Row_Passed_S(int p_Row, int p_Cell, string * p_String)
+     void get_Data_Chunk_From_Given_Cell_In_Given_Row_Passed_S(int p_Row, int p_Cell, std::string * p_String)
      {
           if (p_Row >= Row_Count){ return; }
           
@@ -565,7 +565,7 @@ public:
      
      //==--     BUBBLE SORT
      
-     string get_Table_Data_Type()
+     std::string get_Table_Data_Type()
      {
           //0 = int
           //1 = float
@@ -573,7 +573,7 @@ public:
           
           int tmp_Datatype = 0;
           int tmp_gDatatype = 0;
-          string tmp_Data;
+          std::string tmp_Data;
           
           for (int cou_Index=0;cou_Index<Row_Count;cou_Index++)
           {
@@ -595,7 +595,7 @@ public:
      
      void bubble_Sort()
      {
-          string tmp_Type = get_Table_Data_Type();
+          std::string tmp_Type = get_Table_Data_Type();
           
           if (tmp_Type == "string"){ bubble_Sort_String(); }
           if (tmp_Type == "int"){ bubble_Sort_Int(); }
@@ -607,8 +607,8 @@ public:
           
           c_Row_1D tmp_Row;
           bool flg_Not_Done = 1;
-          string Row_Low_Index;
-          string Row_High_Index;
+          std::string Row_Low_Index;
+          std::string Row_High_Index;
           
           while (flg_Not_Done)
           {
@@ -641,8 +641,8 @@ public:
           
           c_Row_1D tmp_Row;
           bool flg_Not_Done = 1;
-          string Row_Low_Index;
-          string Row_High_Index;
+          std::string Row_Low_Index;
+          std::string Row_High_Index;
           
           while (flg_Not_Done)
           {
@@ -711,8 +711,8 @@ public:
           
           c_Row_1D tmp_Row;
           bool flg_Not_Done = 1;
-          string Row_Low_Index;
-          string Row_High_Index;
+          std::string Row_Low_Index;
+          std::string Row_High_Index;
           
           while (flg_Not_Done)
           {
@@ -863,7 +863,7 @@ public:
      //resets the table.
      void reset_Table()
      {
-          //cout << "\n\t\t Resetting Table->" << Table_Name;
+          //std::cout<< "\n\t\t Resetting Table->" << Table_Name;
           for (int cou_Index=0;cou_Index<Row_Count;cou_Index++)
           {
                delete Rows[cou_Index];
@@ -876,7 +876,7 @@ public:
           Row_Count = 1;
           Push_Index = 0;
           
-          //cout << "    T_EOF->" << table_Is_Empty();
+          //std::cout<< "    T_EOF->" << table_Is_Empty();
      }
      
      
@@ -884,42 +884,42 @@ public:
      
      
      //Pushes a data chunk onto the given row.
-     void push_pop_string(   string p_String){ push_Data_Chunk_Onto_Given_Row_S(Push_Index, p_String); pop_Row(); }
+     void push_pop_string(   std::string p_String){ push_Data_Chunk_Onto_Given_Row_S(Push_Index, p_String); pop_Row(); }
      void push_pop_int(      int p_Int)      { push_Data_Bit_Onto_Given_Row_I(Push_Index, p_Int); pop_Row(); }
      void push_pop_float(    float p_Float)  { push_Data_Bit_Onto_Given_Row_F(Push_Index, p_Float); pop_Row(); }
      void push_pop_reference(void * p_Void)  { push_Data_Bit_Onto_Given_Row_NR(Push_Index, p_Void); pop_Row(); }
      void push_pop_bool(     bool p_Bool)    { push_Data_Bit_Onto_Given_Row_B(Push_Index, p_Bool); pop_Row(); }
      
      //Pushes a data chunk onto the given row.
-     void pop_push_string(   string p_String){ pop_Row(); push_Data_Chunk_Onto_Given_Row_S(Push_Index, p_String); }
+     void pop_push_string(   std::string p_String){ pop_Row(); push_Data_Chunk_Onto_Given_Row_S(Push_Index, p_String); }
      void pop_push_int(      int p_Int)      { pop_Row(); push_Data_Bit_Onto_Given_Row_I(Push_Index, p_Int); }
      void pop_push_float(    float p_Float)  { pop_Row(); push_Data_Bit_Onto_Given_Row_F(Push_Index, p_Float); }
      void pop_push_reference(void * p_Void)  { pop_Row(); push_Data_Bit_Onto_Given_Row_NR(Push_Index, p_Void); }
      void pop_push_bool(     bool p_Bool)    { pop_Row(); push_Data_Bit_Onto_Given_Row_B(Push_Index, p_Bool); }
      
      //Pushes a data chunk onto the current row.
-     void pushc_string(   string p_String){ push_Data_Chunk_Onto_Given_Row_S(Push_Index, p_String); }
+     void pushc_string(   std::string p_String){ push_Data_Chunk_Onto_Given_Row_S(Push_Index, p_String); }
      void pushc_int(      int p_Int)      { push_Data_Bit_Onto_Given_Row_I(Push_Index, p_Int); }
      void pushc_float(    float p_Float)  { push_Data_Bit_Onto_Given_Row_F(Push_Index, p_Float); }
      void pushc_reference(void * p_Void)  { push_Data_Bit_Onto_Given_Row_NR(Push_Index, p_Void); }
      void pushc_bool(     bool p_Bool)    { push_Data_Bit_Onto_Given_Row_B(Push_Index, p_Bool); }
      
      //Pushes a data chunk onto the given row.
-     void push_string(   int p_Row, string p_String){ push_Data_Chunk_Onto_Given_Row_S(p_Row, p_String); }
+     void push_string(   int p_Row, std::string p_String){ push_Data_Chunk_Onto_Given_Row_S(p_Row, p_String); }
      void push_int(      int p_Row, int p_Int)      { push_Data_Bit_Onto_Given_Row_I(p_Row, p_Int); }
      void push_float(    int p_Row, float p_Float)  { push_Data_Bit_Onto_Given_Row_F(p_Row, p_Float); }
      void push_reference(int p_Row, void * p_Void)  { push_Data_Bit_Onto_Given_Row_NR(p_Row, p_Void); }
      void push_bool(     int p_Row, bool p_Bool)    { push_Data_Bit_Onto_Given_Row_B(p_Row, p_Bool); }
      
      //Sets a given rows cell to the given data.
-     void set_string(   int p_Row, int p_Cell, string p_String){ set_Data_Chunk_For_Given_Cell_In_Given_Row_S(p_Row, p_Cell, p_String); }
+     void set_string(   int p_Row, int p_Cell, std::string p_String){ set_Data_Chunk_For_Given_Cell_In_Given_Row_S(p_Row, p_Cell, p_String); }
      void set_int(      int p_Row, int p_Cell, int p_Int)      { set_Data_Bit_For_Given_Cell_In_Given_Row_I(p_Row, p_Cell, p_Int); }
      void set_float(    int p_Row, int p_Cell, float p_Float)  { set_Data_Bit_For_Given_Cell_In_Given_Row_F(p_Row, p_Cell, p_Float); }
      void set_reference(int p_Row, int p_Cell, void * p_Void)  { set_Data_Bit_For_Given_Cell_In_Given_Row_NR(p_Row, p_Cell, p_Void); }
      void set_bool(     int p_Row, int p_Cell, bool p_Bool)    { set_Data_Bit_For_Given_Cell_In_Given_Row_B(p_Row, p_Cell, p_Bool); }
      
      //Gets a given cells data in a given row.
-     string get_string(   int p_Row, int p_Cell){ string tmp_String = ""; get_Data_Chunk_From_Given_Cell_In_Given_Row_Passed_S(p_Row, p_Cell, &tmp_String); return tmp_String; }
+     std::string get_string(   int p_Row, int p_Cell){ std::string tmp_String = ""; get_Data_Chunk_From_Given_Cell_In_Given_Row_Passed_S(p_Row, p_Cell, &tmp_String); return tmp_String; }
      int    get_int(      int p_Row, int p_Cell, int p_Index=0){ return get_Data_Bit_At_Given_Index_In_Given_Cell_In_Given_Row_I(p_Row, p_Cell, p_Index); }
      float  get_float(    int p_Row, int p_Cell, int p_Index=0){ return get_Data_Bit_At_Given_Index_In_Given_Cell_In_Given_Row_F(p_Row, p_Cell, p_Index); }
      void * get_reference(int p_Row, int p_Cell, int p_Index=0){ return get_Data_Bit_At_Given_Index_In_Given_Cell_In_Given_Row_NR(p_Row, p_Cell, p_Index); }
@@ -927,7 +927,7 @@ public:
      u_Data get_data(     int p_Row, int p_Cell, int p_Index=0){ return get_Data_Bit_At_Given_Index_In_Given_Cell_In_Given_Row(p_Row, p_Cell, p_Index); }
      
      //Gets the current cells data in the current row.
-     string getc_string(   ){ string tmp_String = ""; get_Data_Chunk_From_Given_Cell_In_Given_Row_Passed_S(Push_Index, Rows[Push_Index]->get_Push_Index(), &tmp_String); return tmp_String; }
+     std::string getc_string(   ){ std::string tmp_String = ""; get_Data_Chunk_From_Given_Cell_In_Given_Row_Passed_S(Push_Index, Rows[Push_Index]->get_Push_Index(), &tmp_String); return tmp_String; }
      int    getc_int(      ){ return get_Data_Bit_At_Given_Index_In_Given_Cell_In_Given_Row_I(Push_Index, Rows[Push_Index]->get_Push_Index(), 0); }
      float  getc_float(    ){ return get_Data_Bit_At_Given_Index_In_Given_Cell_In_Given_Row_F(Push_Index, Rows[Push_Index]->get_Push_Index(), 0); }
      void * getc_reference(){ return get_Data_Bit_At_Given_Index_In_Given_Cell_In_Given_Row_NR(Push_Index, Rows[Push_Index]->get_Push_Index(), 0); }
@@ -935,9 +935,9 @@ public:
      u_Data getc_data(     ){ return get_Data_Bit_At_Given_Index_In_Given_Cell_In_Given_Row(Push_Index, Rows[Push_Index]->get_Push_Index(), 0); }
      
      //Copies the data from the submitted cell into itself.
-     string copy_Cell(int p_Row, int p_Cell, void * p_Cell_To_Copy)
+     std::string copy_Cell(int p_Row, int p_Cell, void * p_Cell_To_Copy)
      {
-          if (p_Cell_To_Copy == NULL){ cout << "\n\n\t\t ARG_ERR_NULL_POINTER->TABLE_COPY->p_Cell_To_Copy"; return "ARG_ERR_NULL_POINTER->TABLE_COPY->p_Cell_To_Copy"; }
+          if (p_Cell_To_Copy == NULL){ std::cout<< "\n\n\t\t ARG_ERR_NULL_POINTER->TABLE_COPY->p_Cell_To_Copy"; return "ARG_ERR_NULL_POINTER->TABLE_COPY->p_Cell_To_Copy"; }
           
           expand_Table(p_Row + 1);
           
@@ -952,9 +952,9 @@ public:
      }
      
      //Copies the data from the submitted row into itself.
-     string copy_Row(int p_Row, void * p_Row_To_Copy)
+     std::string copy_Row(int p_Row, void * p_Row_To_Copy)
      {
-          if (p_Row_To_Copy == NULL){ cout << "\n\n\t\t ARG_ERR_NULL_POINTER->TABLE_COPY->p_Row_To_Copy"; return "ARG_ERR_NULL_POINTER->TABLE_COPY->p_Row_To_Copy"; }
+          if (p_Row_To_Copy == NULL){ std::cout<< "\n\n\t\t ARG_ERR_NULL_POINTER->TABLE_COPY->p_Row_To_Copy"; return "ARG_ERR_NULL_POINTER->TABLE_COPY->p_Row_To_Copy"; }
           
           expand_Table(p_Row + 1);
           
@@ -988,10 +988,10 @@ public:
      }
      
      //Copies the data from the submitted row into itself.
-     string copy_Row(void * p_Row_To_Overwrite, void * p_Row_To_Copy)
+     std::string copy_Row(void * p_Row_To_Overwrite, void * p_Row_To_Copy)
      {
-          if (p_Row_To_Copy == NULL){ cout << "\n\n\t\t ARG_ERR_NULL_POINTER->TABLE_COPY->p_Row_To_Copy"; return "ARG_ERR_NULL_POINTER->TABLE_COPY->p_Row_To_Copy"; }
-          if (p_Row_To_Overwrite == NULL){ cout << "\n\n\t\t ARG_ERR_NULL_POINTER->TABLE_COPY->p_Row_To_Overwrite"; return "ARG_ERR_NULL_POINTER->TABLE_COPY->p_Row_To_Overwrite"; }
+          if (p_Row_To_Copy == NULL){ std::cout<< "\n\n\t\t ARG_ERR_NULL_POINTER->TABLE_COPY->p_Row_To_Copy"; return "ARG_ERR_NULL_POINTER->TABLE_COPY->p_Row_To_Copy"; }
+          if (p_Row_To_Overwrite == NULL){ std::cout<< "\n\n\t\t ARG_ERR_NULL_POINTER->TABLE_COPY->p_Row_To_Overwrite"; return "ARG_ERR_NULL_POINTER->TABLE_COPY->p_Row_To_Overwrite"; }
           
           //For readability cast the void to a row.
           c_Row_1D * tmp_Row_To_Copy = ((c_Row_1D*) p_Row_To_Copy);
@@ -1023,7 +1023,7 @@ public:
           return "CODE_4";
      }
      
-     string swap_Row_Reference(int p_Row_One, int p_Row_Two)
+     std::string swap_Row_Reference(int p_Row_One, int p_Row_Two)
      {
           c_Row_1D * tmp_Row;
           if (!bounds(p_Row_One) || !bounds(p_Row_Two)){ return "OOB_ERROR"; }
@@ -1036,7 +1036,7 @@ public:
      }
      
      //Copies a set of rows from one table into another table.
-     string copy_Row_Set(void * p_Table_To_Copy_From, int p_Start, int p_End, void * p_Table_To_Copy_To, int p_Offset)
+     std::string copy_Row_Set(void * p_Table_To_Copy_From, int p_Start, int p_End, void * p_Table_To_Copy_To, int p_Offset)
      {
           void * tmp_Current_Row = NULL;
           //Gets the two tables.
@@ -1061,7 +1061,7 @@ public:
      }
      
      //Copys a table into this table.
-     virtual string copy_Table(void * p_Table_To_Copy)
+     virtual std::string copy_Table(void * p_Table_To_Copy)
      {
           //If now table then return.
           if (p_Table_To_Copy == NULL){ return "NULL_TABLE"; }
@@ -1080,7 +1080,7 @@ public:
           return "1";
      }
      
-     string translate_Row(void * p_From_Table, int p_Row, int p_Column, int p_Offset)
+     std::string translate_Row(void * p_From_Table, int p_Row, int p_Column, int p_Offset)
      {
           //The current cell to copy from.
           void * tmp_Cell = NULL;
@@ -1092,7 +1092,7 @@ public:
           {
                //Holds the current cell in the row.
                tmp_Cell = tmp_From_Table->get_Cell_Reference(p_Row, cou_Index);
-               //cout << "\n\n\t Current_Cell->";
+               //std::cout<< "\n\n\t Current_Cell->";
                
                copy_Cell((p_Offset + cou_Index), p_Column, tmp_Cell); 
                
@@ -1102,7 +1102,7 @@ public:
      }
      
      //Translates a column into a row using push(). Starts at the offset and continues down until either p_Depth or end of Table is hit.
-     virtual string translate_Column(void * p_From_Table, int p_Column, int p_Offset, int p_Depth, int p_Row)
+     virtual std::string translate_Column(void * p_From_Table, int p_Column, int p_Offset, int p_Depth, int p_Row)
      {
           //Bounds checking.
           if (!bounds(p_Row)){ return "OOB_ERROR_translate_Column"; }
@@ -1124,9 +1124,9 @@ public:
      }
      
      //Copies the data from a row into another at a given bit index. The receiving row is not wiped.
-     string overlay_Row(int p_Row, int p_Index, void * p_Row_To_Copy)
+     std::string overlay_Row(int p_Row, int p_Index, void * p_Row_To_Copy)
      {
-          if (p_Row_To_Copy == NULL){ cout << "\n\n\t\t ARG_ERR_NULL_POINTER->TABLE_COPY->p_Row_To_Copy"; return "ARG_ERR_NULL_POINTER->TABLE_COPY->p_Row_To_Copy"; }
+          if (p_Row_To_Copy == NULL){ std::cout<< "\n\n\t\t ARG_ERR_NULL_POINTER->TABLE_COPY->p_Row_To_Copy"; return "ARG_ERR_NULL_POINTER->TABLE_COPY->p_Row_To_Copy"; }
           
           expand_Table(p_Row + 1);
           
@@ -1152,7 +1152,7 @@ public:
           return "CODE_4";
      }
      
-     string shift_Column(int p_Column_To_Shift)
+     std::string shift_Column(int p_Column_To_Shift)
      {
           
           //The current cell to copy from.
@@ -1164,7 +1164,7 @@ public:
                //Holds the current cell in the row.
                tmp_Cell = Rows[cou_Index]->get_Cell_Reference(p_Column_To_Shift);
                
-               //cout << "\n\n\t Current_Cell->";
+               //std::cout<< "\n\n\t Current_Cell->";
                
                copy_Cell(cou_Index, (p_Column_To_Shift + 1), tmp_Cell); 
                
@@ -1173,7 +1173,7 @@ public:
           return "1";
      }
      
-     string shift_All_Rows(int p_Index)
+     std::string shift_All_Rows(int p_Index)
      {
           if (!bounds(p_Index)){ return "0"; }
           
@@ -1191,7 +1191,7 @@ public:
      }
      
      //Rotates a tables data. Rows are translated to columns.
-     string rotate_Table()
+     std::string rotate_Table()
      {
           c_Table_1D tmp_Table;
           tmp_Table.reset_Table();
@@ -1205,14 +1205,14 @@ public:
           
           copy_Table(&tmp_Table);
           
-          cout << "\n\nRotated Table.";
+          std::cout<< "\n\nRotated Table.";
           output_Table();
           
           return "Table_Rotated";
      }
      
      //Converts all indexes in a table to strings.
-     string convert_Table_To_String()
+     std::string convert_Table_To_String()
      {
           for (int cou_Index=0;cou_Index<Row_Count;cou_Index++)
           {
@@ -1234,7 +1234,7 @@ public:
      void output_Row(int p_Row, int p_Limit)
      {
           if (Rows[p_Row] == NULL){ return; }
-          if (row_Is_Empty(p_Row)){ cout << " Row Is Empty..."; return; }
+          if (row_Is_Empty(p_Row)){ std::cout<< " Row Is Empty..."; return; }
           Rows[p_Row]->output_Row_Data(p_Limit);
      }
      
@@ -1243,18 +1243,18 @@ public:
      {
           for (int cou_Index=0;cou_Index<Row_Count - 1;cou_Index++)
           {
-               cout << "\n\t    ";
+               std::cout<< "\n\t    ";
                ochr(0, 8, char (195));
                ostr(0, 7, "<");
-               cout << cou_Index;
+               std::cout<< cou_Index;
                ostr(0, 7, ">-");
                output_Row(cou_Index, p_Limit);
           }
           
-          cout << "\n\t    ";
+          std::cout<< "\n\t    ";
           ochr(0, 8, char (192));
           ostr(0, 7, "<");
-          cout << Row_Count - 1;
+          std::cout<< Row_Count - 1;
           ostr(0, 7, ">-");
           
           output_Row(Row_Count - 1, p_Limit);
@@ -1271,50 +1271,50 @@ public:
      {
           for (int cou_Index=0;cou_Index<Row_Count - 1;cou_Index++)
           {
-               cout << "\n\t    " << char (195) << "<" << cou_Index << ">-";
+               std::cout<< "\n\t    " << char (195) << "<" << cou_Index << ">-";
                output_Row_Verbose(cou_Index);
           }
-          cout << "\n\t    " << char (192) << "<" << (Row_Count - 1) << ">-";
+          std::cout<< "\n\t    " << char (192) << "<" << (Row_Count - 1) << ">-";
           output_Row_Verbose(Row_Count - 1);
      }
      
      //Outputs the table.
      void output_Table()
      {
-          cout << "\n\n\t ";
+          std::cout<< "\n\n\t ";
           ostr(0, 15, "Table");
           ostr(0, 7, "[");
-          cout << Table_ID;
+          std::cout<< Table_ID;
           ostr(0, 7, "]->");
           ostr(0, 15, Table_Name);
-          cout << "\n\t   ";
-          if (table_Is_Empty()){ cout << " Table Is Empty..."; return; }
-          cout << Row_Count;
+          std::cout<< "\n\t   ";
+          if (table_Is_Empty()){ std::cout<< " Table Is Empty..."; return; }
+          std::cout<< Row_Count;
           ostr(0, 7, "->");
-          cout << Row_Count;
+          std::cout<< Row_Count;
           output_All_Rows();
      }
      
      //Outputs the table in verbose mode.
      void output_Table_Verbose()
      {
-          cout << "\n\n\t Table->" << Table_Name;
-          cout << "\n\t   Table_ID->" << Table_ID;
-          cout << "\n\t   Row_Count->" << Row_Count;
-          cout << "\n\t   Push_Index->" << Push_Index;
+          std::cout<< "\n\n\t Table->" << Table_Name;
+          std::cout<< "\n\t   Table_ID->" << Table_ID;
+          std::cout<< "\n\t   Row_Count->" << Row_Count;
+          std::cout<< "\n\t   Push_Index->" << Push_Index;
           output_All_Rows_Verbose();
      }
      
      //Outputs the information for the table without its contained data.
      void output_Table_Header()
      {
-          cout << " #Rows" << Row_Count << " " << Table_Name;
+          std::cout<< " #Rows" << Row_Count << " " << Table_Name;
      }
      
      //Saves a table int the given mode in the given file, otherwise defaults to current table ID.Table_Name.svc;
-     void save_Table(string p_Mode = "csv", string p_Name = "Default")
+     void save_Table(std::string p_Mode = "csv", std::string p_Name = "Default")
      {
-		 cout << "\n Saving Table: " << p_Name << "." << p_Mode;
+		 std::cout<< "\n Saving Table: " << p_Name << "." << p_Mode;
           if (p_Name == "Default")
           {
                p_Name = "Tables\\" + int2str(Table_ID) + "." + Table_Name + "." + p_Mode;
@@ -1323,7 +1323,7 @@ public:
           output_Table();
           
           //Open the file to write to.
-          ofstream SF;
+          std::ofstream SF;
           SF.open(p_Name.c_str());
           
           //Save the table.
@@ -1392,25 +1392,25 @@ public:
      }
 
      //Loads a table into the current table wiping out any existing data.
-     bool load_Table(string p_Filename, int p_Type = 0)
+     bool load_Table(std::string p_Filename, int p_Type = 0)
      {
           //Setup the tmp variables.
           int tmp_Int;
           //float tmp_Float;
-          string tmp_String;
-		  string tmp_Data;
-          string tmp_File_Type;
+          std::string tmp_String;
+		  std::string tmp_Data;
+          std::string tmp_File_Type;
           
           p_Filename = "Tables\\" + p_Filename;
-          cout << "\n\t load_Table: " << p_Filename;
+          std::cout<< "\n\t load_Table: " << p_Filename;
           
           //Open the file to write to.
-          ifstream SF;
+          std::ifstream SF;
           SF.open(p_Filename.c_str());
           
           if (!SF.is_open())
           {
-			  cout << "\n Failed To Load Table";
+			  std::cout<< "\n Failed To Load Table";
                return 0;
           }
           
@@ -1429,29 +1429,29 @@ public:
                tmp_File_Type += p_Filename[cou_Index];
           }
 
-		  ifstream tmp_SF;
+		  std::ifstream tmp_SF;
 		  tmp_SF.open(p_Filename);
           
 		  if (!tmp_SF.is_open())
 		  {
-			  cout << "\n File Failed To Open: " << p_Filename;
+			  std::cout<< "\n File Failed To Open: " << p_Filename;
 		  }
 
           if (tmp_File_Type == "csv")
           {
-			  cout << "\n Comma Separated Volume Found...";
+			  std::cout<< "\n Comma Separated Volume Found...";
 			  return 1;
           }
           
 		  if (tmp_File_Type == "ssv")
 		  {
-			  cout << "\n Space Separated Volume Found...";
+			  std::cout<< "\n Space Separated Volume Found...";
 
 			  while (!tmp_SF.eof())
 			  {
 				  tmp_String = "";
 				  getline(tmp_SF, tmp_String);
-				  cout << "\n ->" << tmp_String << "<-";
+				  std::cout<< "\n ->" << tmp_String << "<-";
 				  if ((!table_Is_Empty()) && (tmp_String != "")) { pop_Row(); }
 
 				  int flg_Var_Pos = 0;
@@ -1480,7 +1480,7 @@ public:
 			  return 1;
 		  }
 
-		  cout << "\n Unrecognized Filetype: " << p_Filename;
+		  std::cout<< "\n Unrecognized Filetype: " << p_Filename;
 
 
           /*

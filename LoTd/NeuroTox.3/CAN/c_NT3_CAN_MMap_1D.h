@@ -53,13 +53,13 @@ public:
      void Full()
      {
           resize();
-          //*-----cout << "\n Resized for an input with " << Input->Length << " unit of data.";
+          //*-----std::cout << "\n Resized for an input with " << Input->Length << " unit of data.";
           //*-----output_CAN();
           fill_State();
-          //*-----cout << "\n Filled out the state with nodes in the input set.";
+          //*-----std::cout << "\n Filled out the state with nodes in the input set.";
           //*-----output_CAN();
           build_Tiers_Full();
-          //*-----cout << "\n Build the entire CAN.";
+          //*-----std::cout << "\n Build the entire CAN.";
           //*-----output_CAN();
      }
      
@@ -67,13 +67,13 @@ public:
      void RC()
      {
           resize();
-          //*-----cout << "\n Resized for an input with " << Input->Length << " unit of data.";
+          //*-----std::cout << "\n Resized for an input with " << Input->Length << " unit of data.";
           //*-----output_CAN();
           fill_State();
-          //*-----cout << "\n Filled out the state with nodes in the input set.";
+          //*-----std::cout << "\n Filled out the state with nodes in the input set.";
           //*-----output_CAN();
           build_Tiers_Full();
-          //*-----cout << "\n Build the entire CAN.";
+          //*-----std::cout << "\n Build the entire CAN.";
           //*-----output_CAN();
           reinforce();
      }
@@ -112,8 +112,8 @@ public:
           {
                for (int cou_Index=0;cou_Index<((Number_Of_Tiers - cou_T) - 1);cou_Index++)
                {
-                    //*-----ostr(0, 12, "\n["); cout << cou_T; ostr(0, 12, " \\ "); cout << Number_Of_Tiers; ostr(0, 12, "]"); 
-                    //*-----ostr(0, 12, " ["); cout << cou_Index; ; ostr(0, 12, " \\ "); cout << (Number_Of_Tiers - cou_T); ostr(0, 12, "]");
+                    //*-----ostr(0, 12, "\n["); std::cout << cou_T; ostr(0, 12, " \\ "); std::cout << Number_Of_Tiers; ostr(0, 12, "]"); 
+                    //*-----ostr(0, 12, " ["); std::cout << cou_Index; ; ostr(0, 12, " \\ "); std::cout << (Number_Of_Tiers - cou_T); ostr(0, 12, "]");
                     CAN[cou_T + 1] [cou_Index].U = Nodes->get_Upper_Tier_Connection(cou_T, CAN[cou_T] [cou_Index].U, CAN[cou_T] [cou_Index + 1].U);
                }
           }
@@ -206,19 +206,19 @@ public:
 	 {
 		 int tmp_CLR = 0;
 		 char tmp_CHR = 0;
-		 cout << "\n\n";
+		 std::cout << "\n\n";
 		 for (int cou_T = 0; cou_T < Number_Of_Tiers; cou_T++)
 		 {
-			 cout << "\n";// << cou_T << "->";
+			 std::cout << "\n";// << cou_T << "->";
 			 for (int cou_Index = 0; cou_Index < (Number_Of_Tiers - cou_T); cou_Index++)
 			 {
 				 tmp_CLR = int(Nodes->get_RC_Score(CAN[cou_T][cou_Index]));
 				 tmp_CHR = int(CAN[cou_T][cou_Index].U - ((CAN[cou_T][cou_Index].U * .001) * 100) + 14);
 
 				 opchr(0, tmp_CLR, tmp_CHR);
-				 //if (CAN[cou_T] [cou_Index].U != 0){ cout << " <_"; oull(0, tmp_CLR, CAN[cou_T] [cou_Index].U); cout << "_>"; }
-				 if (CAN[cou_T][cou_Index].U == 0) { cout << "-"; }
-				 //if (CAN[cou_T] [cou_Index].U == 0){ cout << " <_NULL_>"; }
+				 //if (CAN[cou_T] [cou_Index].U != 0){ std::cout << " <_"; oull(0, tmp_CLR, CAN[cou_T] [cou_Index].U); std::cout << "_>"; }
+				 if (CAN[cou_T][cou_Index].U == 0) { std::cout << "-"; }
+				 //if (CAN[cou_T] [cou_Index].U == 0){ std::cout << " <_NULL_>"; }
 			 }
 		 }
 	 }
@@ -228,10 +228,10 @@ public:
 	 {
 		 int tmp_CLR = 0;
 		 char tmp_CHR = 0;
-		 //cout << "\n\n";
+		 //std::cout << "\n\n";
 		 for (int cou_T = 0; cou_T < Number_Of_Tiers; cou_T++)
 		 {
-			 //cout << "\n";// << cou_T << "->";
+			 //std::cout << "\n";// << cou_T << "->";
 			 xy(p_X, (p_Y + cou_T));
 			 for (int cou_Index = 0; cou_Index < (Number_Of_Tiers - cou_T); cou_Index++)
 			 {
@@ -239,9 +239,9 @@ public:
 				 tmp_CHR = int(CAN[cou_T][cou_Index].U - ((CAN[cou_T][cou_Index].U * .001) * 100) + 14);
 
 				 opchr(0, tmp_CLR, tmp_CHR);
-				 //if (CAN[cou_T] [cou_Index].U != 0){ cout << " <_"; oull(0, tmp_CLR, CAN[cou_T] [cou_Index].U); cout << "_>"; }
-				 if (CAN[cou_T][cou_Index].U == 0) { cout << "-"; }
-				 //if (CAN[cou_T] [cou_Index].U == 0){ cout << " <_NULL_>"; }
+				 //if (CAN[cou_T] [cou_Index].U != 0){ std::cout << " <_"; oull(0, tmp_CLR, CAN[cou_T] [cou_Index].U); std::cout << "_>"; }
+				 if (CAN[cou_T][cou_Index].U == 0) { std::cout << "-"; }
+				 //if (CAN[cou_T] [cou_Index].U == 0){ std::cout << " <_NULL_>"; }
 			 }
 		 }
 	 }
@@ -249,13 +249,13 @@ public:
      //Outputs the CAN.
      void output_CAN_RC()
      {
-          cout << "\n\n";
+          std::cout << "\n\n";
           for (int cou_T=0;cou_T<Number_Of_Tiers;cou_T++)
           {
-               cout << "\n" << cou_T << "->";
+               std::cout << "\n" << cou_T << "->";
                for (int cou_Index=0;cou_Index<(Number_Of_Tiers - cou_T);cou_Index++)
                {
-                    cout << " {" << Nodes->get_RC_Score(CAN[cou_T] [cou_Index].U) << "}";
+                    std::cout << " {" << Nodes->get_RC_Score(CAN[cou_T] [cou_Index].U) << "}";
                }
           }
      }
@@ -263,15 +263,15 @@ public:
      //Outputs the CAN.
      void output_CAN_State(int p_Output_Type)
      {
-          cout << "\n\n";
+          std::cout << "\n\n";
           for (int cou_T=0;cou_T<Number_Of_Tiers;cou_T++)
           {
-               cout << "\n" << cou_T << "->";
+               std::cout << "\n" << cou_T << "->";
                for (int cou_Index=0;cou_Index<(Number_Of_Tiers - cou_T);cou_Index++)
                {
-                    cout << " {";
+                    std::cout << " {";
                     Nodes->bp_Output_Only(CAN[cou_T] [cou_Index].U, p_Output_Type);
-                    cout << "}";
+                    std::cout << "}";
                }
           }
      }
@@ -279,13 +279,13 @@ public:
      //Outputs the CAN.
      void output_CAN_Type()
      {
-          cout << "\n\n";
+          std::cout << "\n\n";
           for (int cou_T=0;cou_T<Number_Of_Tiers;cou_T++)
           {
-               cout << "\n" << cou_T << "->";
+               std::cout << "\n" << cou_T << "->";
                for (int cou_Index=0;cou_Index<(Number_Of_Tiers - cou_T);cou_Index++)
                {
-                    cout << " {" << (Nodes->get_Type(CAN[cou_T] [cou_Index].U)) << "}";
+                    std::cout << " {" << (Nodes->get_Type(CAN[cou_T] [cou_Index].U)) << "}";
                }
           }
      }
@@ -293,13 +293,13 @@ public:
      //Outputs the CAN.
      void output_CAN_Axons()
      {
-          cout << "\n\n";
+          std::cout << "\n\n";
           for (int cou_T=0;cou_T<Number_Of_Tiers;cou_T++)
           {
-               cout << "\n" << cou_T << "->";
+               std::cout << "\n" << cou_T << "->";
                for (int cou_Index=0;cou_Index<(Number_Of_Tiers - cou_T);cou_Index++)
                {
-                    //cout << " {" << CAN[cou_T] [cou_Index] << " (" << (CAN[cou_T] [cou_Index]->Axon_Count_L) << ", " << (CAN[cou_T] [cou_Index]->Axon_Count_R) << ")}";
+                    //std::cout << " {" << CAN[cou_T] [cou_Index] << " (" << (CAN[cou_T] [cou_Index]->Axon_Count_L) << ", " << (CAN[cou_T] [cou_Index]->Axon_Count_R) << ")}";
                }
           }
      }
@@ -307,10 +307,10 @@ public:
      //Outputs the CAN nodes.
      void output_Nodes_In_CAN_Compact()
      {
-          cout << "\n\n";
+          std::cout << "\n\n";
           for (int cou_T=0;cou_T<Number_Of_Tiers;cou_T++)
           {
-               cout << "\n" << cou_T << "->";
+               std::cout << "\n" << cou_T << "->";
                for (int cou_Index=0;cou_Index<(Number_Of_Tiers - cou_T);cou_Index++)
                {
                     Nodes->output_Node_Compact(CAN[cou_T] [cou_Index].U);

@@ -66,7 +66,7 @@ public:
      //Sort the tables by charge.
      bool settings_Bubble_Sort_Output;
      
-     //The percentage of the input string to charge starting at index 0.
+     //The percentage of the input std::string to charge starting at index 0.
      double settings_Input_Charging_Depth;
      
      //Cross CAN Charging, when charging a leg all nodes are charged in the CAN to the (L||R) of the current,
@@ -104,14 +104,14 @@ public:
      //==--   API FUNCTIONS
      ////==-----------------------+
      
-     virtual c_Raw_Table_1D * get_Table_1D(string p_Table)=0;
-     virtual c_Raw_Table_2D * get_Table_2D(string p_Table)=0;
+     virtual c_Raw_Table_1D * get_Table_1D(std::string p_Table)=0;
+     virtual c_Raw_Table_2D * get_Table_2D(std::string p_Table)=0;
      
-     virtual void set_Name(string p_Name)=0;
+     virtual void set_Name(std::string p_Name)=0;
      virtual void set_CID(unsigned long long int p_CID)=0;
      
-	 virtual int first_Run(string p_Dir, string p_Name)=0;
-	 virtual int init(string p_Dir, string p_Name)=0;
+	 virtual int first_Run(std::string p_Dir, std::string p_Name)=0;
+	 virtual int init(std::string p_Dir, std::string p_Name)=0;
 
      //Used to reset the IO tables of the construct.
      virtual void reset_IO()=0;
@@ -149,12 +149,12 @@ public:
      virtual long long int get_Node_Count()=0; //Returns the number of nodes in the network.
      virtual void output_Treetops()=0; //Outputs the treetops tree in the node network.
      virtual void output_Treetops_BP()=0; //Outputs the treetops tree in a compressed BP format.
-     virtual void output_Nodes_As_HTML(string p_Dir, string p_File, int p_X_Padd, int p_Y_Padd)=0; //Outputs the node network to a HTML for visual output.
+     virtual void output_Nodes_As_HTML(std::string p_Dir, std::string p_File, int p_X_Padd, int p_Y_Padd)=0; //Outputs the node network to a HTML for visual output.
       
      ////==---------------------------------+
      //==--   SAVING AND LOADING FUNCTIONS
      ////==---------------------------------+
      
-     virtual void Save(string p_DIR, string p_Name)=0; //Saves the construct.
-     virtual void Load(string p_DIR, string p_Name)=0; //Loads a construct.     
+     virtual void Save(std::string p_DIR, std::string p_Name)=0; //Saves the construct.
+     virtual void Load(std::string p_DIR, std::string p_Name)=0; //Loads a construct.     
 };

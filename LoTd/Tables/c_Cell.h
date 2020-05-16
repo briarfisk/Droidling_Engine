@@ -128,7 +128,7 @@ public:
      }
      
      //Sets the data in the cell.
-     void set_S(string p_Data)
+     void set_S(std::string p_Data)
      {
           //Setup the temporary array.
           u_Data * tmp_Data = new u_Data[p_Data.size() + 1];
@@ -226,8 +226,8 @@ public:
      //Sets the data in the cell.
      void set(u_Data p_Data[], int p_Data_Length, int p_Data_Type)
      {
-          //cout << "\n\t\t\t set p_Data_Type->" << p_Data_Type;
-          //cout << "\n\t\t\t  p_Data_Length->" << p_Data_Length;
+          //std::cout << "\n\t\t\t set p_Data_Type->" << p_Data_Type;
+          //std::cout << "\n\t\t\t  p_Data_Length->" << p_Data_Length;
           
           //Wipe the cell first.
           reset_Cell();
@@ -334,12 +334,12 @@ public:
      
      //--     GET DATA CHUNK FROM CELL BY PASSING AN ARRAY REFERENCE
      
-     void get_Cell_Data_Chunk_Passed_S(string * p_String)
+     void get_Cell_Data_Chunk_Passed_S(std::string * p_String)
      {
           //Reset passed string.
           *p_String = "";
           
-          //Read the data into the string as characters.
+          //Read the data into the std::string as characters.
           for (int cou_Index=0;cou_Index<Data_Depth;cou_Index++)
           {
                *p_String += char (Data[cou_Index].I);
@@ -429,7 +429,7 @@ public:
      //Integer
      int get_Data_Bit_From_Given_Index_I(int p_Index)
      {
-          if (p_Index >= Data_Depth){ return 0; cout << "\n\t\t\t\t returning 0;"; }
+          if (p_Index >= Data_Depth){ return 0; std::cout << "\n\t\t\t\t returning 0;"; }
           return Data[p_Index].I;
      }
      
@@ -536,7 +536,7 @@ public:
      //Output the cell data.
      void convert_Cell_To_String()
      {
-          //cout << " ^" << flg_Data_Type;
+          //std::cout << " ^" << flg_Data_Type;
           if (flg_Data_Type == 0)
           {
                return;
@@ -576,7 +576,7 @@ public:
      //Output the cell data.
      void output_Cell_Data()
      {
-          //cout << " ^" << flg_Data_Type;
+          //std::cout << " ^" << flg_Data_Type;
           if (flg_Data_Type == 0)
           {
                ochr(0, 8, '[');
@@ -589,7 +589,7 @@ public:
                     }
                     ochr(0, 11, char (Data[cou_Index].I));
                }
-               ochr(0, 8, ']'); cout << " ";
+               ochr(0, 8, ']'); std::cout << " ";
           }
           
           if (flg_Data_Type == 1)
@@ -598,10 +598,10 @@ public:
                ostr(0, 14, int2str(Data[0].I));
                for (int cou_Index=1;cou_Index<Data_Depth;cou_Index++)
                {
-                    cout << " ";
+                    std::cout << " ";
                     ostr(0, 14, int2str(Data[cou_Index].I));
                }
-               ochr(0, 8, ']'); cout << " ";
+               ochr(0, 8, ']'); std::cout << " ";
           }
           
           if (flg_Data_Type == 2)
@@ -610,21 +610,21 @@ public:
                ostr(0, 13, float2str(Data[0].F));
                for (int cou_Index=1;cou_Index<Data_Depth;cou_Index++)
                {
-                    cout << " ";
+                    std::cout << " ";
                     ostr(0, 13, float2str(Data[cou_Index].F));
                }
-               ochr(0, 8, ']'); cout << " ";
+               ochr(0, 8, ']'); std::cout << " ";
           }
           
           if (flg_Data_Type == 3)
           {
                ochr(0, 8, '[');
-               cout << Data[0].NR;
+               std::cout << Data[0].NR;
                for (int cou_Index=1;cou_Index<Data_Depth;cou_Index++)
                {
-                    cout << " " << Data[cou_Index].NR;                    
+                    std::cout << " " << Data[cou_Index].NR;                    
                }
-               ochr(0, 8, ']'); cout << " ";
+               ochr(0, 8, ']'); std::cout << " ";
           }
           
           if (flg_Data_Type == 4)
@@ -635,19 +635,19 @@ public:
                {
                     ostr(0, 15, bool2str(Data[cou_Index].B));
                }
-               ochr(0, 8, ']'); cout << " ";
+               ochr(0, 8, ']'); std::cout << " ";
           }
      }
      
      //Outputs the cell.
      void output_Cell()
      {
-          cout << "\n\t\t\t c_Cell_1D->" << this;
-          cout << "\n\t\t\t   Data_Depth->" << Data_Depth;
-          cout << "\n\t\t\t   flg_Data_Type->" << flg_Data_Type;
-          cout << "\n\t\t\t   flg_Set->" << flg_Set;
-          cout << "\n\t\t\t   Push_Index->" << Push_Index;
-          cout << "\n\t\t\t   Data->";
+          std::cout << "\n\t\t\t c_Cell_1D->" << this;
+          std::cout << "\n\t\t\t   Data_Depth->" << Data_Depth;
+          std::cout << "\n\t\t\t   flg_Data_Type->" << flg_Data_Type;
+          std::cout << "\n\t\t\t   flg_Set->" << flg_Set;
+          std::cout << "\n\t\t\t   Push_Index->" << Push_Index;
+          std::cout << "\n\t\t\t   Data->";
           output_Cell_Data();
      }
 };

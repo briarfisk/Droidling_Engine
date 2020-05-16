@@ -69,7 +69,7 @@ public:
      //====----
           
      //Takes a submission.
-     void submit_String(string p_Submission)
+     void submit_String(std::string p_Submission)
      {
           resize(p_Submission.size());
           
@@ -209,9 +209,9 @@ public:
      
      
      //Gets teh contents of the cell as a string.
-     string get_String()
+     std::string get_String()
      {
-          string tmp_Out = "";
+          std::string tmp_Out = "";
           
           for (int cou_Index=0;cou_Index<Length;cou_Index++)
           {
@@ -310,7 +310,7 @@ public:
                if (tmp_State == char (9)){ tmp_State = '?'; }
                if (tmp_State == char (10)){ tmp_State = '?'; }
                if (tmp_State == char (13)){ tmp_State = '?'; }
-               cout << tmp_State;
+               std::cout << tmp_State;
           }
      }
      
@@ -360,7 +360,7 @@ public:
      
      //==--     SAVING TO FILE
      
-     void save_C(ofstream * p_File)
+     void save_C(std::ofstream * p_File)
      {
           for (int cou_Index=0;cou_Index<Length;cou_Index++)
           {
@@ -370,7 +370,7 @@ public:
           }
      }
      
-     void save_I(ofstream * p_File)
+     void save_I(std::ofstream * p_File)
      {
           for (int cou_Index=0;cou_Index<Length;cou_Index++)
           {
@@ -379,7 +379,7 @@ public:
           }
      }
      
-     void save_F(ofstream * p_File)
+     void save_F(std::ofstream * p_File)
      {
           for (int cou_Index=0;cou_Index<Length;cou_Index++)
           {
@@ -388,7 +388,7 @@ public:
           }
      }
      
-     void save_NR(ofstream * p_File)
+     void save_NR(std::ofstream * p_File)
      {
           for (int cou_Index=0;cou_Index<Length;cou_Index++)
           {
@@ -434,21 +434,21 @@ public:
      //====----
      
      //Takes a submission.
-     void submit_String(string p_Submission)
+     void submit_String(std::string p_Submission)
      {
-          //ostr(0, 12, "\n Depth_B:"); cout << Depth;
+          //ostr(0, 12, "\n Depth_B:"); std::cout << Depth;
           resize(Depth + 1);
           Cells[Depth - 1]->submit_String(p_Submission);
-          //ostr(0, 12, "\n Depth_A:"); cout << Depth;
+          //ostr(0, 12, "\n Depth_A:"); std::cout << Depth;
      }
      
      //Takes a submission.
      void submit_UData_String(u_Data_3 * p_Submission, int p_Size)
      {
-          //ostr(0, 12, "\n Depth_B:"); cout << Depth;
+          //ostr(0, 12, "\n Depth_B:"); std::cout << Depth;
           resize(Depth + 1);
           Cells[Depth - 1]->submit_UData_String(p_Submission, p_Size);
-          //ostr(0, 12, "\n Depth_A:"); cout << Depth;
+          //ostr(0, 12, "\n Depth_A:"); std::cout << Depth;
      }
      
      //Takes a submission.
@@ -485,7 +485,7 @@ public:
      //====----
      
      //Takes a submission to a given cell.
-     void set_String(int p_Cell, string p_Submission)
+     void set_string(int p_Cell, std::string p_Submission)
      {
           resize(p_Cell + 1);
           Cells[p_Cell]->submit_String(p_Submission);
@@ -683,7 +683,7 @@ public:
      //Resizes the row to hold a new submission.
      void resize(int p_Size)
      {
-          //cout << "\n resize(" << p_Size << ") D->" << Depth << " MX->" << MAX_Depth; cout.flush();
+          //cout << "\n resize(" << p_Size << ") D->" << Depth << " MX->" << MAX_Depth; std::cout.flush();
           
           if (p_Size <= Depth){ return; }
           
@@ -752,7 +752,7 @@ public:
                return;
           }
           
-          cout << "\n\n\n CELLS IN ROW " << this << " ARE NOT NULL YET DEPTH == 0, NOT GOOD!! WTF!!";
+          std::cout << "\n\n\n CELLS IN ROW " << this << " ARE NOT NULL YET DEPTH == 0, NOT GOOD!! WTF!!";
           //**--if (Cells != NULL){ ga_Row_Alloc--; }
           delete [] Cells;
           Cells = NULL;
@@ -763,31 +763,31 @@ public:
      //Resets the cells back to nothing.
      void reset_End()
      {
-          cout << " reset_End() " << this; cout.flush();
+          std::cout << " reset_End() " << this; std::cout.flush();
           
           if (Cells == NULL){ return; }
           
-          cout << " Depth->" << Depth; cout.flush();
+          std::cout << " Depth->" << Depth; std::cout.flush();
           if (Depth != 0)
           {
-               cout << " delete Cells->" << Cells; cout.flush();
+               std::cout << " delete Cells->" << Cells; std::cout.flush();
                for (int cou_Index=0;cou_Index<Depth;cou_Index++)
                {
-                    cout << " Cell[" << cou_Index << "]->" << Cells[cou_Index]; cout.flush();
+                    std::cout << " Cell[" << cou_Index << "]->" << Cells[cou_Index]; std::cout.flush();
                     delete Cells[cou_Index];
                     Cells[cou_Index] = NULL;
                }
-               cout << " delete [] Cells->" << Cells; cout.flush();
+               std::cout << " delete [] Cells->" << Cells; std::cout.flush();
                delete [] Cells;
                Cells = NULL;
           }
           
-          //cout << " delete [] Cells->" << Cells; cout.flush();
+          //cout << " delete [] Cells->" << Cells; std::cout.flush();
           //delete [] Cells;
           //Cells = NULL;
           
           Depth = 0;
-          cout << " Done(" << this << ")";
+          std::cout << " Done(" << this << ")";
      }   
      
      
@@ -797,15 +797,15 @@ public:
      //Outputs the row as characters.
      void output_C()
      {
-          cout << " {";
+          std::cout << " {";
           if (Depth != 0){ oint(0, 13, Depth); }
-          cout << "} ";
+          std::cout << "} ";
           
           for (int cou_Index=0;cou_Index<Depth;cou_Index++)
           {
-               cout << " {";
+               std::cout << " {";
                oint(0, 12, cou_Index);
-               cout << "} ";
+               std::cout << "} ";
                Cells[cou_Index]->output_C();
           }
      }
@@ -813,15 +813,15 @@ public:
      //Outputs the row as integer.
      void output_I()
      {
-          cout << " {";
+          std::cout << " {";
           if (Depth != 0){ oint(0, 13, Depth); }
-          cout << "} ";
+          std::cout << "} ";
           
           for (int cou_Index=0;cou_Index<Depth;cou_Index++)
           {
-               cout << " {";
+               std::cout << " {";
                oint(0, 12, cou_Index);
-               cout << "}";
+               std::cout << "}";
                Cells[cou_Index]->output_I();
           }
      }
@@ -829,15 +829,15 @@ public:
      //Outputs the row as integer.
      void output_U()
      {
-          cout << " {";
+          std::cout << " {";
           if (Depth != 0){ oint(0, 13, Depth); }
-          cout << "} ";
+          std::cout << "} ";
           
           for (int cou_Index=0;cou_Index<Depth;cou_Index++)
           {
-               cout << " {";
+               std::cout << " {";
                oint(0, 12, cou_Index);
-               cout << "}";
+               std::cout << "}";
                Cells[cou_Index]->output_U();
           }
      }
@@ -845,15 +845,15 @@ public:
      //Outputs the row as *void.
      void output_NR()
      {
-          cout << " {";
+          std::cout << " {";
           if (Depth != 0){ oint(0, 13, Depth); }
-          cout << "} ";
+          std::cout << "} ";
           
           for (int cou_Index=0;cou_Index<Depth;cou_Index++)
           {
-               cout << " {";
+               std::cout << " {";
                oint(0, 12, cou_Index);
-               cout << "}";
+               std::cout << "}";
                Cells[cou_Index]->output_NR();
           }
      }
@@ -861,15 +861,15 @@ public:
      //Outputs the row as float.
      void output_F()
      {
-          cout << " {";
+          std::cout << " {";
           if (Depth != 0){ oint(0, 13, Depth); }
-          cout << "} ";
+          std::cout << "} ";
           
           for (int cou_Index=0;cou_Index<Depth;cou_Index++)
           {
-               cout << " {";
+               std::cout << " {";
                oint(0, 12, cou_Index);
-               cout << "}";
+               std::cout << "}";
                Cells[cou_Index]->output_F();
           }
      }
@@ -882,7 +882,7 @@ public:
         
      
      //Outputs the row as characters.
-     void save_C(ofstream * p_File)
+     void save_C(std::ofstream * p_File)
      {
           *p_File << " " << Depth;
           for (int cou_Index=0;cou_Index<Depth;cou_Index++)
@@ -893,7 +893,7 @@ public:
      }
      
      //Outputs the row as integer.
-     void save_I(ofstream * p_File)
+     void save_I(std::ofstream * p_File)
      {
           *p_File << " " << Depth;
           for (int cou_Index=0;cou_Index<Depth;cou_Index++)
@@ -904,7 +904,7 @@ public:
      }
      
      //Outputs the row as *void.
-     void save_NR(ofstream * p_File)
+     void save_NR(std::ofstream * p_File)
      {
           *p_File << " " << Depth;
           for (int cou_Index=0;cou_Index<Depth;cou_Index++)
@@ -915,7 +915,7 @@ public:
      }
      
      //Outputs the row as float.
-     void save_F(ofstream * p_File)
+     void save_F(std::ofstream * p_File)
      {
           *p_File << " " << Depth;
           for (int cou_Index=0;cou_Index<Depth;cou_Index++)
@@ -941,7 +941,7 @@ public:
      bool * Hotlinked;
      
      //The name of the table.
-     string Name;
+     std::string Name;
      
      c_Raw_Table_1D()
      {
@@ -954,9 +954,9 @@ public:
      ~c_Raw_Table_1D()
      {
           
-          cout << "\n    ~c_Raw_Table_1D " << Name << " " << Number_Of_Rows << " "; cout.flush();
+          std::cout << "\n    ~c_Raw_Table_1D " << Name << " " << Number_Of_Rows << " "; std::cout.flush();
           reset_End();
-          cout << "\n    ~~~c_Raw_Table_1D " << Name << " " << Number_Of_Rows << " "; cout.flush();
+          std::cout << "\n    ~~~c_Raw_Table_1D " << Name << " " << Number_Of_Rows << " "; std::cout.flush();
      }
      
      //====----
@@ -964,7 +964,7 @@ public:
      //====----
           
      //Makes a submission to the table adding a new row.
-     void submit_String(string p_Submission)
+     void submit_String(std::string p_Submission)
      {
           //Make room for the new submission.
           resize(Number_Of_Rows + 1);
@@ -1010,7 +1010,7 @@ public:
      //====----
           
      //Makes a submission to the table adding a new cell to the current row.
-     void add_String(string p_Submission)
+     void add_String(std::string p_Submission)
      {
           //If there are no rows then make the first one.
           if (Number_Of_Rows == 0){ resize(1); }
@@ -1050,7 +1050,7 @@ public:
      }
           
      //Makes a submission to the table adding a new cell to the given row.
-     void add_String(int p_Row, string p_Submission)
+     void add_String(int p_Row, std::string p_Submission)
      {
           resize(p_Row + 1);
           
@@ -1092,13 +1092,13 @@ public:
      //====----
           
      //Sets a given cell cell to the given string.
-     void set_String(int p_Row, int p_Cell, string p_Submission)
+     void set_string(int p_Row, int p_Cell, std::string p_Submission)
      {
           //IF there are not enough rows then create them.
           if (Number_Of_Rows <= p_Row){ resize(p_Row + 1); }
           
           //Set the string.
-          Rows[p_Row]->set_String(p_Cell, p_Submission);
+          Rows[p_Row]->set_string(p_Cell, p_Submission);
      }
      
      //Sets a given cell to the given integer.
@@ -1368,27 +1368,27 @@ public:
      //Resets the table.
      void reset_End()
      {
-          cout << "\n    " << this << " Rows->" << Rows << "  ";
+          std::cout << "\n    " << this << " Rows->" << Rows << "  ";
           if (Number_Of_Rows != 0)
           {
-               cout << " (Number_Of_Rows->" << Number_Of_Rows << " != 0)"; cout.flush();
+               std::cout << " (Number_Of_Rows->" << Number_Of_Rows << " != 0)"; std::cout.flush();
                for (int cou_Index=0;cou_Index<Number_Of_Rows;cou_Index++)
                {
-                    cout << " delete Rows[" << cou_Index << "]->" << Rows[cou_Index]; cout.flush();
-                    if (Hotlinked[cou_Index]){ Rows[cou_Index] = NULL; cout << "REEEEE"; continue; }
+                    std::cout << " delete Rows[" << cou_Index << "]->" << Rows[cou_Index]; std::cout.flush();
+                    if (Hotlinked[cou_Index]){ Rows[cou_Index] = NULL; std::cout << "REEEEE"; continue; }
                     delete Rows[cou_Index];
                     
                     Rows[cou_Index] = NULL;
-                    cout << " Roe"; cout.flush();
+                    std::cout << " Roe"; std::cout.flush();
                }
                
-               cout << " delete [] Rows->" << Rows; cout.flush();
+               std::cout << " delete [] Rows->" << Rows; std::cout.flush();
                
                delete [] Rows;
                Rows = NULL;
           }
           Number_Of_Rows = 0;
-          cout << " Done"; cout.flush();
+          std::cout << " Done"; std::cout.flush();
      }
      
      //Resets the data in the rows, however, the row itself is not destroyed.
@@ -1576,100 +1576,100 @@ public:
      
      void output_C(int p_Tab = 0)
      {
-          string tmp_Tabl = "";
+          std::string tmp_Tabl = "";
           for (int cou_Index=0;cou_Index<p_Tab;cou_Index++){ tmp_Tabl += "\t"; }
           
-          cout << "\n\n" << tmp_Tabl << " --== ";
+          std::cout << "\n\n" << tmp_Tabl << " --== ";
           ostr(0, 8, Name);
-          cout << " ==--";
+          std::cout << " ==--";
           
-          cout << "\n" << tmp_Tabl << "  Number_Of_Rows->";
+          std::cout << "\n" << tmp_Tabl << "  Number_Of_Rows->";
           oint(0, 7, Number_Of_Rows);
           for (int cou_Index=0;cou_Index<Number_Of_Rows;cou_Index++)
           {
-               cout << "\n" << tmp_Tabl << "  --[";
+               std::cout << "\n" << tmp_Tabl << "  --[";
                oint(0, 15, cou_Index);
-               cout << "]";
+               std::cout << "]";
                Rows[cou_Index]->output_C();
           }
      }
      
      void output_I(int p_Tab = 0)
      {
-          string tmp_Tabl = "";
+          std::string tmp_Tabl = "";
           for (int cou_Index=0;cou_Index<p_Tab;cou_Index++){ tmp_Tabl += "\t"; }
           
-          cout << "\n\n" << tmp_Tabl << " --== ";
+          std::cout << "\n\n" << tmp_Tabl << " --== ";
           ostr(0, 8, Name);
-          cout << " ==--";
+          std::cout << " ==--";
           
-          cout << "\n" << tmp_Tabl << "  Number_Of_Rows->";
+          std::cout << "\n" << tmp_Tabl << "  Number_Of_Rows->";
           oint(0, 7, Number_Of_Rows);
           for (int cou_Index=0;cou_Index<Number_Of_Rows;cou_Index++)
           {
-               cout << "\n" << tmp_Tabl << "  --[";
+               std::cout << "\n" << tmp_Tabl << "  --[";
                oint(0, 15, cou_Index);
-               cout << "]";
+               std::cout << "]";
                Rows[cou_Index]->output_I();
           }
      }
      
      void output_U(int p_Tab = 0)
      {
-          string tmp_Tabl = "";
+          std::string tmp_Tabl = "";
           for (int cou_Index=0;cou_Index<p_Tab;cou_Index++){ tmp_Tabl += "\t"; }
           
-          cout << "\n\n" << tmp_Tabl << " --== ";
+          std::cout << "\n\n" << tmp_Tabl << " --== ";
           ostr(0, 8, Name);
-          cout << " ==--";
+          std::cout << " ==--";
           
-          cout << "\n" << tmp_Tabl << "  Number_Of_Rows->";
+          std::cout << "\n" << tmp_Tabl << "  Number_Of_Rows->";
           oint(0, 7, Number_Of_Rows);
           for (int cou_Index=0;cou_Index<Number_Of_Rows;cou_Index++)
           {
-               cout << "\n" << tmp_Tabl << "  --[";
+               std::cout << "\n" << tmp_Tabl << "  --[";
                oint(0, 15, cou_Index);
-               cout << "]";
+               std::cout << "]";
                Rows[cou_Index]->output_U();
           }
      }
      
      void output_NR(int p_Tab = 0)
      {
-          string tmp_Tabl = "";
+          std::string tmp_Tabl = "";
           for (int cou_Index=0;cou_Index<p_Tab;cou_Index++){ tmp_Tabl += "\t"; }
           
-          cout << "\n\n" << tmp_Tabl << " --== ";
+          std::cout << "\n\n" << tmp_Tabl << " --== ";
           ostr(0, 8, Name);
-          cout << " ==--";
+          std::cout << " ==--";
           
-          cout << "\n" << tmp_Tabl << "  Number_Of_Rows->";
+          std::cout << "\n" << tmp_Tabl << "  Number_Of_Rows->";
           oint(0, 7, Number_Of_Rows);
           for (int cou_Index=0;cou_Index<Number_Of_Rows;cou_Index++)
           {
-               cout << "\n" << tmp_Tabl << "  --[";
+               std::cout << "\n" << tmp_Tabl << "  --[";
                oint(0, 15, cou_Index);
-               cout << "]";
+               std::cout << "]";
                Rows[cou_Index]->output_NR();
           }
      }
      
      void output_F(int p_Tab = 0)
      {
-          string tmp_Tabl = "";
+          std::string tmp_Tabl = "";
           for (int cou_Index=0;cou_Index<p_Tab;cou_Index++){ tmp_Tabl += "\t"; }
           
-          cout << "\n\n" << tmp_Tabl << " --== ";
+          std::cout << "\n\n" << tmp_Tabl << " --== ";
           ostr(0, 8, Name);
-          cout << " ==--";
+          std::cout << " ==--";
           
-          cout << "\n" << tmp_Tabl << "  Number_Of_Rows->";
+          std::cout << "\n" << tmp_Tabl << "  Number_Of_Rows->";
           oint(0, 7, Number_Of_Rows);
           for (int cou_Index=0;cou_Index<Number_Of_Rows;cou_Index++)
           {
-               cout << "\n" << tmp_Tabl << "  --[";
+               std::cout << "\n" << tmp_Tabl << "  --[";
                oint(0, 15, cou_Index);
-               cout << "]";
+               std::cout << "]";
                Rows[cou_Index]->output_F();
           }
      }
@@ -1685,7 +1685,7 @@ public:
      //====----
      
      
-     void save_C(ofstream * SF)
+     void save_C(std::ofstream * SF)
      {
           *SF << "\n\nR " << Number_Of_Rows;
           
@@ -1696,7 +1696,7 @@ public:
           }
      }
      
-     void save_I(ofstream * SF)
+     void save_I(std::ofstream * SF)
      {
           *SF << "\n\nR " << Number_Of_Rows;
           
@@ -1707,7 +1707,7 @@ public:
           }
      }
      
-     void save_NR(ofstream * SF)
+     void save_NR(std::ofstream * SF)
      {
           *SF << "\n\nR " << Number_Of_Rows;
           
@@ -1718,7 +1718,7 @@ public:
           }
      }
      
-     void save_F(ofstream * SF)
+     void save_F(std::ofstream * SF)
      {
           *SF << "\n\nR " << Number_Of_Rows;
           
@@ -1732,56 +1732,56 @@ public:
      
      
      
-     void save_C(string p_File, string p_DIR = "NO_DIR")
+     void save_C(std::string p_File, std::string p_DIR = "NO_DIR")
      {
-          ofstream SF;
-          string tmp_File;
+          std::ofstream SF;
+          std::string tmp_File;
           if (p_DIR != "NO_DIR"){ tmp_File = p_DIR + "\\" + p_File; } else { tmp_File = p_File; }
           
           SF.open(tmp_File);
-          if (!SF.is_open()){ cout << "\n FILE " << tmp_File << " COULD NOT BE OPENED!"; return; }
+          if (!SF.is_open()){ std::cout << "\n FILE " << tmp_File << " COULD NOT BE OPENED!"; return; }
           
           save_C(&SF);
           
           SF.close();
      }
      
-     void save_I(string p_File, string p_DIR = "NO_DIR")
+     void save_I(std::string p_File, std::string p_DIR = "NO_DIR")
      {
-          ofstream SF;
-          string tmp_File;
+          std::ofstream SF;
+          std::string tmp_File;
           if (p_DIR != "NO_DIR"){ tmp_File = p_DIR + "\\" + p_File; } else { tmp_File = p_File; }
           
           SF.open(tmp_File);
-          if (!SF.is_open()){ cout << "\n FILE " << tmp_File << " COULD NOT BE OPENED!"; return; }
+          if (!SF.is_open()){ std::cout << "\n FILE " << tmp_File << " COULD NOT BE OPENED!"; return; }
           
           save_I(&SF);
           
           SF.close();
      }
      
-     void save_NR(string p_File, string p_DIR = "NO_DIR")
+     void save_NR(std::string p_File, std::string p_DIR = "NO_DIR")
      {
-          ofstream SF;
-          string tmp_File;
+          std::ofstream SF;
+          std::string tmp_File;
           if (p_DIR != "NO_DIR"){ tmp_File = p_DIR + "\\" + p_File; } else { tmp_File = p_File; }
           
           SF.open(tmp_File);
-          if (!SF.is_open()){ cout << "\n FILE " << tmp_File << " COULD NOT BE OPENED!"; return; }
+          if (!SF.is_open()){ std::cout << "\n FILE " << tmp_File << " COULD NOT BE OPENED!"; return; }
           
           save_NR(&SF);
           
           SF.close();
      }
      
-     void save_F(string p_File, string p_DIR = "NO_DIR")
+     void save_F(std::string p_File, std::string p_DIR = "NO_DIR")
      {
-          ofstream SF;
-          string tmp_File;
+          std::ofstream SF;
+          std::string tmp_File;
           if (p_DIR != "NO_DIR"){ tmp_File = p_DIR + "\\" + p_File; } else { tmp_File = p_File; }
           
           SF.open(tmp_File);
-          if (!SF.is_open()){ cout << "\n FILE " << tmp_File << " COULD NOT BE OPENED!"; return; }
+          if (!SF.is_open()){ std::cout << "\n FILE " << tmp_File << " COULD NOT BE OPENED!"; return; }
           
           save_F(&SF);
           

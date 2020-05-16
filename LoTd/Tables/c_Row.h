@@ -59,17 +59,17 @@ public:
      
      //--     PUSHING A SINGLE BIT OF DATA ONTO THE CURRENT CELL AFTER POPPING
      
-     void push_Data_Bit_F(float p_Data){    if (Cells[Push_Index]->get_Set_State()){ pop_Cell(); } Cells[Push_Index]->push_F(p_Data); }
-     void push_Data_Bit_I(int p_Data){      if (Cells[Push_Index]->get_Set_State()){ pop_Cell(); } Cells[Push_Index]->push_I(p_Data); }
-     void push_Data_Bit_NR(void * p_Data){  if (Cells[Push_Index]->get_Set_State()){ pop_Cell(); } Cells[Push_Index]->push_NR(p_Data); }     
-     void push_Data_Bit_B(bool p_Data){     if (Cells[Push_Index]->get_Set_State()){ pop_Cell(); } Cells[Push_Index]->push_B(p_Data); }
-     void push_Data_Bit_S(string p_Data){   if (Cells[Push_Index]->get_Set_State()){ pop_Cell(); } push_Data_Chunk_S(p_Data); }
+     void push_Data_Bit_F(float p_Data){         if (Cells[Push_Index]->get_Set_State()){ pop_Cell(); } Cells[Push_Index]->push_F(p_Data); }
+     void push_Data_Bit_I(int p_Data){           if (Cells[Push_Index]->get_Set_State()){ pop_Cell(); } Cells[Push_Index]->push_I(p_Data); }
+     void push_Data_Bit_NR(void * p_Data){       if (Cells[Push_Index]->get_Set_State()){ pop_Cell(); } Cells[Push_Index]->push_NR(p_Data); }     
+     void push_Data_Bit_B(bool p_Data){          if (Cells[Push_Index]->get_Set_State()){ pop_Cell(); } Cells[Push_Index]->push_B(p_Data); }
+     void push_Data_Bit_S(std::string p_Data){   if (Cells[Push_Index]->get_Set_State()){ pop_Cell(); } push_Data_Chunk_S(p_Data); }
      void push_Data_Bit(u_Data p_Data, int p_Data_Type){ if (Cells[Push_Index]->get_Set_State()){ pop_Cell(); } push_Data_Chunk(&p_Data, 0, p_Data_Type); }
      
      
      //--     PUSHING A DATA CHUNK ONTO THE CURRENT CELL AFTER POPPING IT
      
-     void push_Data_Chunk_S(string p_Data)                       { if (Cells[Push_Index]->get_Set_State()){ pop_Cell(); } Cells[Push_Index]->set_S(p_Data); }
+     void push_Data_Chunk_S(std::string p_Data)                  { if (Cells[Push_Index]->get_Set_State()){ pop_Cell(); } Cells[Push_Index]->set_S(p_Data); }
      void push_Data_Chunk_I(int p_Data[], int p_Data_Depth)      { if (Cells[Push_Index]->get_Set_State()){ pop_Cell(); } Cells[Push_Index]->set_I(p_Data, p_Data_Depth); }
      void push_Data_Chunk_F(float p_Data[], int p_Data_Depth)    { if (Cells[Push_Index]->get_Set_State()){ pop_Cell(); } Cells[Push_Index]->set_F(p_Data, p_Data_Depth); }
      void push_Data_Chunk_NR(void * p_Data[], int p_Data_Depth)  { if (Cells[Push_Index]->get_Set_State()){ pop_Cell(); } Cells[Push_Index]->set_NR(p_Data, p_Data_Depth); }
@@ -79,7 +79,7 @@ public:
      //--     SETTING A GIVEN CELLS DATA TO THE GIVEN DATA CHUNK
      
      //Sets a given index to the given data set.
-     void set_Given_Cell_Data_Chunk_S (int p_Cell, string p_Data)                     { expand_Row_Depth(p_Cell + 1); Cells[p_Cell]->set_S(p_Data); }
+     void set_Given_Cell_Data_Chunk_S (int p_Cell, std::string p_Data)                { expand_Row_Depth(p_Cell + 1); Cells[p_Cell]->set_S(p_Data); }
      void set_Given_Cell_Data_Chunk_C (int p_Cell, char p_Data[], int p_Data_Length)  { expand_Row_Depth(p_Cell + 1); Cells[p_Cell]->set_C(p_Data, p_Data_Length); }
      void set_Given_Cell_Data_Chunk_I (int p_Cell, int p_Data[], int p_Data_Length)   { expand_Row_Depth(p_Cell + 1); Cells[p_Cell]->set_I(p_Data, p_Data_Length); }
      void set_Given_Cell_Data_Chunk_F (int p_Cell, float p_Data[], int p_Data_Length) { expand_Row_Depth(p_Cell + 1); Cells[p_Cell]->set_F(p_Data, p_Data_Length); }
@@ -92,7 +92,7 @@ public:
      
      //Sets the given cells data to the given single value.
      void set_Given_Cell_Data_Bit_C (int p_Cell, char p_Data)  { expand_Row_Depth(p_Cell + 1); Cells[p_Cell]->set_C(&p_Data, 1);}
-     void set_Given_Cell_Data_Bit_S (int p_Cell, string p_Data){ expand_Row_Depth(p_Cell + 1); Cells[p_Cell]->set_S(p_Data);}
+     void set_Given_Cell_Data_Bit_S (int p_Cell, std::string p_Data){ expand_Row_Depth(p_Cell + 1); Cells[p_Cell]->set_S(p_Data);}
      void set_Given_Cell_Data_Bit_I (int p_Cell, int p_Data)   { expand_Row_Depth(p_Cell + 1); Cells[p_Cell]->set_I(&p_Data, 1);}
      void set_Given_Cell_Data_Bit_F (int p_Cell, float p_Data) { expand_Row_Depth(p_Cell + 1); Cells[p_Cell]->set_F(&p_Data, 1);}
      void set_Given_Cell_Data_Bit_NR(int p_Cell, void * p_Data){ expand_Row_Depth(p_Cell + 1); Cells[p_Cell]->set_NR(&p_Data, 1);}
@@ -104,7 +104,7 @@ public:
      
      //Sets the given cells data to the given single value.
      void set_Given_Cell_Data_Bit_At_Given_Index_C (int p_Cell, int p_Index, char p_Data)  { expand_Row_Depth(p_Cell + 1); Cells[p_Cell]->set_Data_Bit_At_Given_Index_C(p_Index, p_Data); }
-     void set_Given_Cell_Data_Bit_At_Given_Index_S (int p_Cell, int p_Index, string p_Data){ expand_Row_Depth(p_Cell + 1); Cells[p_Cell]->set_Data_Bit_At_Given_Index_C(p_Index, p_Data[0]); }
+     void set_Given_Cell_Data_Bit_At_Given_Index_S (int p_Cell, int p_Index, std::string p_Data){ expand_Row_Depth(p_Cell + 1); Cells[p_Cell]->set_Data_Bit_At_Given_Index_C(p_Index, p_Data[0]); }
      void set_Given_Cell_Data_Bit_At_Given_Index_I (int p_Cell, int p_Index, int p_Data)   { expand_Row_Depth(p_Cell + 1); Cells[p_Cell]->set_Data_Bit_At_Given_Index_I(p_Index, p_Data); }
      void set_Given_Cell_Data_Bit_At_Given_Index_F (int p_Cell, int p_Index, float p_Data) { expand_Row_Depth(p_Cell + 1); Cells[p_Cell]->set_Data_Bit_At_Given_Index_F(p_Index, p_Data); }
      void set_Given_Cell_Data_Bit_At_Given_Index_NR(int p_Cell, int p_Index, void * p_Data){ expand_Row_Depth(p_Cell + 1); Cells[p_Cell]->set_Data_Bit_At_Given_Index_NR(p_Index, p_Data); }
@@ -190,7 +190,7 @@ public:
      //--     GETS A GIVEN CELLS DATA CHUNK USING AN ARRAY REFERENCE PASSED
      
      //String
-     void get_Given_Cells_Data_Chunk_Passed_S(int p_Cell, string * p_String)
+     void get_Given_Cells_Data_Chunk_Passed_S(int p_Cell, std::string * p_String)
      {
           if (p_Cell < Cell_Count)
           {
@@ -373,7 +373,7 @@ public:
      }
      
      //Converts each cell in the row into strings.
-     string convert_Row_To_String()
+     std::string convert_Row_To_String()
      {
           for (int cou_Index=0;cou_Index<Cell_Count;cou_Index++)
           {
@@ -416,7 +416,7 @@ public:
           
           for (int cou_Index=0;cou_Index<p_Limit;cou_Index++)
           {
-               cout << cou_Index;
+               std::cout << cou_Index;
                output_Given_Cell(cou_Index);
           }
      }
@@ -424,13 +424,13 @@ public:
      //Outputs the row.
      void output_Row(int p_Limit)
      {
-          cout << "\n\t ";
+          std::cout << "\n\t ";
           ostr(0, 15, "Row");
           ostr(0, 7, "->");
-          cout << this;
+          std::cout << this;
           ostr(0, 15, " Cell_Count");
           ostr(0, 7, "->");
-          cout << Cell_Count;
+          std::cout << Cell_Count;
           ostr(0, 7, " | ");
           output_Row_Data(p_Limit);
      }
@@ -455,7 +455,7 @@ public:
      //Outputs the row.
      void output_Row_Verbose()
      {
-          cout << "\n\t\t Row->" << this << " Cell_Count->" << Cell_Count << " | ";
+          std::cout << "\n\t\t Row->" << this << " Cell_Count->" << Cell_Count << " | ";
           output_Row_Data_Verbose();
      }
      

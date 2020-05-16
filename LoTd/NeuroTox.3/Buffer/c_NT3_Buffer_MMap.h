@@ -33,9 +33,9 @@ public:
      //-- !WARNING WILL CAUSE STACK CORRUPTION ERROR WITH ENOUGH NODES!
      void output_LL()
      {
-          //*cout << " [";
-          if (NID.U != 0){ cout << " NID:" << NID.U; }
-          cout << " $" << Charge.I << "]  ";
+          //*std::cout << " [";
+          if (NID.U != 0){ std::cout << " NID:" << NID.U; }
+          std::cout << " $" << Charge.I << "]  ";
           if (Next != NULL){ Next->output_LL(); }
      }
 };
@@ -104,27 +104,27 @@ public:
      void reset()
      {
 		 //ostr(0, 13, "\n\n\n resetting LL Depth:"); oint(0, 8, Depth);
-		 //cout << "\n Root:" << Root;
+		 //std::cout << "\n Root:" << Root;
 
           c_NT3_Linked_List_MMap * tmp_LL = Root;
           Root = NULL;
           c_NT3_Linked_List_MMap * tmp_LL_Next = NULL;
-		  //cout << "\n tmp_LL: " << tmp_LL;
-		  //cout << "\n tmp_LL_Next: " << tmp_LL_Next;
+		  //std::cout << "\n tmp_LL: " << tmp_LL;
+		  //std::cout << "\n tmp_LL_Next: " << tmp_LL_Next;
           while (tmp_LL != NULL)
           {
 			  //ostr(0, 11, "\n\nIn Loop:");
-			  //cout << "\n tmp_LL: " << tmp_LL;
+			  //std::cout << "\n tmp_LL: " << tmp_LL;
                tmp_LL_Next = tmp_LL->Next;
-			   //cout << "\n tmp_LL_Next: " << tmp_LL_Next;
+			   //std::cout << "\n tmp_LL_Next: " << tmp_LL_Next;
                tmp_LL->Next = NULL;
                tmp_LL->Previous = NULL;
                delete tmp_LL;
                tmp_LL = NULL;
                tmp_LL = tmp_LL_Next;
 
-			   //cout << "\n --tmp_LL: " << tmp_LL;
-			   //cout << "\n --tmp_LL_Next: " << tmp_LL_Next;
+			   //std::cout << "\n --tmp_LL: " << tmp_LL;
+			   //std::cout << "\n --tmp_LL_Next: " << tmp_LL_Next;
           }
           
           delete Root;
@@ -234,7 +234,7 @@ private:
                
                
                
-               //---cout << "\n\n SEARCHING ->" << tmp_SSData.U;
+               //---std::cout << "\n\n SEARCHING ->" << tmp_SSData.U;
                //system("PAUSE > NULL");
                return query_Node(Root, tmp_SSData, 31);
           }
@@ -248,25 +248,25 @@ private:
                u_Data_3 tmp_DData;
                tmp_DData.U = p_Data.U;
                tmp_DData.U = tmp_DData.U >> p_Shift;
-               //---cout << "\n tmp_DData.U = " << tmp_DData.U << " p_Data.U->" << p_Data.U << " p_Shift = " << p_Shift;
-               //---cout << "\n\n tmp_DData.U = " << tmp_DData.U << " p_Shift = " << p_Shift;
-               //---cout << "\n\t __QN__ tmp_DData.U->" << tmp_DData.U << " p_Data.U->" << p_Data.U;
+               //---std::cout << "\n tmp_DData.U = " << tmp_DData.U << " p_Data.U->" << p_Data.U << " p_Shift = " << p_Shift;
+               //---std::cout << "\n\n tmp_DData.U = " << tmp_DData.U << " p_Shift = " << p_Shift;
+               //---std::cout << "\n\t __QN__ tmp_DData.U->" << tmp_DData.U << " p_Data.U->" << p_Data.U;
                
                if (p_Node == NULL)
                {      
-                    //---cout << "\n\t   Node is NULL";
+                    //---std::cout << "\n\t   Node is NULL";
                     p_Node = new c_NT3_Buffer_Node_MMap;
                     p_Node->Right = NULL;
                     p_Node->Center = NULL;
                     p_Node->Left = NULL;
                     if (p_Shift >= 1)
                     {
-                         //---cout << "\n\t   tmp_DData.U > 1";
+                         //---std::cout << "\n\t   tmp_DData.U > 1";
                          p_Node->Data = tmp_DData;
                     }
                     else 
                     {
-                         //---cout << "\n\t   tmp_DData.U !> 1";
+                         //---std::cout << "\n\t   tmp_DData.U !> 1";
                          p_Node->Data = p_Data;
                          Current = &p_Node; 
                          flg_Foundit = false;
@@ -281,9 +281,9 @@ private:
                //If the current data matches the tmp data then another depth is explored.
                if (p_Node->Data.U == tmp_DData.U && p_Shift > 0)
                {
-                    //---cout << "\n\t   p_Node->Data.U (" << p_Node->Data.U << ") == tmp_DData.U (" << tmp_DData.U << ")";
+                    //---std::cout << "\n\t   p_Node->Data.U (" << p_Node->Data.U << ") == tmp_DData.U (" << tmp_DData.U << ")";
                     
-                    //---cout << "\t tmp_DData.U = " << tmp_DData.U;
+                    //---std::cout << "\t tmp_DData.U = " << tmp_DData.U;
                     
                     return query_Node(p_Node->Center, p_Data, (p_Shift - 1));
                }
@@ -294,7 +294,7 @@ private:
                //--Having error because now that node references can be single digits we have the issue of a NID 1 triggering this function when shift > 0.
                if (p_Node->Data.U == p_Data.U && p_Shift <= 0)
                {
-                    //---cout << "\n\t    p_Node->Data.NR(" << p_Node->Data.NR << ") == p_Data.NR(" << p_Data.NR << ")";
+                    //---std::cout << "\n\t    p_Node->Data.NR(" << p_Node->Data.NR << ") == p_Data.NR(" << p_Data.NR << ")";
                     Current = &p_Node;  
                     flg_Foundit = true;
                     tmp_Return = p_Node;
@@ -307,12 +307,12 @@ private:
                
                if (tmp_DData.U < p_Node->Data.U)
                {
-                    //---cout << "\n\t    tmp_DData.U (" << tmp_DData.U << ") < p_Node->Data.U(" << p_Node->Data.U << ")";
+                    //---std::cout << "\n\t    tmp_DData.U (" << tmp_DData.U << ") < p_Node->Data.U(" << p_Node->Data.U << ")";
                     return query_Node(p_Node->Left, p_Data, (p_Shift - 1));
                }
                if (tmp_DData.U > p_Node->Data.U)
                {
-                    //---cout << "\n\t    tmp_DData.U (" << tmp_DData.U << ") > p_Node->Data.U(" << p_Node->Data.U << ")";
+                    //---std::cout << "\n\t    tmp_DData.U (" << tmp_DData.U << ") > p_Node->Data.U(" << p_Node->Data.U << ")";
                     return query_Node(p_Node->Right, p_Data, (p_Shift - 1));
                }
                return tmp_Return;
@@ -328,13 +328,13 @@ private:
                /*
                if (p_Node == NULL){ return; }
                output_Node(p_Node->Left, (p_Tab));
-               //cout << "\n";
+               //std::cout << "\n";
                for (int cou_Index=0;cou_Index<p_Tab;cou_Index++)
                {
-                    //cout << "  ";
+                    //std::cout << "  ";
                }
-               //cout << (p_Node->Data).I;
-               if (p_Node->LL != NULL){ cout << "->" << (p_Node->LL->NID); }
+               //std::cout << (p_Node->Data).I;
+               if (p_Node->LL != NULL){ std::cout << "->" << (p_Node->LL->NID); }
                output_Node(p_Node->Center, (p_Tab + 1));
                output_Node(p_Node->Right, (p_Tab));
                 * */
@@ -497,7 +497,7 @@ public:
      //Charges the outputs back into the charging buffer.
      void charge_Outputs(int p_Use_Spike, int p_Left_Leg = 1, int p_Right_Leg = 1)
      {
-          //*---cout << "\n\n charge_Outputs(" << p_Use_Spike << ", " << p_Left_Leg << ", " << p_Right_Leg << ");";
+          //*---std::cout << "\n\n charge_Outputs(" << p_Use_Spike << ", " << p_Left_Leg << ", " << p_Right_Leg << ");";
           c_NT3_Linked_List_MMap * tmp_LL = Output.Root;
           
           Previous_Highest_Charge = Current_Highest_Charge;
@@ -509,12 +509,12 @@ public:
           //*---long int tmp_Tracker = 0;
           while(tmp_LL != NULL)
           {
-               //*---cout << "\n [" << tmp_Tracker << "] "; oull(0, 13, tmp_LL->NID.U); cout << " Tp->" << Nodes->get_Type(tmp_LL->NID.U) << " "; tmp_Tracker++;
+               //*---std::cout << "\n [" << tmp_Tracker << "] "; oull(0, 13, tmp_LL->NID.U); std::cout << " Tp->" << Nodes->get_Type(tmp_LL->NID.U) << " "; tmp_Tracker++;
                //*tmp_LL->NID->bp_O();
                
                if (tmp_LL->NID.U == 0){ tmp_LL = tmp_LL->Next; continue; }
                
-               //*cout << " tmp_Charge = " << " (((" << tmp_LL->Charge.I << " * " << Modifier_Charge << ") / " << Previous_Highest_Charge << ") * " << Base_Charge << ")";
+               //*std::cout << " tmp_Charge = " << " (((" << tmp_LL->Charge.I << " * " << Modifier_Charge << ") / " << Previous_Highest_Charge << ") * " << Base_Charge << ")";
                
                tmp_Charge_Percentage = ((tmp_LL->Charge.I * Modifier_Charge) / Previous_Highest_Charge);
                if (p_Use_Spike == 0){ tmp_Charge = (tmp_Charge_Percentage * Base_Charge); }
@@ -523,12 +523,12 @@ public:
                
                //tmp_Charge = (((tmp_LL->Charge.I * Modifier_Charge) / Previous_Highest_Charge) * Base_Charge);
                
-               //*---cout << " c->" << tmp_Charge;
+               //*---std::cout << " c->" << tmp_Charge;
                
                if (tmp_Charge < (Base_Charge * Action_Potential_Threshold)){ tmp_LL = tmp_LL->Next; continue; }
                
                Axon_List_L.resize(Nodes->get_Axon_Count_L(tmp_LL->NID.U));
-               //*---cout << "\n   aL->" << Axon_List_L.Current_Size;
+               //*---std::cout << "\n   aL->" << Axon_List_L.Current_Size;
                if (p_Left_Leg)
                {
                     //Gather the left axons from the node.
@@ -537,13 +537,13 @@ public:
                     {
                          //submit(Nodes->get_Axon_L(tmp_LL->NID, cou_A), tmp_Charge);
                          submit(Axon_List_L.Axons[cou_A], tmp_Charge);
-                         //*---cout << " A->" << Axon_List_L.Axons[cou_A].U;
+                         //*---std::cout << " A->" << Axon_List_L.Axons[cou_A].U;
                          //*Nodes->get_Axon_L(tmp_LL->NID, cou_A)->bp_O();
                     }
                }
                
                Axon_List_R.resize(Nodes->get_Axon_Count_R(tmp_LL->NID.U));
-               //*---cout << "\n   aR->" << Axon_List_R.Current_Size;
+               //*---std::cout << "\n   aR->" << Axon_List_R.Current_Size;
                if (p_Right_Leg)
                {
                     //Gather the left axons from the node.
@@ -552,7 +552,7 @@ public:
                     {
                          //submit(Nodes->get_Axon_R(tmp_LL->NID, cou_A), tmp_Charge);
                          submit(Axon_List_R.Axons[cou_A], tmp_Charge);
-                         //*---cout << " A->" << Axon_List_R.Axons[cou_A].U;
+                         //*---std::cout << " A->" << Axon_List_R.Axons[cou_A].U;
                          //*Nodes->get_Axon_L(tmp_LL->NID, cou_A)->bp_O();
                     }
                }
@@ -568,7 +568,7 @@ public:
      //Charges the outputs back into the charging buffer.
      void charge_Outputs_RC(int p_Use_Spike, int p_Left_Leg = 1, int p_Right_Leg = 1)
      {
-          //*---cout << "\n\n charge_Outputs_RC(" << p_Use_Spike << ", " << p_Left_Leg << ", " << p_Right_Leg << ");";
+          //*---std::cout << "\n\n charge_Outputs_RC(" << p_Use_Spike << ", " << p_Left_Leg << ", " << p_Right_Leg << ");";
           c_NT3_Linked_List_MMap * tmp_LL = Output.Root;
           
           Previous_Highest_Charge = Current_Highest_Charge;
@@ -580,12 +580,12 @@ public:
           //*---long int tmp_Tracker = 0;
           while(tmp_LL != NULL)
           {
-               //*---cout << "\n [" << tmp_Tracker << "] "; oull(0, 13, tmp_LL->NID.U); cout << " Tp->" << Nodes->get_Type(tmp_LL->NID.U) << " "; tmp_Tracker++;
+               //*---std::cout << "\n [" << tmp_Tracker << "] "; oull(0, 13, tmp_LL->NID.U); std::cout << " Tp->" << Nodes->get_Type(tmp_LL->NID.U) << " "; tmp_Tracker++;
                //*tmp_LL->NID->bp_O();
                
                if (tmp_LL->NID.U == 0){ tmp_LL = tmp_LL->Next; continue; }
                
-               //---cout << " tmp_Charge = " << " ((((" << tmp_LL->Charge.I << " * " << Modifier_Charge << ") * " << Nodes->get_RC_Score(tmp_LL->NID) << ") / " << Previous_Highest_Charge << ") * " << Base_Charge << ")";
+               //---std::cout << " tmp_Charge = " << " ((((" << tmp_LL->Charge.I << " * " << Modifier_Charge << ") * " << Nodes->get_RC_Score(tmp_LL->NID) << ") / " << Previous_Highest_Charge << ") * " << Base_Charge << ")";
                //tmp_Charge = (((tmp_LL->Charge.I * Modifier_Charge) / Previous_Highest_Charge) * Base_Charge);
                
                tmp_Charge_Percentage = (((tmp_LL->Charge.I * Modifier_Charge) * Nodes->get_RC_Score(tmp_LL->NID.U)) / Previous_Highest_Charge);
@@ -593,17 +593,17 @@ public:
                if (p_Use_Spike == 1){ tmp_Charge = ((tmp_Charge_Percentage * tmp_Charge_Percentage) * Base_Charge); }
 			   if (Nodes->get_flg_Double_Legged(tmp_LL->NID.U)) 
 			   {
-				   //***cout << "\n double legged node found:" << tmp_LL->NID.U;
+				   //***std::cout << "\n double legged node found:" << tmp_LL->NID.U;
 				   tmp_Charge /= 2; 
 			   }
                //tmp_Charge = ((((tmp_LL->Charge.I * Modifier_Charge) * Nodes->get_RC_Score(tmp_LL->NID)) / Previous_Highest_Charge) * Base_Charge);
                
-               //*---cout << " c->" << tmp_Charge;
+               //*---std::cout << " c->" << tmp_Charge;
                
                if (tmp_Charge < (Base_Charge * Action_Potential_Threshold)){ tmp_LL = tmp_LL->Next; continue; }
                
                Axon_List_L.resize(Nodes->get_Axon_Count_L(tmp_LL->NID.U));
-               //*---cout << "\n   aL->" << Axon_List_L.Current_Size;
+               //*---std::cout << "\n   aL->" << Axon_List_L.Current_Size;
                if (p_Left_Leg)
                {
                     //Gather the left axons from the node.
@@ -611,13 +611,13 @@ public:
                     for (int cou_A=0;cou_A<Axon_List_L.Current_Size;cou_A++)
                     {
                          submit_RC(Axon_List_L.Axons[cou_A], tmp_Charge);
-                         //*---cout << " A->" << Axon_List_L.Axons[cou_A].U;
+                         //*---std::cout << " A->" << Axon_List_L.Axons[cou_A].U;
                          //*Nodes->get_Axon_L(tmp_LL->NID, cou_A)->bp_O();
                     }
                }
                
                Axon_List_R.resize(Nodes->get_Axon_Count_R(tmp_LL->NID.U));
-               //*---cout << "\n   aR->" << Axon_List_R.Current_Size;
+               //*---std::cout << "\n   aR->" << Axon_List_R.Current_Size;
                if (p_Right_Leg)
                {
                     //Gather the left axons from the node.
@@ -625,7 +625,7 @@ public:
                     for (int cou_A=0;cou_A<Axon_List_R.Current_Size;cou_A++)
                     {
                          submit_RC(Axon_List_R.Axons[cou_A], tmp_Charge);
-                         //*---cout << " A->" << Axon_List_R.Axons[cou_A].U;
+                         //*---std::cout << " A->" << Axon_List_R.Axons[cou_A].U;
                          //*Nodes->get_Axon_L(tmp_LL->NID, cou_A)->bp_O();
                     }
                }
@@ -651,27 +651,27 @@ public:
           
           while(tmp_LL != NULL)
           {
-               //*cout << "\n " << tmp_LL->NID << " T->" << Nodes->get_Type(tmp_LL->NID) << " ";
+               //*std::cout << "\n " << tmp_LL->NID << " T->" << Nodes->get_Type(tmp_LL->NID) << " ";
                //*tmp_LL->NID->bp_O();
                
                if (tmp_LL->NID.U == 0){ tmp_LL = tmp_LL->Next; continue; }
                
-               //*cout << " tmp_Charge = " << " (((" << tmp_LL->Charge.I << " * " << Modifier_Charge << ") / " << Previous_Highest_Charge << ") * " << Base_Charge << ")";
+               //*std::cout << " tmp_Charge = " << " (((" << tmp_LL->Charge.I << " * " << Modifier_Charge << ") / " << Previous_Highest_Charge << ") * " << Base_Charge << ")";
                
                tmp_Charge_Percentage = ((tmp_LL->Charge.I * Modifier_Charge) / Previous_Highest_Charge);
                if (p_Use_Spike == 0){ tmp_Charge = (tmp_Charge_Percentage * Base_Charge); }
                if (p_Use_Spike == 1){ tmp_Charge = ((tmp_Charge_Percentage * tmp_Charge_Percentage) * Base_Charge); }
                //tmp_Charge = (((tmp_LL->Charge.I * Modifier_Charge) / Previous_Highest_Charge) * Base_Charge);
                
-               //*cout << " c->" << tmp_Charge;
+               //*std::cout << " c->" << tmp_Charge;
                
                if (tmp_Charge < (Base_Charge * Action_Potential_Threshold)){ tmp_LL = tmp_LL->Next; continue; }
                
-               //*cout << " aL->" << Nodes->get_Axon_Count_L(tmp_LL->NID);
+               //*std::cout << " aL->" << Nodes->get_Axon_Count_L(tmp_LL->NID);
                for (int cou_A=0;cou_A<Nodes->get_Axon_Count_L(tmp_LL->NID.U);cou_A++)
                {
                     submit(Nodes->get_Axon_L(tmp_LL->NID.U, cou_A), tmp_Charge);
-                    //*cout << " A->" << Nodes->get_Axon_L(tmp_LL->NID, cou_A);
+                    //*std::cout << " A->" << Nodes->get_Axon_L(tmp_LL->NID, cou_A);
                     //*Nodes->get_Axon_L(tmp_LL->NID, cou_A)->bp_O();
                }
                
@@ -696,7 +696,7 @@ public:
           
           while(tmp_LL != NULL)
           {
-               //*cout << "\n " << tmp_LL->NID << " T->" << Nodes->get_Type(tmp_LL->NID) << " ";
+               //*std::cout << "\n " << tmp_LL->NID << " T->" << Nodes->get_Type(tmp_LL->NID) << " ";
                //*tmp_LL->NID->bp_O();
                
                if (tmp_LL->NID.U == 0){ tmp_LL = tmp_LL->Next; continue; }
@@ -704,14 +704,14 @@ public:
                tmp_Charge_Percentage = ((tmp_LL->Charge.I * Modifier_Charge) / Previous_Highest_Charge);
                tmp_Charge = ((tmp_Charge_Percentage * tmp_Charge_Percentage) * Base_Charge);
                
-               //*cout << " c->" << tmp_Charge;
+               //*std::cout << " c->" << tmp_Charge;
                if (tmp_Charge < (Base_Charge * Action_Potential_Threshold)){ tmp_LL = tmp_LL->Next; continue; }
                
-               //*cout << " aR->" << Nodes->get_Axon_Count_R(tmp_LL->NID);
+               //*std::cout << " aR->" << Nodes->get_Axon_Count_R(tmp_LL->NID);
                for (int cou_A=0;cou_A<Nodes->get_Axon_Count_R(tmp_LL->NID.U);cou_A++)
                {
                     submit(Nodes->get_Axon_R(tmp_LL->NID.U, cou_A), tmp_Charge);
-                    //*cout << " A->" << Nodes->get_Axon_R(tmp_LL->NID, cou_A);
+                    //*std::cout << " A->" << Nodes->get_Axon_R(tmp_LL->NID, cou_A);
                     //*Nodes->get_Axon_R(tmp_LL->NID, cou_A)->bp_O();
                }
                
@@ -737,12 +737,12 @@ public:
           
           while(tmp_LL != NULL)
           {
-               //*cout << "\n " << tmp_LL->NID << " T->" << Nodes->get_Type(tmp_LL->NID) << " ";
+               //*std::cout << "\n " << tmp_LL->NID << " T->" << Nodes->get_Type(tmp_LL->NID) << " ";
                //*tmp_LL->NID->bp_O();
                
                if (tmp_LL->NID.U == 0){ tmp_LL = tmp_LL->Next; continue; }
                
-               //*cout << " tmp_Charge = " << " ((((" << tmp_LL->Charge.I << " * " << Modifier_Charge << ") * " << Nodes->get_RC_Score(tmp_LL->NID) << ") / " << Previous_Highest_Charge << ") * " << Base_Charge << ")";
+               //*std::cout << " tmp_Charge = " << " ((((" << tmp_LL->Charge.I << " * " << Modifier_Charge << ") * " << Nodes->get_RC_Score(tmp_LL->NID) << ") / " << Previous_Highest_Charge << ") * " << Base_Charge << ")";
                //tmp_Charge = (((tmp_LL->Charge.I * Modifier_Charge) / Previous_Highest_Charge) * Base_Charge);
                
                tmp_Charge_Percentage = (((tmp_LL->Charge.I * Modifier_Charge) * Nodes->get_RC_Score(tmp_LL->NID.U)) / Previous_Highest_Charge);
@@ -750,15 +750,15 @@ public:
                if (p_Use_Spike == 1){ tmp_Charge = ((tmp_Charge_Percentage * tmp_Charge_Percentage) * Base_Charge); }
                //tmp_Charge = ((((tmp_LL->Charge.I * Modifier_Charge) * Nodes->get_RC_Score(tmp_LL->NID)) / Previous_Highest_Charge) * Base_Charge);
                
-               //*cout << " c->" << tmp_Charge;
+               //*std::cout << " c->" << tmp_Charge;
                
                if (tmp_Charge < (Base_Charge * Action_Potential_Threshold)){ tmp_LL = tmp_LL->Next; continue; }
                
-               //*cout << " aL->" << Nodes->get_Axon_Count_L(tmp_LL->NID);
+               //*std::cout << " aL->" << Nodes->get_Axon_Count_L(tmp_LL->NID);
                for (int cou_A=0;cou_A<Nodes->get_Axon_Count_L(tmp_LL->NID.U);cou_A++)
                {
                     submit_RC(Nodes->get_Axon_L(tmp_LL->NID.U, cou_A), tmp_Charge);
-                    //*cout << " A->" << Nodes->get_Axon_L(tmp_LL->NID, cou_A);
+                    //*std::cout << " A->" << Nodes->get_Axon_L(tmp_LL->NID, cou_A);
                     //*Nodes->get_Axon_L(tmp_LL->NID, cou_A)->bp_O();
                }
                
@@ -782,12 +782,12 @@ public:
           float tmp_Charge_Percentage = 0.0f;
           while(tmp_LL != NULL)
           {
-               //*cout << "\n " << tmp_LL->NID << " T->" << Nodes->get_Type(tmp_LL->NID) << " ";
+               //*std::cout << "\n " << tmp_LL->NID << " T->" << Nodes->get_Type(tmp_LL->NID) << " ";
                //*tmp_LL->NID->bp_O();
                
                if (tmp_LL->NID.U == 0){ tmp_LL = tmp_LL->Next; continue; }
                
-               //*cout << " tmp_Charge = " << " ((((" << tmp_LL->Charge.I << " * " << Modifier_Charge << ") * " << Nodes->get_RC_Score(tmp_LL->NID) << ") / " << Previous_Highest_Charge << ") * " << Base_Charge << ")";
+               //*std::cout << " tmp_Charge = " << " ((((" << tmp_LL->Charge.I << " * " << Modifier_Charge << ") * " << Nodes->get_RC_Score(tmp_LL->NID) << ") / " << Previous_Highest_Charge << ") * " << Base_Charge << ")";
                //tmp_Charge = (((tmp_LL->Charge.I * Modifier_Charge) / Previous_Highest_Charge) * Base_Charge);
                
                tmp_Charge_Percentage = (((tmp_LL->Charge.I * Modifier_Charge) * Nodes->get_RC_Score(tmp_LL->NID.U)) / Previous_Highest_Charge);
@@ -796,15 +796,15 @@ public:
                
                //tmp_Charge = ((((tmp_LL->Charge.I * Modifier_Charge) * Nodes->get_RC_Score(tmp_LL->NID)) / Previous_Highest_Charge) * Base_Charge);
                
-               //*cout << " c->" << tmp_Charge;
+               //*std::cout << " c->" << tmp_Charge;
                
                if (tmp_Charge < (Base_Charge * Action_Potential_Threshold)){ tmp_LL = tmp_LL->Next; continue; }
                
-               //*cout << " aR->" << Nodes->get_Axon_Count_R(tmp_LL->NID);
+               //*std::cout << " aR->" << Nodes->get_Axon_Count_R(tmp_LL->NID);
                for (int cou_A=0;cou_A<Nodes->get_Axon_Count_R(tmp_LL->NID.U);cou_A++)
                {
                     submit_RC(Nodes->get_Axon_R(tmp_LL->NID.U, cou_A), tmp_Charge);
-                    //*cout << " A->" << Nodes->get_Axon_R(tmp_LL->NID, cou_A);
+                    //*std::cout << " A->" << Nodes->get_Axon_R(tmp_LL->NID, cou_A);
                     //*Nodes->get_Axon_R(tmp_LL->NID, cou_A)->bp_O();
                }
                
@@ -979,13 +979,13 @@ public:
      void output_All_Buffers()
      {
           //system("CLS");
-          cout << "\n Charge_LL->" << Current_Charge.Depth << " ->";
+          std::cout << "\n Charge_LL->" << Current_Charge.Depth << " ->";
           output_Charge_LL();
-          cout << "\n Output_LL->" << Output.Depth << " ->";
+          std::cout << "\n Output_LL->" << Output.Depth << " ->";
           output_Output_LL();
-          cout << "\n Treetops_LL->" << Output.Depth << " ->";
+          std::cout << "\n Treetops_LL->" << Output.Depth << " ->";
           output_Treetops();
-          cout << "\n flg_Not_Done->" << flg_Not_Done;
+          std::cout << "\n flg_Not_Done->" << flg_Not_Done;
      }
      
      //Outputs the buffer.
@@ -1000,28 +1000,28 @@ public:
      //Outputs the Current_Charge_LL.
      void output_Charge_LL()
      {
-          //*cout << "\n\t Current_Charge_LL->";
-          if (Current_Charge.Root == NULL){ cout << "empty..."; return; }
+          //*std::cout << "\n\t Current_Charge_LL->";
+          if (Current_Charge.Root == NULL){ std::cout << "empty..."; return; }
           Current_Charge.Root->output_LL();
-          //*cout << " ~Fing"; cout.flush();
+          //*std::cout << " ~Fing"; std::cout.flush();
      }
      
      //Outputs the Output_LL.
      void output_Output_LL()
      {
-          //*cout << "\n\t Output_LL->";
-          if (Output.Root == NULL){ cout << "empty..."; return; }
+          //*std::cout << "\n\t Output_LL->";
+          if (Output.Root == NULL){ std::cout << "empty..."; return; }
           Output.Root->output_LL();
-          //*cout << " ~Fing"; cout.flush();
+          //*std::cout << " ~Fing"; std::cout.flush();
      }
      
      //Outputs the Treetops.
      void output_Treetops()
      {
-          //*cout << "\n\t Treetops_LL->";
-          if (Treetops.Root == NULL){ cout << "empty..."; return; }
+          //*std::cout << "\n\t Treetops_LL->";
+          if (Treetops.Root == NULL){ std::cout << "empty..."; return; }
           Treetops.Root->output_LL();
-          //*cout << " ~Fing"; cout.flush();
+          //*std::cout << " ~Fing"; std::cout.flush();
      }
 };
 
@@ -1107,9 +1107,9 @@ public:
      //-- !WARNING WILL CAUSE STACK CORRUPTION ERROR WITH ENOUGH NODES!
      void output_LL()
      {
-          cout << "\n[ " << NID.U << " ";
+          std::cout << "\n[ " << NID.U << " ";
           //if (NID != NULL){ NID->bp_0(); } else { ostr(0, 12, "NULL"); }
-          cout << " $"; oint(0, 14, Charge.I); cout << "]  ";
+          std::cout << " $"; oint(0, 14, Charge.I); std::cout << "]  ";
           if (Next != NULL){ Next->output_LL(); }
      }
 };
@@ -1289,7 +1289,7 @@ private:
                
                
                
-               //--cout << "\n\n SEARCHING ->" << tmp_SData.U;
+               //--std::cout << "\n\n SEARCHING ->" << tmp_SData.U;
                //system("PAUSE > NULL");
                return query_Node(Root, tmp_SSData, 31);
           }
@@ -1303,27 +1303,27 @@ private:
                u_Data_3 tmp_DData;
                tmp_DData.U = p_Data.U;
                tmp_DData.U = tmp_DData.U >> p_Shift;
-               //--cout << "\n\n\n tmp_DData.U = " << tmp_DData.U << " p_Shift = " << p_Shift;
+               //--std::cout << "\n\n\n tmp_DData.U = " << tmp_DData.U << " p_Shift = " << p_Shift;
                
                
-               //--cout << "\n\n\t __QN__ tmp_DData.U->" << tmp_DData.U << " p_Data.U->" << p_Data.U;
+               //--std::cout << "\n\n\t __QN__ tmp_DData.U->" << tmp_DData.U << " p_Data.U->" << p_Data.U;
                
                Mutex.lock();
                if (p_Node == NULL)
                {      
-                    //--cout << "\n\t   Node is NULL";
+                    //--std::cout << "\n\t   Node is NULL";
                     p_Node = new c_NT3_Buffer_Node_MMap_2D;
                     p_Node->Right = NULL;
                     p_Node->Center = NULL;
                     p_Node->Left = NULL;
                     if (p_Shift > 1)
                     {
-                         //--cout << "\n\t   tmp_DData.U > 1";
+                         //--std::cout << "\n\t   tmp_DData.U > 1";
                          p_Node->Data = tmp_DData;
                     }
                     else 
                     {
-                         //--cout << "\n\t   tmp_DData.U !> 1";
+                         //--std::cout << "\n\t   tmp_DData.U !> 1";
                          p_Node->Data = p_Data;
                          Current = &p_Node; 
                          flg_Foundit = false;
@@ -1339,9 +1339,9 @@ private:
                //If the current data matches the tmp data then another depth is explored.
                if (p_Node->Data.U == tmp_DData.U && p_Shift > 0)
                {
-                    //--cout << "\n\t   p_Node->Data.U (" << p_Node->Data.U << ") == tmp_DData.U (" << tmp_DData.U << ")";
+                    //--std::cout << "\n\t   p_Node->Data.U (" << p_Node->Data.U << ") == tmp_DData.U (" << tmp_DData.U << ")";
                     
-                    //--cout << "\t tmp_DData.U = " << tmp_DData.U;
+                    //--std::cout << "\t tmp_DData.U = " << tmp_DData.U;
                     
                     return query_Node(p_Node->Center, p_Data, (p_Shift - 1));
                }
@@ -1351,7 +1351,7 @@ private:
                //used by the threads, but will work with the standard single thread.
                if (p_Node->Data.U == p_Data.U)
                {
-                    //--cout << "\n\t    p_Node->Data.NR(" << p_Node->Data.NR << ") == p_Data.NR(" << p_Data.NR << ")";
+                    //--std::cout << "\n\t    p_Node->Data.NR(" << p_Node->Data.NR << ") == p_Data.NR(" << p_Data.NR << ")";
                     Current = &p_Node;  
                     flg_Foundit = true;
                     tmp_Return = p_Node;
@@ -1364,12 +1364,12 @@ private:
                
                if (tmp_DData.U < p_Node->Data.U)
                {
-                    //--cout << "\n\t    tmp_DData.U (" << tmp_DData.U << ") < p_Node->Data.U(" << p_Node->Data.U << ")";
+                    //--std::cout << "\n\t    tmp_DData.U (" << tmp_DData.U << ") < p_Node->Data.U(" << p_Node->Data.U << ")";
                     return query_Node(p_Node->Left, p_Data, p_Shift);
                }
                if (tmp_DData.U > p_Node->Data.U)
                {
-                    //--cout << "\n\t    tmp_DData.U (" << tmp_DData.U << ") > p_Node->Data.U(" << p_Node->Data.U << ")";
+                    //--std::cout << "\n\t    tmp_DData.U (" << tmp_DData.U << ") > p_Node->Data.U(" << p_Node->Data.U << ")";
                     return query_Node(p_Node->Right, p_Data, p_Shift);
                }
                return tmp_Return;
@@ -1384,13 +1384,13 @@ private:
           {
                if (p_Node == NULL){ return; }
                output_Node(p_Node->Left, (p_Tab));
-               //*cout << "\n";
+               //*std::cout << "\n";
                for (int cou_Index=0;cou_Index<p_Tab;cou_Index++)
                {
-                    //*cout << "  ";
+                    //*std::cout << "  ";
                }
-               //*cout << (p_Node->Data).I;
-               if (p_Node->LL != NULL){ cout << "->" << (p_Node->LL->NID.U); }
+               //*std::cout << (p_Node->Data).I;
+               if (p_Node->LL != NULL){ std::cout << "->" << (p_Node->LL->NID.U); }
                output_Node(p_Node->Center, (p_Tab + 1));
                output_Node(p_Node->Right, (p_Tab));
           }

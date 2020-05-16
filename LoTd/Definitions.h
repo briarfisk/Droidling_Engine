@@ -75,8 +75,8 @@ public:
      //-- !WARNING WILL CAUSE STACK CORRUPTION ERROR WITH ENOUGH NODES!
      void output_LL()
      {
-          //*cout << " [";
-          cout << "[" << ID.U << " " << Data.U << "]  ";
+          //*std::cout << " [";
+          std::cout << "[" << ID.U << " " << Data.U << "]  ";
           if (Next != NULL){ Next->output_LL(); }
      }
 };
@@ -172,8 +172,8 @@ public:
 //--     SMALL COMMOMLY USED FUNCTIONS.
 
 
-//Gets the datatype of the string submitted.
-string gdt(string p_Data)
+//Gets the datatype of the std::string submitted.
+std::string gdt(std::string p_Data)
 {
      // > 57 = char
      // < 48 && !46 = char
@@ -192,8 +192,8 @@ string gdt(string p_Data)
      if (flg_Int){ return "int"; }
      return "string";
 }
-//Gets the datatype and returns an integer for the type rather than a string as gdt().
-int gdti(string p_Data)
+//Gets the datatype and returns an integer for the type rather than a std::string as gdt().
+int gdti(std::string p_Data)
 {
      // > 57 = char
      // < 48 && !46 = char
@@ -214,11 +214,11 @@ int gdti(string p_Data)
 }
 
 
-//Takes a string and converts it to an array of u_Data.
-void str2data(string p_String, u_Data p_Converted_Data[])
+//Takes a std::string and converts it to an array of u_Data.
+void str2data(std::string p_String, u_Data p_Converted_Data[])
 {
      
-     //Read the string into the data array.
+     //Read the std::string into the data array.
      for (unsigned int cou_Index=0;cou_Index<p_String.size();cou_Index++)
      {
           p_Converted_Data[cou_Index].I = int (p_String[cou_Index]);
@@ -242,12 +242,12 @@ int pow(int p_Base, int p_Exponet)
 }
 
 
-//Takes a string and converts it to an integer.
-int str2int(string p_String)
+//Takes a std::string and converts it to an integer.
+int str2int(std::string p_String)
 {
      if (gdt(p_String) != "float" && gdt(p_String) != "int"){ return 0; }
      
-     stringstream tmp_Cin;
+     std::stringstream tmp_Cin;
      tmp_Cin.flush();
      tmp_Cin << p_String;
      int tmp_Int;
@@ -256,12 +256,12 @@ int str2int(string p_String)
 }
 
 
-//Takes a string and converts it to an integer.
-unsigned long long  str2ullint(string p_String)
+//Takes a std::string and converts it to an integer.
+unsigned long long  str2ullint(std::string p_String)
 {
      if (gdt(p_String) != "float" && gdt(p_String) != "int"){ return 0; }
      
-     stringstream tmp_Cin;
+     std::stringstream tmp_Cin;
      tmp_Cin.flush();
      tmp_Cin << p_String;
      unsigned long long int tmp_Int;
@@ -270,11 +270,11 @@ unsigned long long  str2ullint(string p_String)
 }
 
 
-float str2float(string p_String)
+float str2float(std::string p_String)
 {
      if (gdt(p_String) != "float" && gdt(p_String) != "int"){ return 0.0; }
      
-     stringstream tmp_Cin;
+     std::stringstream tmp_Cin;
      tmp_Cin.flush();
      tmp_Cin << p_String;
      float tmp_Float;
@@ -282,8 +282,8 @@ float str2float(string p_String)
      return tmp_Float;
 }
 
-//Takes a string and returns a bool.
-bool str2bool(string p_String)
+//Takes a std::string and returns a bool.
+bool str2bool(std::string p_String)
 {
      if (p_String[0] == '0'){ return 0; }
      if (p_String[0] == '1'){ return 1; }
@@ -292,50 +292,50 @@ bool str2bool(string p_String)
      return 0;
 }
 
-//Takes an int and returns a string.
-string int2str(int p_Integer)
+//Takes an int and returns a std::string.
+std::string int2str(int p_Integer)
 {
-     stringstream tmp_Cin;
+     std::stringstream tmp_Cin;
      tmp_Cin.flush();
      tmp_Cin << p_Integer;
      return tmp_Cin.str();
 }
-//Takes an int and returns a string.
-string int2str(unsigned long long int p_Integer)
+//Takes an int and returns a std::string.
+std::string int2str(unsigned long long int p_Integer)
 {
-	 stringstream tmp_Cin;
+	 std::stringstream tmp_Cin;
 	 tmp_Cin.flush();
 	 tmp_Cin << p_Integer;
 	 return tmp_Cin.str();
 }
 
-//Takes a float and returns a string.
-string float2str(double p_Float)
+//Takes a float and returns a std::string.
+std::string float2str(double p_Float)
 {
-     stringstream tmp_Cin;
+     std::stringstream tmp_Cin;
      tmp_Cin << p_Float;
      return tmp_Cin.str();
 }
 
-//Takes a float and returns a string.
-string dbl2str(double p_Double)
+//Takes a float and returns a std::string.
+std::string dbl2str(double p_Double)
 {
-     stringstream tmp_Cin;
+     std::stringstream tmp_Cin;
      tmp_Cin << p_Double;
      return tmp_Cin.str();
 }
 
-//Takes a bool and returns a string.
-string bool2str(bool p_Bool)
+//Takes a bool and returns a std::string.
+std::string bool2str(bool p_Bool)
 {
-     stringstream tmp_Cin;
+     std::stringstream tmp_Cin;
      tmp_Cin << p_Bool;
      return tmp_Cin.str();
 }
 
-//Takes a bool and returns a string.
+//Takes a bool and returns a std::string.
 u_Data_3 poi2x_Tmp_Data;
-string poi2str(void * p_Void)
+std::string poi2str(void * p_Void)
 {
      poi2x_Tmp_Data.NR = p_Void;
      return int2str(poi2x_Tmp_Data.U);
@@ -466,7 +466,7 @@ int gl3di(long int p_Data)
      int tmp_Remainder = p_Data;
      int tmp_Takaway = int ((p_Data * .001)) * 1000;
      tmp_Remainder = tmp_Remainder - tmp_Takaway;
-     //cout << "\n\t p_Data->" << p_Data << " tmp_R->" << tmp_Remainder << " tmp_T->" << tmp_Takaway;
+     //std::cout << "\n\t p_Data->" << p_Data << " tmp_R->" << tmp_Remainder << " tmp_T->" << tmp_Takaway;
      return tmp_Remainder;
 }
 
@@ -510,22 +510,22 @@ u_Data gl3dd(u_Data p_Data)
      
      if (p_Data.I < 1000){ return p_Data; }
      
-     //cout << "\n ->" << p_Data.I;
+     //std::cout << "\n ->" << p_Data.I;
      u_Data tmp_Remainder;
      tmp_Remainder.I = p_Data.I;
 	 p_Data.I = int(p_Data.I * .001);
 	 p_Data.I = int(p_Data.I * 1000);
      tmp_Remainder.I -= p_Data.I;
-     //cout << " ->" << p_Data.I << " ->" << tmp_Remainder.I;
+     //std::cout << " ->" << p_Data.I << " ->" << tmp_Remainder.I;
      if (tmp_Remainder.I > 0){ tmp_Remainder.I -= 1; }
      return tmp_Remainder;
 }
 
 //Generates a folder.
-void make_Dir(string p_Dir)
+void make_Dir(std::string p_Dir)
 {
 	//Create the subfolder.
-	string tmp_MD = "md " + p_Dir;
+	std::string tmp_MD = "md " + p_Dir;
 	system(tmp_MD.c_str());
 }
 

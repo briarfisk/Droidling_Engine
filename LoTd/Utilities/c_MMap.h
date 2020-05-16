@@ -41,7 +41,7 @@ private:
      
      
      //The current filename opened
-     string File_Name;
+     std::string File_Name;
      
 public:
      
@@ -72,32 +72,32 @@ public:
      //p_Map_Size is MB
      void calculate_Mapping_Parameters(unsigned long long int p_Map_Size = 512)
      {
-          cout << "\n p_Map_Size->" << p_Map_Size;
+          std::cout << "\n p_Map_Size->" << p_Map_Size;
           
           //Get the system granulation.
           get_System_Granulation();
           
-          cout << "\n system_Granulation->" << system_Granulation;
+          std::cout << "\n system_Granulation->" << system_Granulation;
           
           //Get the MMap_Starting_Offset for where to start the mapping in the file grains.
           MMap_Starting_Offset = 0;//(p_File_Map_Start / system_Granulation) * system_Granulation;
           
-          cout << "\n MMap_Starting_Offset->" << MMap_Starting_Offset;
+          std::cout << "\n MMap_Starting_Offset->" << MMap_Starting_Offset;
           
           //Figure size of the file mapping object.
           MMap_File_Map_Size = (p_Map_Size * (1024 * 1024)) + CONST_BUFFER_SIZE;
           
           if (p_Map_Size == 0)
           {
-               cout << "\n MMap_File_Map_Size->FILE_DEPENDENT";
+               std::cout << "\n MMap_File_Map_Size->FILE_DEPENDENT";
                MMap_File_Map_Size = 0;
           }
-          cout << "\n MMap_File_Map_Size->" << MMap_File_Map_Size;
+          std::cout << "\n MMap_File_Map_Size->" << MMap_File_Map_Size;
           
           //Find the current position of the data pointer to use when referencing file contents.
           MMap_Current_Position = MMap_Starting_Offset;
           
-          cout << "\n MMap_Current_Position->" << MMap_Current_Position;
+          std::cout << "\n MMap_Current_Position->" << MMap_Current_Position;
      }
      
      //Maps the files, does not create the view.
@@ -112,7 +112,7 @@ public:
           
           if (MMap_File_Mapping == NULL)
           {
-               cout << "\n MMap_File_Mapping == NULL LastError():" << GetLastError();
+               std::cout << "\n MMap_File_Mapping == NULL LastError():" << GetLastError();
                return 2;
           }
           
@@ -171,7 +171,7 @@ public:
                                    
           if (MMap_View == NULL)
           {
-               cout << "\n MMap_View == NULL LastError():" << GetLastError();
+               std::cout << "\n MMap_View == NULL LastError():" << GetLastError();
                return 3;
           }
           
@@ -181,14 +181,14 @@ public:
      
      //The p_File_Map_Start is the offset to use in the beginning. 
      //There will be a function for moving the view.
-     int open_File(string p_File_Name, unsigned long long int p_Map_Size_MB = 512, bool p_Resize = 0)
+     int open_File(std::string p_File_Name, unsigned long long int p_Map_Size_MB = 512, bool p_Resize = 0)
      {
           
           Data_File = NULL;
           
           File_Name = p_File_Name;
           
-          cout << "\n Opening " << p_File_Name;
+          std::cout << "\n Opening " << p_File_Name;
           
           //After the file iloaded 
           Data_File = CreateFileA(p_File_Name.c_str(), GENERIC_READ | GENERIC_WRITE, 0, NULL, OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
@@ -235,7 +235,7 @@ public:
      {                  
           if (MMap_View == NULL)
           {
-               cout << "\n MMap_View == NULL LastError():" << GetLastError();
+               std::cout << "\n MMap_View == NULL LastError():" << GetLastError();
                return;
           }
           for (int cou_Index=0;cou_Index<CONST_BUFFER_SIZE;cou_Index++)
@@ -249,7 +249,7 @@ public:
      {
           //Multiply by CONST_BUFFER_SIZE to get the chunk position, not byte position.
           create_Mapping_View(p_Position * CONST_BUFFER_SIZE);
-          cout << "\n create_Mapping_View :: LastError():" << GetLastError() << " MMap_View:" << MMap_View << " MMap_Current_Position_Data:" << MMap_Current_Position_Data;
+          std::cout << "\n create_Mapping_View :: LastError():" << GetLastError() << " MMap_View:" << MMap_View << " MMap_Current_Position_Data:" << MMap_Current_Position_Data;
           get_Data(p_Data);
      }
      
@@ -263,12 +263,12 @@ public:
      //Sets the current MMap_View to the given data.
      void set_Data(char * p_Data, int p_Len)
      {
-          //cout << "\n"; cout.flush();
-          //cout << " p_Len:" << p_Len; cout.flush();
-          //cout << " &p_Data:" << p_Data; cout.flush();
+          //cout << "\n"; std::cout.flush();
+          //cout << " p_Len:" << p_Len; std::cout.flush();
+          //cout << " &p_Data:" << p_Data; std::cout.flush();
           for (int cou_Index=0;cou_Index<p_Len;cou_Index++)
           {
-               //cout << " p_Data:" << p_Data[cou_Index]; cout.flush();
+               //cout << " p_Data:" << p_Data[cou_Index]; std::cout.flush();
                ((char*)MMap_Current_Position_Data)[cou_Index] = p_Data[cou_Index];
           }
      }
@@ -319,11 +319,11 @@ private:
      unsigned long long int MMap_Current_Position;
      
      //The current filename opened
-     string File_Name;
+     std::string File_Name;
      
 public:
      
-     string file_Name;
+     std::string file_Name;
      
      void * MMap_Current_Position_Data;
      
@@ -351,33 +351,33 @@ public:
      //p_Map_Size is MB
      void calculate_Mapping_Parameters(unsigned long long int p_Map_Size = 512)
      {
-          cout << "\n p_Map_Size->" << p_Map_Size;
+          std::cout << "\n p_Map_Size->" << p_Map_Size;
           
           //Get the system granulation.
           get_System_Granulation();
           
-          cout << "\n system_Granulation->" << system_Granulation;
+          std::cout << "\n system_Granulation->" << system_Granulation;
           
           //Get the MMap_Starting_Offset for where to start the mapping in the file grains.
           MMap_Starting_Offset = 0;//(p_File_Map_Start / system_Granulation) * system_Granulation;
           
-          cout << "\n MMap_Starting_Offset->" << MMap_Starting_Offset;
+          std::cout << "\n MMap_Starting_Offset->" << MMap_Starting_Offset;
           
           //Calculate the size of the mapping view.
           MMap_View_Size = CONST_BUFFER_SIZE;//(p_File_Map_Start % system_Granulation) + CONST_BUFFER_SIZE;
           
-          cout << "\n MMap_View_Size->" << MMap_View_Size;
+          std::cout << "\n MMap_View_Size->" << MMap_View_Size;
           
           //Figure size of the file mapping object.
           MMap_File_Map_Size = (p_Map_Size * (1024 * 1024)) + CONST_BUFFER_SIZE;
           
-          cout << "\n MMap_File_Map_Size->" << MMap_File_Map_Size;
+          std::cout << "\n MMap_File_Map_Size->" << MMap_File_Map_Size;
           
           //Find the current position of the data pointer to use when referencing file contents.
           //MMap_Current_Position = p_File_Map_Start - MMap_Starting_Offset;
           MMap_Current_Position = MMap_Starting_Offset;
           
-          cout << "\n MMap_Current_Position->" << MMap_Current_Position;
+          std::cout << "\n MMap_Current_Position->" << MMap_Current_Position;
      }
      
      //Maps the files, does not create the view.
@@ -392,7 +392,7 @@ public:
           
           if (MMap_File_Mapping == NULL)
           {
-               cout << "\n MMap_File_Mapping == NULL LastError():" << GetLastError();
+               std::cout << "\n MMap_File_Mapping == NULL LastError():" << GetLastError();
                return 2;
           }
           
@@ -444,7 +444,7 @@ public:
                                    
           if (MMap_View == NULL)
           {
-               cout << "\n MMap_View == NULL LastError():" << GetLastError();
+               std::cout << "\n MMap_View == NULL LastError():" << GetLastError();
                return 3;
           }
           
@@ -454,14 +454,14 @@ public:
      
      //The p_File_Map_Start is the offset to use in the beginning. 
      //There will be a function for moving the view.
-     int open_File(string p_File_Name, unsigned long long int p_Map_Size_MB = 512)
+     int open_File(std::string p_File_Name, unsigned long long int p_Map_Size_MB = 512)
      {
           
           Data_File = NULL;
           
           File_Name = p_File_Name;
           
-          cout << "\n Opening " << p_File_Name;
+          std::cout << "\n Opening " << p_File_Name;
           
           calculate_Mapping_Parameters(p_Map_Size_MB);
           
@@ -490,19 +490,19 @@ public:
      int expand(unsigned long long int p_Size)
      {
           close();
-          ostr(0, 13, "\n expand "); cout << File_Name << " to " << p_Size;
+          ostr(0, 13, "\n expand "); std::cout << File_Name << " to " << p_Size;
           return open_File(File_Name, p_Size);
      }
      
      //Sets the current MMap_View to the given data.
      void set_Data(char * p_Data, int p_Len)
      {
-          //cout << "\n"; cout.flush();
-          //cout << " p_Len:" << p_Len; cout.flush();
-          //cout << " &p_Data:" << p_Data; cout.flush();
+          //cout << "\n"; std::cout.flush();
+          //cout << " p_Len:" << p_Len; std::cout.flush();
+          //cout << " &p_Data:" << p_Data; std::cout.flush();
           for (int cou_Index=0;cou_Index<p_Len;cou_Index++)
           {
-               //cout << " p_Data:" << p_Data[cou_Index]; cout.flush();
+               //cout << " p_Data:" << p_Data[cou_Index]; std::cout.flush();
                ((char*)MMap_Current_Position_Data)[cou_Index] = p_Data[cou_Index];
           }
      }
@@ -532,14 +532,14 @@ public:
           char * tmp_Data = NULL;
           if (p_Mode == 0)
           {
-               cout << "\n -----------------------------------------------------------------------------\n";
+               std::cout << "\n -----------------------------------------------------------------------------\n";
                for (unsigned int cou_Index=0;cou_Index<CONST_BUFFER_SIZE;cou_Index++)
                {
                     tmp_Data = ((char*) MMap_View + MMap_Current_Position + cou_Index);
                     
-                    cout << (*tmp_Data);
+                    std::cout << (*tmp_Data);
                }
-               cout << "\n -----------------------------------------------------------------------------\n";
+               std::cout << "\n -----------------------------------------------------------------------------\n";
           }
           if (p_Mode == 1)
           {
@@ -547,7 +547,7 @@ public:
                {
                     tmp_Data = ((char*) MMap_View + MMap_Current_Position + cou_Index);
                     
-                    cout << "\n " << cou_Index << "->" << (*tmp_Data) << "<-  int->" << ((int) (*tmp_Data));
+                    std::cout << "\n " << cou_Index << "->" << (*tmp_Data) << "<-  int->" << ((int) (*tmp_Data));
                }
           }
      }
@@ -577,7 +577,7 @@ private:
      const int CONST_BUFFER_SIZE = 128;
      
      //The current filename base opened
-     string File_Name;
+     std::string File_Name;
      
      //The MMaps. 
      c_MMap_Chunk ** MMaps;
@@ -604,7 +604,7 @@ public:
      }
      
      //Initializes the arrays and variables.
-     void init_Chunk(unsigned int p_Chunk, string p_File_Name, unsigned int p_Chunk_Size = 128)
+     void init_Chunk(unsigned int p_Chunk, std::string p_File_Name, unsigned int p_Chunk_Size = 128)
      {
           p_File_Name += "." + int2str(p_Chunk);
           MMaps[p_Chunk]->open_File(p_File_Name, p_Chunk_Size);
@@ -624,9 +624,9 @@ public:
      }
      
      //Loads the chunks from the header.
-     int load_Chunks(string p_File_Name)
+     int load_Chunks(std::string p_File_Name)
      {
-          string tmp_File;
+          std::string tmp_File;
           for (int cou_Index=0;cou_Index<MMaps_Current_Chunk;cou_Index++)
           {
                tmp_File = p_File_Name + "." + int2str(cou_Index) + ".dat";
@@ -635,27 +635,27 @@ public:
      }
      
      //Opens and loads a header.
-     int open_Header(string p_File_Name)
+     int open_Header(std::string p_File_Name)
      {
-          ifstream SF;
+          std::ifstream SF;
           
           //Doesn't use the current chunk because the resizing function handles that.
           unsigned int tmp_Chunks = 0;
-          string tmp_String;
+          std::string tmp_String;
           
           SF.open(p_File_Name);
           
           if (!SF.is_open()){ return 0; }
           
-          cout << "\n Loaded " << p_File_Name;
+          std::cout << "\n Loaded " << p_File_Name;
           
           SF >> tmp_String;
           SF >> MMaps_Chunk_Size_MB;
-          cout << "\n Chunks size (MB) = " << MMaps_Chunk_Size_MB;
+          std::cout << "\n Chunks size (MB) = " << MMaps_Chunk_Size_MB;
           
           SF >> tmp_String;
           SF >> tmp_Chunks;
-          cout << "\n Chunk count = " << tmp_Chunks;
+          std::cout << "\n Chunk count = " << tmp_Chunks;
           
           resize(tmp_Chunks);
           
@@ -664,7 +664,7 @@ public:
      
      //Opens a file based on the header file given. 
      //MMaps are divided into a header with the data files.
-     int open_File(string p_File_Name, unsigned long long int p_Map_Size_MB = 512)
+     int open_File(std::string p_File_Name, unsigned long long int p_Map_Size_MB = 512)
      {
           //Open the header and gather the number of chunks currently in play.
           if (!load_Header(p_File_Name)){ return 0; }
@@ -690,7 +690,7 @@ public:
      {                  
           if (MMap_View == NULL)
           {
-               cout << "\n MMap_View == NULL LastError():" << GetLastError();
+               std::cout << "\n MMap_View == NULL LastError():" << GetLastError();
                return;
           }
           for (int cou_Index=0;cou_Index<CONST_BUFFER_SIZE;cou_Index++)
@@ -704,7 +704,7 @@ public:
      {
           //Multiply by CONST_BUFFER_SIZE to get the chunk position, not byte position.
           create_Mapping_View(p_Position * CONST_BUFFER_SIZE);
-          cout << "\n create_Mapping_View :: LastError():" << GetLastError() << " MMap_View:" << MMap_View << " MMap_Current_Position_Data:" << MMap_Current_Position_Data;
+          std::cout << "\n create_Mapping_View :: LastError():" << GetLastError() << " MMap_View:" << MMap_View << " MMap_Current_Position_Data:" << MMap_Current_Position_Data;
           get_Data(p_Data);
      }
      
@@ -716,12 +716,12 @@ public:
      //Sets the current MMap_View to the given data.
      void set_Data(char * p_Data, int p_Len)
      {
-          //cout << "\n"; cout.flush();
-          //cout << " p_Len:" << p_Len; cout.flush();
-          //cout << " &p_Data:" << p_Data; cout.flush();
+          //cout << "\n"; std::cout.flush();
+          //cout << " p_Len:" << p_Len; std::cout.flush();
+          //cout << " &p_Data:" << p_Data; std::cout.flush();
           for (int cou_Index=0;cou_Index<p_Len;cou_Index++)
           {
-               //cout << " p_Data:" << p_Data[cou_Index]; cout.flush();
+               //cout << " p_Data:" << p_Data[cou_Index]; std::cout.flush();
                ((char*)MMap_Current_Position_Data)[cou_Index] = p_Data[cou_Index];
           }
      }

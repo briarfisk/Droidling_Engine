@@ -67,7 +67,7 @@ public:
 	}
 
 	//Creates a new table and returns the table address.
-	c_Table_1D* register_New_Table_1D(string p_Table_Name)
+	c_Table_1D* register_New_Table_1D(std::string p_Table_Name)
 	{
 		//Search for a NULL index, if found register the table there.
 		//If a NULL index is found and the table created then the handle is returned.
@@ -115,7 +115,7 @@ public:
 	{
 		if (!bounds_TID(p_TID)) { return; }
 
-		//cout << "\n\n\t Deleting Table[" << p_TID << "]";
+		//std::cout <<"\n\n\t Deleting Table[" << p_TID << "]";
 
 		//Remove the table from the registry.
 		Table_Registry.remove_Node(Tables[p_TID]->get_Table_Name());
@@ -127,7 +127,7 @@ public:
 	}
 
 	//Removes a table using the table name.
-	void delete_Table(string p_Table_Name)
+	void delete_Table(std::string p_Table_Name)
 	{
 		delete_Table(get_Table_ID(p_Table_Name));
 	}
@@ -141,26 +141,26 @@ public:
 
 		return Tables[p_TID];
 	}
-	void* get_Table_Reference(string p_TName)
+	void* get_Table_Reference(std::string p_TName)
 	{
 		return get_Table_Reference(get_Table_ID(p_TName));
 	}
 
 	//Gets the ID of a given table from the given table name.
-	int get_Table_ID(string p_Table_Name)
+	int get_Table_ID(std::string p_Table_Name)
 	{
 		return Table_Registry.get_int(p_Table_Name);
 	}
 
 	//Gets the name of a given table.
-	string get_Table_Name(int p_TID)
+	std::string get_Table_Name(int p_TID)
 	{
 		if (bounds_TID(p_TID)) { return Tables[p_TID]->get_Table_Name(); }
 		return "Table_ID_Not_Found";
 	}
 
 	//Updates the name of a table in the registry.
-	void set_Table_Name(int p_TID, string p_Table_Name)
+	void set_Table_Name(int p_TID, std::string p_Table_Name)
 	{
 		if (!bounds_TID(p_TID)) { return; }
 
@@ -170,7 +170,7 @@ public:
 		Tables[p_TID]->set_Table_Name(p_Table_Name);
 		Registry_Table->set_string(p_TID, 0, p_Table_Name);
 	}
-	void set_Table_Name(string p_TName, string p_Table_Name)
+	void set_Table_Name(std::string p_TName, std::string p_Table_Name)
 	{
 		set_Table_Name(get_Table_ID(p_TName), p_Table_Name);
 	}
@@ -182,7 +182,7 @@ public:
 
 		return Tables[p_TID]->get_Row_Reference(p_Row);
 	}
-	void* get_Table_Row_Reference(string p_TName, int p_Row)
+	void* get_Table_Row_Reference(std::string p_TName, int p_Row)
 	{
 		return get_Table_Row_Reference(get_Table_ID(p_TName), p_Row);
 	}
@@ -195,7 +195,7 @@ public:
 
 		return Tables[p_TID]->get_Cell_Reference(p_Row, p_Cell);
 	}
-	void* get_Table_Cell_Reference(string p_TName, int p_Row, int p_Cell)
+	void* get_Table_Cell_Reference(std::string p_TName, int p_Row, int p_Cell)
 	{
 		return get_Table_Cell_Reference(get_Table_ID(p_TName), p_Row, p_Cell);
 	}
@@ -207,7 +207,7 @@ public:
 
 		return Tables[p_TID]->get_Row_Count();
 	}
-	int get_Row_Count(string p_Table)
+	int get_Row_Count(std::string p_Table)
 	{
 		return get_Row_Count(get_Table_ID(p_Table));
 	}
@@ -219,7 +219,7 @@ public:
 
 		return Tables[p_TID]->get_Row_Cell_Count(p_Row);
 	}
-	int get_Row_Cell_Count(string p_Table, int p_Row)
+	int get_Row_Cell_Count(std::string p_Table, int p_Row)
 	{
 		return get_Row_Cell_Count(get_Table_ID(p_Table), p_Row);
 	}
@@ -231,7 +231,7 @@ public:
 
 		return Tables[p_TID]->table_Is_Empty();
 	}
-	int table_Is_Empty(string p_Table)
+	int table_Is_Empty(std::string p_Table)
 	{
 		return table_Is_Empty(get_Table_ID(p_Table));
 	}
@@ -243,7 +243,7 @@ public:
 
 		Tables[p_TID]->reset_Table();
 	}
-	void reset_Table(string p_Table)
+	void reset_Table(std::string p_Table)
 	{
 		reset_Table(get_Table_ID(p_Table));
 	}
@@ -253,14 +253,14 @@ public:
 	//==--     Table ID Submission
 
 	//Sets a given rows cell to the given data.
-	void set_string(int p_TID, int p_Row, int p_Cell, string p_String) { if (!bounds_TID(p_TID)) { return; } Tables[p_TID]->set_string(p_Row, p_Cell, p_String); }
+	void set_string(int p_TID, int p_Row, int p_Cell, std::string p_String) { if (!bounds_TID(p_TID)) { return; } Tables[p_TID]->set_string(p_Row, p_Cell, p_String); }
 	void set_int(int p_TID, int p_Row, int p_Cell, int p_Int) { if (!bounds_TID(p_TID)) { return; } Tables[p_TID]->set_int(p_Row, p_Cell, p_Int); }
 	void set_float(int p_TID, int p_Row, int p_Cell, float p_Float) { if (!bounds_TID(p_TID)) { return; } Tables[p_TID]->set_float(p_Row, p_Cell, p_Float); }
 	void set_reference(int p_TID, int p_Row, int p_Cell, void* p_Void) { if (!bounds_TID(p_TID)) { return; } Tables[p_TID]->set_reference(p_Row, p_Cell, p_Void); }
 	void set_bool(int p_TID, int p_Row, int p_Cell, bool p_Bool) { if (!bounds_TID(p_TID)) { return; } Tables[p_TID]->set_bool(p_Row, p_Cell, p_Bool); }
 
 	//Pushes a given rows cell to the given data.
-	void push_string(int p_TID, int p_Row, string p_String) { if (!bounds_TID(p_TID)) { return; } Tables[p_TID]->push_string(p_Row, p_String); }
+	void push_string(int p_TID, int p_Row, std::string p_String) { if (!bounds_TID(p_TID)) { return; } Tables[p_TID]->push_string(p_Row, p_String); }
 	void push_int(int p_TID, int p_Row, int p_Int) { if (!bounds_TID(p_TID)) { return; } Tables[p_TID]->push_int(p_Row, p_Int); }
 	void push_float(int p_TID, int p_Row, float p_Float) { if (!bounds_TID(p_TID)) { return; } Tables[p_TID]->push_float(p_Row, p_Float); }
 	void push_reference(int p_TID, int p_Row, void* p_Void) { if (!bounds_TID(p_TID)) { return; } Tables[p_TID]->push_reference(p_Row, p_Void); }
@@ -268,7 +268,7 @@ public:
 
 
 	//Pushes a data onto the curren row.
-	void pushc_string(int p_TID, string p_String) { if (!bounds_TID(p_TID)) { return; } Tables[p_TID]->pushc_string(p_String); }
+	void pushc_string(int p_TID, std::string p_String) { if (!bounds_TID(p_TID)) { return; } Tables[p_TID]->pushc_string(p_String); }
 	void pushc_int(int p_TID, int p_Int) { if (!bounds_TID(p_TID)) { return; } Tables[p_TID]->pushc_int(p_Int); }
 	void pushc_float(int p_TID, float p_Float) { if (!bounds_TID(p_TID)) { return; } Tables[p_TID]->pushc_float(p_Float); }
 	void pushc_reference(int p_TID, void* p_Void) { if (!bounds_TID(p_TID)) { return; } Tables[p_TID]->pushc_reference(p_Void); }
@@ -276,7 +276,7 @@ public:
 
 
 	//Pushes a given rows cell to the given data.
-	void pop_push_string(int p_TID, string p_String) { if (!bounds_TID(p_TID)) { return; } Tables[p_TID]->pop_push_string(p_String); }
+	void pop_push_string(int p_TID, std::string p_String) { if (!bounds_TID(p_TID)) { return; } Tables[p_TID]->pop_push_string(p_String); }
 	void pop_push_int(int p_TID, int p_Int) { if (!bounds_TID(p_TID)) { return; } Tables[p_TID]->pop_push_int(p_Int); }
 	void pop_push_float(int p_TID, float p_Float) { if (!bounds_TID(p_TID)) { return; } Tables[p_TID]->pop_push_float(p_Float); }
 	void pop_push_reference(int p_TID, void* p_Void) { if (!bounds_TID(p_TID)) { return; } Tables[p_TID]->pop_push_reference(p_Void); }
@@ -284,21 +284,21 @@ public:
 
 
 	//Pushes a given rows cell to the given data.
-	void push_pop_string(int p_TID, string p_String) { if (!bounds_TID(p_TID)) { return; } Tables[p_TID]->push_pop_string(p_String); }
+	void push_pop_string(int p_TID, std::string p_String) { if (!bounds_TID(p_TID)) { return; } Tables[p_TID]->push_pop_string(p_String); }
 	void push_pop_int(int p_TID, int p_Int) { if (!bounds_TID(p_TID)) { return; } Tables[p_TID]->push_pop_int(p_Int); }
 	void push_pop_float(int p_TID, float p_Float) { if (!bounds_TID(p_TID)) { return; } Tables[p_TID]->push_pop_float(p_Float); }
 	void push_pop_reference(int p_TID, void* p_Void) { if (!bounds_TID(p_TID)) { return; } Tables[p_TID]->push_pop_reference(p_Void); }
 	void push_pop_bool(int p_TID, bool p_Bool) { if (!bounds_TID(p_TID)) { return; } Tables[p_TID]->push_pop_bool(p_Bool); }
 
 	//Gets a given cells data in a given row.
-	string get_string(int p_TID, int p_Row, int p_Cell) { if (!bounds_TID(p_TID)) { return "Foul"; } return Tables[p_TID]->get_string(p_Row, p_Cell); }
+	std::string get_string(int p_TID, int p_Row, int p_Cell) { if (!bounds_TID(p_TID)) { return "Foul"; } return Tables[p_TID]->get_string(p_Row, p_Cell); }
 	int    get_int(int p_TID, int p_Row, int p_Cell, int p_Index = 0) { if (!bounds_TID(p_TID)) { return 0; }    return Tables[p_TID]->get_int(p_Row, p_Cell, p_Index); }
 	float  get_float(int p_TID, int p_Row, int p_Cell, int p_Index = 0) { if (!bounds_TID(p_TID)) { return 0.0; }  return Tables[p_TID]->get_float(p_Row, p_Cell, p_Index); }
 	void* get_reference(int p_TID, int p_Row, int p_Cell, int p_Index = 0) { if (!bounds_TID(p_TID)) { return NULL; } return Tables[p_TID]->get_reference(p_Row, p_Cell, p_Index); }
 	bool   get_bool(int p_TID, int p_Row, int p_Cell, int p_Index = 0) { if (!bounds_TID(p_TID)) { return 0; }    return Tables[p_TID]->get_bool(p_Row, p_Cell, p_Index); }
 
 	//Gets a given cells data in a given row.
-	string getc_string(int p_TID) { if (!bounds_TID(p_TID)) { return "Foul"; } return Tables[p_TID]->getc_string(); }
+	std::string getc_string(int p_TID) { if (!bounds_TID(p_TID)) { return "Foul"; } return Tables[p_TID]->getc_string(); }
 	int    getc_int(int p_TID) { if (!bounds_TID(p_TID)) { return 0; }      return Tables[p_TID]->getc_int(); }
 	float  getc_float(int p_TID) { if (!bounds_TID(p_TID)) { return 0.0; }    return Tables[p_TID]->getc_float(); }
 	void* getc_reference(int p_TID) { if (!bounds_TID(p_TID)) { return NULL; }   return Tables[p_TID]->getc_reference(); }
@@ -308,80 +308,80 @@ public:
 	//==--    Table Name Submission
 
 	//Sets a given rows cell to the given data.
-	void set_string(string p_TName, int p_Row, int p_Cell, string p_String) { set_string(get_Table_ID(p_TName), p_Row, p_Cell, p_String); }
-	void set_int(string p_TName, int p_Row, int p_Cell, int p_Int) { set_int(get_Table_ID(p_TName), p_Row, p_Cell, p_Int); }
-	void set_float(string p_TName, int p_Row, int p_Cell, float p_Float) { set_float(get_Table_ID(p_TName), p_Row, p_Cell, p_Float); }
-	void set_reference(string p_TName, int p_Row, int p_Cell, void* p_Void) { set_reference(get_Table_ID(p_TName), p_Row, p_Cell, p_Void); }
-	void set_bool(string p_TName, int p_Row, int p_Cell, bool p_Bool) { set_bool(get_Table_ID(p_TName), p_Row, p_Cell, p_Bool); }
+	void set_string(std::string p_TName, int p_Row, int p_Cell, std::string p_String) { set_string(get_Table_ID(p_TName), p_Row, p_Cell, p_String); }
+	void set_int(std::string p_TName, int p_Row, int p_Cell, int p_Int) { set_int(get_Table_ID(p_TName), p_Row, p_Cell, p_Int); }
+	void set_float(std::string p_TName, int p_Row, int p_Cell, float p_Float) { set_float(get_Table_ID(p_TName), p_Row, p_Cell, p_Float); }
+	void set_reference(std::string p_TName, int p_Row, int p_Cell, void* p_Void) { set_reference(get_Table_ID(p_TName), p_Row, p_Cell, p_Void); }
+	void set_bool(std::string p_TName, int p_Row, int p_Cell, bool p_Bool) { set_bool(get_Table_ID(p_TName), p_Row, p_Cell, p_Bool); }
 
 	//Sets a given rows cell to the given data.
-	void push_string(string p_TName, int p_Row, string p_String) { push_string(get_Table_ID(p_TName), p_Row, p_String); }
-	void push_int(string p_TName, int p_Row, int p_Int) { push_int(get_Table_ID(p_TName), p_Row, p_Int); }
-	void push_float(string p_TName, int p_Row, float p_Float) { push_float(get_Table_ID(p_TName), p_Row, p_Float); }
-	void push_reference(string p_TName, int p_Row, void* p_Void) { push_reference(get_Table_ID(p_TName), p_Row, p_Void); }
-	void push_bool(string p_TName, int p_Row, bool p_Bool) { push_bool(get_Table_ID(p_TName), p_Row, p_Bool); }
+	void push_string(std::string p_TName, int p_Row, std::string p_String) { push_string(get_Table_ID(p_TName), p_Row, p_String); }
+	void push_int(std::string p_TName, int p_Row, int p_Int) { push_int(get_Table_ID(p_TName), p_Row, p_Int); }
+	void push_float(std::string p_TName, int p_Row, float p_Float) { push_float(get_Table_ID(p_TName), p_Row, p_Float); }
+	void push_reference(std::string p_TName, int p_Row, void* p_Void) { push_reference(get_Table_ID(p_TName), p_Row, p_Void); }
+	void push_bool(std::string p_TName, int p_Row, bool p_Bool) { push_bool(get_Table_ID(p_TName), p_Row, p_Bool); }
 
 	//Pushes a given rows cell to the given data.
-	void pop_push_string(string p_TName, string p_String) { pop_push_string(get_Table_ID(p_TName), p_String); }
-	void pop_push_int(string p_TName, int p_Int) { pop_push_int(get_Table_ID(p_TName), p_Int); }
-	void pop_push_float(string p_TName, float p_Float) { pop_push_float(get_Table_ID(p_TName), p_Float); }
-	void pop_push_reference(string p_TName, void* p_Void) { pop_push_reference(get_Table_ID(p_TName), p_Void); }
-	void pop_push_bool(string p_TName, bool p_Bool) { pop_push_bool(get_Table_ID(p_TName), p_Bool); }
+	void pop_push_string(std::string p_TName, std::string p_String) { pop_push_string(get_Table_ID(p_TName), p_String); }
+	void pop_push_int(std::string p_TName, int p_Int) { pop_push_int(get_Table_ID(p_TName), p_Int); }
+	void pop_push_float(std::string p_TName, float p_Float) { pop_push_float(get_Table_ID(p_TName), p_Float); }
+	void pop_push_reference(std::string p_TName, void* p_Void) { pop_push_reference(get_Table_ID(p_TName), p_Void); }
+	void pop_push_bool(std::string p_TName, bool p_Bool) { pop_push_bool(get_Table_ID(p_TName), p_Bool); }
 
 
 	//Pushes a given rows cell to the given data.
-	void push_pop_string(string p_TName, string p_String) { push_pop_string(get_Table_ID(p_TName), p_String); }
-	void push_pop_int(string p_TName, int p_Int) { push_pop_int(get_Table_ID(p_TName), p_Int); }
-	void push_pop_float(string p_TName, float p_Float) { push_pop_float(get_Table_ID(p_TName), p_Float); }
-	void push_pop_reference(string p_TName, void* p_Void) { push_pop_reference(get_Table_ID(p_TName), p_Void); }
-	void push_pop_bool(string p_TName, bool p_Bool) { push_pop_bool(get_Table_ID(p_TName), p_Bool); }
+	void push_pop_string(std::string p_TName, std::string p_String) { push_pop_string(get_Table_ID(p_TName), p_String); }
+	void push_pop_int(std::string p_TName, int p_Int) { push_pop_int(get_Table_ID(p_TName), p_Int); }
+	void push_pop_float(std::string p_TName, float p_Float) { push_pop_float(get_Table_ID(p_TName), p_Float); }
+	void push_pop_reference(std::string p_TName, void* p_Void) { push_pop_reference(get_Table_ID(p_TName), p_Void); }
+	void push_pop_bool(std::string p_TName, bool p_Bool) { push_pop_bool(get_Table_ID(p_TName), p_Bool); }
 
 	//Gets a given cells data in a given row.
-	string get_string(string p_TName, int p_Row, int p_Cell) { return get_string(get_Table_ID(p_TName), p_Row, p_Cell); }
-	int    get_int(string p_TName, int p_Row, int p_Cell, int p_Index = 0) { return get_int(get_Table_ID(p_TName), p_Row, p_Cell, p_Index); }
-	float  get_float(string p_TName, int p_Row, int p_Cell, int p_Index = 0) { return get_float(get_Table_ID(p_TName), p_Row, p_Cell, p_Index); }
-	void* get_reference(string p_TName, int p_Row, int p_Cell, int p_Index = 0) { return get_reference(get_Table_ID(p_TName), p_Row, p_Cell, p_Index); }
-	bool   get_bool(string p_TName, int p_Row, int p_Cell, int p_Index = 0) { return get_bool(get_Table_ID(p_TName), p_Row, p_Cell, p_Index); }
+	std::string get_string(std::string p_TName, int p_Row, int p_Cell) { return get_string(get_Table_ID(p_TName), p_Row, p_Cell); }
+	int    get_int(std::string p_TName, int p_Row, int p_Cell, int p_Index = 0) { return get_int(get_Table_ID(p_TName), p_Row, p_Cell, p_Index); }
+	float  get_float(std::string p_TName, int p_Row, int p_Cell, int p_Index = 0) { return get_float(get_Table_ID(p_TName), p_Row, p_Cell, p_Index); }
+	void* get_reference(std::string p_TName, int p_Row, int p_Cell, int p_Index = 0) { return get_reference(get_Table_ID(p_TName), p_Row, p_Cell, p_Index); }
+	bool   get_bool(std::string p_TName, int p_Row, int p_Cell, int p_Index = 0) { return get_bool(get_Table_ID(p_TName), p_Row, p_Cell, p_Index); }
 
 	//Gets a the current cells first data bit.
-	string getc_string(string p_TName) { return getc_string(get_Table_ID(p_TName)); }
-	int    getc_int(string p_TName) { return getc_int(get_Table_ID(p_TName)); }
-	float  getc_float(string p_TName) { return getc_float(get_Table_ID(p_TName)); }
-	void* getc_reference(string p_TName) { return getc_reference(get_Table_ID(p_TName)); }
-	bool   getc_bool(string p_TName) { return getc_bool(get_Table_ID(p_TName)); }
+	std::string getc_string(std::string p_TName) { return getc_string(get_Table_ID(p_TName)); }
+	int    getc_int(std::string p_TName) { return getc_int(get_Table_ID(p_TName)); }
+	float  getc_float(std::string p_TName) { return getc_float(get_Table_ID(p_TName)); }
+	void* getc_reference(std::string p_TName) { return getc_reference(get_Table_ID(p_TName)); }
+	bool   getc_bool(std::string p_TName) { return getc_bool(get_Table_ID(p_TName)); }
 
 
 	//Copies the data from the submitted cell into itself.
-	string copy(int p_Table, int p_Row, int p_Cell, void* p_Cell_To_Copy)
+	std::string copy(int p_Table, int p_Row, int p_Cell, void* p_Cell_To_Copy)
 	{
-		if (!bounds_TID(p_Table)) { cout << "\n\n\t Table[" << p_Table << "] does not exist."; return "BOUNDING_ERROR->Table_Handler->copy->p_TID"; }
+		if (!bounds_TID(p_Table)) { std::cout <<"\n\n\t Table[" << p_Table << "] does not exist."; return "BOUNDING_ERROR->Table_Handler->copy->p_TID"; }
 
 		Tables[p_Table]->copy_Cell(p_Row, p_Cell, p_Cell_To_Copy);
 
 		return "CODE 4";
 	}
 
-	string copy(string p_TName, int p_Row, int p_Cell, void* p_Cell_To_Copy)
+	std::string copy(std::string p_TName, int p_Row, int p_Cell, void* p_Cell_To_Copy)
 	{
 		return copy(get_Table_ID(p_TName), p_Row, p_Cell, p_Cell_To_Copy);
 	}
 
 	//Copies a row.
-	string copy_Row(int p_Table, int p_Row, void* p_Row_To_Copy)
+	std::string copy_Row(int p_Table, int p_Row, void* p_Row_To_Copy)
 	{
-		if (!bounds_TID(p_Table)) { cout << "\n\n\t Table[" << p_Table << "] does not exist."; return "BOUNDING_ERROR->Table_Handler->copy->p_TID"; }
+		if (!bounds_TID(p_Table)) { std::cout <<"\n\n\t Table[" << p_Table << "] does not exist."; return "BOUNDING_ERROR->Table_Handler->copy->p_TID"; }
 
 		Tables[p_Table]->copy_Row(p_Row, p_Row_To_Copy);
 
 		return "CODE 4";
 	}
-	string copy_Row(string p_TName, int p_Row, void* p_Row_To_Copy)
+	std::string copy_Row(std::string p_TName, int p_Row, void* p_Row_To_Copy)
 	{
 		return copy_Row(get_Table_ID(p_TName), p_Row, p_Row_To_Copy);
 	}
 
 	//Copies a row from given table IDs
-	string copy_Row(int p_Table, int p_Row, int p_Table_To, int p_Row_To)
+	std::string copy_Row(int p_Table, int p_Row, int p_Table_To, int p_Row_To)
 	{
 		if (!bounds_TID(p_Table) || !bounds_TID(p_Table_To)) { return "TABLE_NO_EXISTY"; }
 
@@ -389,81 +389,81 @@ public:
 	}
 
 	//Copies a whole damn table.
-	string copy_Table(int p_Table, int p_Table_To_Copy)
+	std::string copy_Table(int p_Table, int p_Table_To_Copy)
 	{
-		if (!bounds_TID(p_Table)) { cout << "\n\n\t Table[" << p_Table << "] does not exist."; return "BOUNDING_ERROR->Table_Handler->copy->p_TID"; }
+		if (!bounds_TID(p_Table)) { std::cout <<"\n\n\t Table[" << p_Table << "] does not exist."; return "BOUNDING_ERROR->Table_Handler->copy->p_TID"; }
 
 		Tables[p_Table]->copy_Table(Tables[p_Table_To_Copy]);
 
 		return "CODE 4";
 	}
-	string copy_Table(string p_TName, string p_TTCName)
+	std::string copy_Table(std::string p_TName, std::string p_TTCName)
 	{
 		return copy_Table(get_Table_ID(p_TName), get_Table_ID(p_TTCName));
 	}
 
 	//Copies a whole damn table.
-	string rotate_Table(int p_Table)
+	std::string rotate_Table(int p_Table)
 	{
-		if (!bounds_TID(p_Table)) { cout << "\n\n\t Table[" << p_Table << "] does not exist."; return "BOUNDING_ERROR->Table_Handler->copy->p_TID"; }
+		if (!bounds_TID(p_Table)) { std::cout <<"\n\n\t Table[" << p_Table << "] does not exist."; return "BOUNDING_ERROR->Table_Handler->copy->p_TID"; }
 
 		Tables[p_Table]->rotate_Table();
 
 		return "CODE 4";
 	}
-	string rotate_Table(string p_TName)
+	std::string rotate_Table(std::string p_TName)
 	{
 		return rotate_Table(get_Table_ID(p_TName));
 	}
 
 
-	string translate_Row(string p_From_Table, int p_Row, string p_To_Table, int p_Offset, int p_Column = 0)
+	std::string translate_Row(std::string p_From_Table, int p_Row, std::string p_To_Table, int p_Offset, int p_Column = 0)
 	{
 		int tmp_Table_ID = get_Table_ID(p_To_Table);
 
-		if (!bounds_TID(tmp_Table_ID)) { cout << "\n\n\t Table[" << tmp_Table_ID << "] does not exist."; return "BOUNDING_ERROR->Table_Handler->copy->p_TID"; }
+		if (!bounds_TID(tmp_Table_ID)) { std::cout <<"\n\n\t Table[" << tmp_Table_ID << "] does not exist."; return "BOUNDING_ERROR->Table_Handler->copy->p_TID"; }
 
 		return Tables[tmp_Table_ID]->translate_Row(get_Table_Reference(p_From_Table), p_Row, p_Offset, p_Column);
 	}
-	string translate_Row(int p_From_Table, int p_Row, int p_To_Table, int p_Offset, int p_Column = 0)
+	std::string translate_Row(int p_From_Table, int p_Row, int p_To_Table, int p_Offset, int p_Column = 0)
 	{
-		if (!bounds_TID(p_To_Table)) { cout << "\n\n\t Table[" << p_To_Table << "] does not exist."; return "BOUNDING_ERROR->Table_Handler->copy->p_TID"; }
+		if (!bounds_TID(p_To_Table)) { std::cout <<"\n\n\t Table[" << p_To_Table << "] does not exist."; return "BOUNDING_ERROR->Table_Handler->copy->p_TID"; }
 
 		return Tables[p_To_Table]->translate_Row(get_Table_Reference(p_From_Table), p_Row, p_Offset, p_Column);
 	}
 
 	//Overlays a row onto another row at the given index.
-	string overlay_Row(int p_Table, int p_Row, int p_Index, void* p_Row_To_Copy)
+	std::string overlay_Row(int p_Table, int p_Row, int p_Index, void* p_Row_To_Copy)
 	{
-		if (!bounds_TID(p_Table)) { cout << "\n\n\t Table[" << p_Table << "] does not exist."; return "BOUNDING_ERROR->Table_Handler->copy->p_TID"; }
+		if (!bounds_TID(p_Table)) { std::cout <<"\n\n\t Table[" << p_Table << "] does not exist."; return "BOUNDING_ERROR->Table_Handler->copy->p_TID"; }
 
 		Tables[p_Table]->overlay_Row(p_Row, p_Index, p_Row_To_Copy);
 
 		return "CODE 4";
 	}
-	string overlay_Row(string p_TName, int p_Row, int p_Index, void* p_Row_To_Copy)
+	std::string overlay_Row(std::string p_TName, int p_Row, int p_Index, void* p_Row_To_Copy)
 	{
 		return overlay_Row(get_Table_ID(p_TName), p_Row, p_Index, p_Row_To_Copy);
 	}
 
-	string shift_Column(int p_Table, int p_Column_To_Shift)
+	std::string shift_Column(int p_Table, int p_Column_To_Shift)
 	{
-		if (!bounds_TID(p_Table)) { cout << "\n\n\t Table[" << p_Table << "] does not exist."; return "BOUNDING_ERROR->Table_Handler->copy->p_TID"; }
+		if (!bounds_TID(p_Table)) { std::cout <<"\n\n\t Table[" << p_Table << "] does not exist."; return "BOUNDING_ERROR->Table_Handler->copy->p_TID"; }
 
 		return Tables[p_Table]->shift_Column(p_Column_To_Shift);
 	}
-	string shift_Column(string p_TName, int p_Column_To_Shift)
+	std::string shift_Column(std::string p_TName, int p_Column_To_Shift)
 	{
 		return shift_Column(get_Table_ID(p_TName), p_Column_To_Shift);
 	}
 
-	string shift_All_Rows(int p_Table, int p_Index)
+	std::string shift_All_Rows(int p_Table, int p_Index)
 	{
-		if (!bounds_TID(p_Table)) { cout << "\n\n\t Table[" << p_Table << "] does not exist."; return "BOUNDING_ERROR->Table_Handler->copy->p_TID"; }
+		if (!bounds_TID(p_Table)) { std::cout <<"\n\n\t Table[" << p_Table << "] does not exist."; return "BOUNDING_ERROR->Table_Handler->copy->p_TID"; }
 
 		return Tables[p_Table]->shift_All_Rows(p_Index);
 	}
-	string shift_All_Rows(string p_TName, int p_Index)
+	std::string shift_All_Rows(std::string p_TName, int p_Index)
 	{
 		return shift_All_Rows(get_Table_ID(p_TName), p_Index);
 	}
@@ -536,7 +536,7 @@ public:
 		}
 		Tables[p_TID]->output_Table();
 	}
-	void output_Table(string p_TName)
+	void output_Table(std::string p_TName)
 	{
 		output_Table(get_Table_ID(p_TName));
 	}
@@ -555,10 +555,10 @@ public:
 	{
 		if (!bounds_TID(p_TID)) { return; }
 
-		cout << "\n\t TID[" << p_TID << "]";
+		std::cout <<"\n\t TID[" << p_TID << "]";
 		Tables[p_TID]->output_Table_Header();
 	}
-	void output_Table_Header(string p_TName)
+	void output_Table_Header(std::string p_TName)
 	{
 		output_Table_Header(get_Table_ID(p_TName));
 	}
@@ -577,10 +577,10 @@ public:
 	{
 		if (!bounds_TID(p_TID)) { return; }
 
-		cout << "\n\t TID[" << p_TID << "]";
+		std::cout <<"\n\t TID[" << p_TID << "]";
 		Tables[p_TID]->output_Table_Verbose();
 	}
-	void output_Table_Verbose(string p_TName)
+	void output_Table_Verbose(std::string p_TName)
 	{
 		output_Table_Verbose(get_Table_ID(p_TName));
 	}
