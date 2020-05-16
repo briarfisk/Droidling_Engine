@@ -6,7 +6,7 @@
 -Separate files into the correct format of header files and code files
 -During building of a 1 dimensional network the error:5 "access denied" occured when the memory mapping could not reopen the file after enlarging it.
 -Many instances of variables being assigned incompatable data type values potentially leading to a loss of data, hundreds of warnings atm.
--Create namespace for the library
+DONE-Create namespace for the library
 -c_NT3_Command_Parser is a mess. Needs revised and modularized. 
 -Use more prebuilt functions for math and other things. 
 -More abstractions between classes instead of direct access to public members.
