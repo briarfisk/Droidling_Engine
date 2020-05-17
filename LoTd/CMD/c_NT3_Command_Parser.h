@@ -18,7 +18,7 @@ protected:
     int flg_Undefined;
 
     //The flag allows for std::string inputs multiple tokens long.
-    int flg_String;
+    int flg_String; 
 
     //Holds all of the variables and their values.
     c_Lookup_Tree Var_Lookup_Tree;
