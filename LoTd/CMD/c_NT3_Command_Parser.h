@@ -1967,7 +1967,7 @@ public:
 
     //--      Externally Defined Members      --//
 
-    std::string c_NT3_Command_Parser::cmde_Main_Sandbox(int* p_EIP, c_Lookup_Tree* p_Labels, c_Table_1D* p_Tokens);
+    std::string cmde_Main_Sandbox(int* p_EIP, c_Lookup_Tree* p_Labels, c_Table_1D* p_Tokens);
     std::string eval_Tokens_Extended(int* p_EIP, c_Lookup_Tree* p_Labels, c_Table_1D* p_Tokens);
 };
 

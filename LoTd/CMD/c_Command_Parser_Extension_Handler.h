@@ -21,9 +21,8 @@
 	-Add your function by including it in the check block of eval_Tokens_Extended(p_EIP, p_Labels, p_Tokens).
 */
 
-#include "c_CMDE_Sandbox.h"
 
-std::string eval_Tokens_Extended(int* p_EIP, c_Lookup_Tree* p_Labels, c_Table_1D* p_Tokens)
+std::string c_NT3_Command_Parser::eval_Tokens_Extended(int* p_EIP, c_Lookup_Tree* p_Labels, c_Table_1D* p_Tokens)
 {
 	//The temporary std::string for the token being evaluated.
 	std::string tmp_Token[100];

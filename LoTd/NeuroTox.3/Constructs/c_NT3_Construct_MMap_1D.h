@@ -185,10 +185,6 @@ public:
           ostr(0, 12, "\n Table NOT found:"); std::cout << p_Table;
           return NULL;
      }
-     c_Raw_Table_2D * get_Table_2D(std::string p_Table)
-     {
-          return NULL;
-     }
      
      
      

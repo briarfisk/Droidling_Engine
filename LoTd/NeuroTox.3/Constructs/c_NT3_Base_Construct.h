@@ -105,7 +105,6 @@ public:
      ////==-----------------------+
      
      virtual c_Raw_Table_1D * get_Table_1D(std::string p_Table)=0;
-     virtual c_Raw_Table_2D * get_Table_2D(std::string p_Table)=0;
      
      virtual void set_Name(std::string p_Name)=0;
      virtual void set_CID(unsigned long long int p_CID)=0;
