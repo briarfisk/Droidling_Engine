@@ -10,6 +10,10 @@
 //Used by the console for drawing lines.
 #include <cstdlib>
 
+
+#ifndef LoTd_H
+#define LoTd_H
+
 namespace LoTd
 {
 
@@ -61,3 +65,7 @@ namespace LoTd
     }
 
 }
+
+
+
+#endif
