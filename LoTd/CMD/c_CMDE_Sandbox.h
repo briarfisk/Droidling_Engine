@@ -1,4 +1,7 @@
-#define c_CMDE_SANDBOX_H
+#include "../Bin_Trees/c_Name_Lookup_Tree.h"
+#include "../Tables/c_Table.h"
+#include "c_NT3_Command_Parser.h"
+#ifndef c_CMDE_SANDBOX_H
 #define c_CMDE_SANDBOX_H
 
 

@@ -1,4 +1,4 @@
-#define c_COMMAND_PARSER_EXTENSION_HANDLER_H
+#ifndef c_COMMAND_PARSER_EXTENSION_HANDLER_H
 #define c_COMMAND_PARSER_EXTENSION_HANDLER_H
 //This file is meant to handle the extended command hooked into the command parser. 
 //The command parser passes control here if it falls through, from here control is passed 
