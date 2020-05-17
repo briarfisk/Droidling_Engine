@@ -1,3 +1,6 @@
+#ifndef DEFINITIONS_H
+#define DEFINITIONS_H
+
 //This file contains definitions used in the NeuroTox.2 that
 //are to small to justify a separate header file.
 
@@ -529,22 +532,4 @@ void make_Dir(std::string p_Dir)
 	system(tmp_MD.c_str());
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+#endif // !DEFINITIONS_H

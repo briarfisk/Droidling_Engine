@@ -1,4 +1,5 @@
-
+#ifndef c_NT3_SANDBOX_H
+#define c_NT3_SANDBOX_H
 
 //This class is the MSC for working with multiple inputs.
 class c_NT3_SANDBOX
@@ -1181,6 +1182,4 @@ public:
 
 int c_NT3_SANDBOX::stat_MAX_CONSTRUCTS = 1000;
 
-
-
-
+#endif // !c_NT3_SANDBOX_H

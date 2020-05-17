@@ -1,3 +1,5 @@
+#ifndef c_MATH_H
+#define c_MATH_H
 
 void odbl(int p_bg, int p_fg, double p_Double);
 void oint(int p_bg, int p_fg, int p_Int);
@@ -303,3 +305,5 @@ float get_Difference(float p_Start, float p_End)
 {
      return float(abs((p_Start - p_End)));
 }
+
+#endif // !c_MATH_H

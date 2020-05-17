@@ -1,4 +1,5 @@
-
+#ifndef c_NT3_PIPES_H
+#define c_NT3_PIPES_H
 
 //This is the IO class.
 class c_NT3_IO: public c_NT3_Base
@@ -835,3 +836,5 @@ public:
           //Pipe[p_Pipe].hotlink();
      }
 };
+
+#endif // !c_NT3_PIPES_H

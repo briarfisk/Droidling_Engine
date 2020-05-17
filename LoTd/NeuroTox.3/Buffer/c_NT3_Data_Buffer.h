@@ -1,3 +1,6 @@
+#ifndef c_NT3_DATA_BUFFER_H
+#define c_NT3_DATA_BUFFER_H
+
 //This is the linked list for the buffer.
 class c_NT3_Linked_Data_List
 {
@@ -367,3 +370,5 @@ public:
           Data_Buffer.Root->output_LL();
      }
 };
+
+#endif // !c_NT3_DATA_BUFFER_H

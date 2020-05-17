@@ -1,3 +1,6 @@
+#ifndef c_NT3_BASE_CONSTRUCT_H
+#define c_NT3_BASE_CONSTRUCT_H
+
 //This contains the base construct polymorphic class.
 class c_NT3_Base_Construct: public c_NT3_Base
 {
@@ -157,3 +160,5 @@ public:
      virtual void Save(std::string p_DIR, std::string p_Name)=0; //Saves the construct.
      virtual void Load(std::string p_DIR, std::string p_Name)=0; //Loads a construct.     
 };
+
+#endif // !c_NT3_BASE_CONSTRUCT_H

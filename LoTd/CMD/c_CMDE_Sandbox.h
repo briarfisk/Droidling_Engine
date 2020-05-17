@@ -1,4 +1,5 @@
-
+#define c_CMDE_SANDBOX_H
+#define c_CMDE_SANDBOX_H
 
 
 //--      CALLBACKS FOR THE NT ENGINE      --//
@@ -489,20 +490,4 @@ std::string c_NT3_Command_Parser::cmde_Main_Sandbox(int* p_EIP, c_Lookup_Tree* p
     return "NO_COMMAND";
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+#endif // !c_CMDE_SANDBOX_H

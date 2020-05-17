@@ -1,26 +1,5 @@
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+#ifndef c_NT3_NODE_MMAP_1D_H
+#define c_NT3_NODE_MMAP_1D_H
 
 //The basic polymorphic node to use for the node network.
 class c_NT3_Base_Node_MMap_1D
@@ -670,23 +649,4 @@ public:
      }
 };
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+#endif // !c_NT3_NODE_MMAP_1D_H

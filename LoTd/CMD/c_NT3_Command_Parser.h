@@ -1,5 +1,10 @@
+#ifndef c_NT3_COMMAND_PARSER_H
+#define c_NT3_COMMAND_PARSER_H
+
 //This file contains the command parser whose job it is to accept input in the form of command text and parse it accordingly.
 //Tables can be submitted for parsing on a row by row basis with each cell containing an argument. Or perhaps on a row by row basis with comments being in the secondary cells.
+
+
 
 class c_NT3_Command_Parser
 {
@@ -1972,3 +1977,4 @@ public:
 };
 
 
+#endif // !c_NT3_COMMAND_PARSER_H

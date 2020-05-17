@@ -1,3 +1,6 @@
+#ifndef c_NT3_CONSTRUCT_MMAP_1D_H
+#define c_NT3_CONSTRUCT_MMAP_1D_H
+
 //The construct class.
 class c_NT3_Construct_MMap_1D: public c_NT3_Base_Construct
 {
@@ -1388,3 +1391,5 @@ public:
      }
      
 };
+
+#endif // !c_NT3_CONSTRUCT_MMAP_1D_H

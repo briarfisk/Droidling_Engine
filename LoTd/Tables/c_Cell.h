@@ -1,3 +1,6 @@
+#ifndef c_CELL_H
+#define c_CELL_H
+
 //The cell is the base unit for the table.
 
 //The data types are; 0 = char, 1 = int, 2 = float, 3 = *void, 4 = bool
@@ -651,3 +654,5 @@ public:
           output_Cell_Data();
      }
 };
+
+#endif // !c_CELL_H

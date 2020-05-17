@@ -1,4 +1,5 @@
-
+#ifndef c_NT3_CAN_1D_H
+#define c_NT3_CAN_1D_H
 
 //The class for the 1D CAN.
 class c_NT3_CAN_1D
@@ -260,3 +261,5 @@ public:
      }
 
 };
+
+#endif // !c_NT3_CAN_1D_H

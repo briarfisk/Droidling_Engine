@@ -1,3 +1,6 @@
+#ifndef c_CONSOLE_H
+#define c_CONSOLE_H
+
 /*****************************************************************  
 **                                                              **
 **                                                              **
@@ -430,3 +433,4 @@ void countdown(int p_Seconds)
      }
 }
 
+#endif // !c_CONSOLE_H

@@ -1,3 +1,6 @@
+#ifndef c_ROW_H
+#define c_ROW_H
+
 //This class holds and array of cells for the table rows.
 
 class c_Row_1D
@@ -460,3 +463,5 @@ public:
      }
      
 };
+
+#endif // !c_ROW_H
