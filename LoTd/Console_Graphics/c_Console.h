@@ -20,39 +20,154 @@
 
 
 
-//console color thingy
-HANDLE  hConsole;
-CONSOLE_SCREEN_BUFFER_INFO csbi;
 int bg;//current background
 int fg;//current foreground
 
+//==--     PLATFORM DEPENDENT FUNCTIONS     --==//
+
+#ifdef _WIN32
+
+//console color thingy
+HANDLE  hConsole;
+CONSOLE_SCREEN_BUFFER_INFO csbi;
+
+
+    void init_Console()
+    {
+        hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    }
+
+    void set_Console_Title(std::string p_Title)
+    {
+        SetConsoleTitleA(p_Title.c_str());
+
+    }
+
+    void set_Console_Color(int p_bg = 0, int p_fg = 0)
+    {
+
+        // sets color
+        bg = p_bg;
+        fg = p_fg;
+        SetConsoleTextAttribute(hConsole, fg + (bg * 16));
+    }
+
+    void set_Console_Temp_Color(int p_bg = 0, int p_fg = 0)
+    {
+
+        // sets color
+        SetConsoleTextAttribute(hConsole, p_fg + (p_bg * 16));
+    }
+
+    void reset_Console_Color()
+    {
+
+        // sets color
+        SetConsoleTextAttribute(hConsole, fg + (bg * 16));
+    }
+
+
+    void console_Move_Cursor_To_Given_X_And_Y(short int p_X, short int p_Y)
+    {
+        //system("PAUSE > NULL");
+        COORD tmp_Coordinate = { p_X, p_Y };
+        SetConsoleCursorPosition(hConsole, tmp_Coordinate);
+    }
+
+    int get_Console_Cursor_X()
+    {
+        GetConsoleScreenBufferInfo(hConsole, &csbi);
+        return csbi.dwCursorPosition.X;
+    }
+
+    int get_Console_Cursor_Y()
+    {
+        GetConsoleScreenBufferInfo(hConsole, &csbi);
+        return csbi.dwCursorPosition.Y;
+    }
+
+#endif
+
+#ifdef linux
+
 void init_Console()
 {
-     hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    
 }
 
 void set_Console_Title(std::string p_Title)
 {
-     SetConsoleTitleA(p_Title.c_str());
-	 
+    
 }
 
-void set_Console_Color(int p_bg=0, int p_fg=0)
+void set_Console_Color(int p_bg = 0, int p_fg = 0)
 {
-     
-     // sets color
-     bg = p_bg;
-     fg = p_fg;
-     SetConsoleTextAttribute(hConsole, fg+(bg*16));
+
+    // sets color
+    bg = p_bg;
+    fg = p_fg;
+    //SetConsoleTextAttribute(hConsole, fg + (bg * 16));
 }
+
+void set_Console_Temp_Color(int p_bg = 0, int p_fg = 0)
+{
+
+    // sets color
+    //SetConsoleTextAttribute(hConsole, p_fg + (p_bg * 16));
+}
+
+void reset_Console_Color()
+{
+
+    // sets color
+    //SetConsoleTextAttribute(hConsole, fg + (bg * 16));
+}
+
+void console_Move_Cursor_To_Given_X_And_Y(short int p_X, short int p_Y)
+{
+    //system("PAUSE > NULL");
+    //COORD tmp_Coordinate = { p_X, p_Y };
+    //SetConsoleCursorPosition(hConsole, tmp_Coordinate);
+}
+
+int get_Console_Cursor_X()
+{
+    //GetConsoleScreenBufferInfo(hConsole, &csbi);
+    //return csbi.dwCursorPosition.X;
+    return 0;
+}
+
+int get_Console_Cursor_Y()
+{
+    //GetConsoleScreenBufferInfo(hConsole, &csbi);
+    //return csbi.dwCursorPosition.Y;
+    return 0;
+}
+#endif
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 void output_Console_Character_Colored(int p_bg, int p_fg, char p_Char)
 {
      //hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
      // sets color
-     SetConsoleTextAttribute(hConsole, p_fg+(p_bg*16));
+     set_Console_Temp_Color(p_bg, p_fg);
      std::cout << p_Char;
-     SetConsoleTextAttribute(hConsole, fg+(bg*16));
+     reset_Console_Color();
 }
 
 
@@ -60,31 +175,31 @@ void output_Console_Int_Colored(int p_bg, int p_fg, int p_Int)
 {
      //hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
      // sets color
-     SetConsoleTextAttribute(hConsole, p_fg+(p_bg*16));
+     set_Console_Temp_Color(p_bg, p_fg);
      std::cout << p_Int;
-     SetConsoleTextAttribute(hConsole, fg+(bg*16));
-     set_Console_Color(bg, fg);
+     reset_Console_Color();
+     
 }
 
 void output_Console_Float_Colored(int p_bg, int p_fg, float p_Float)
 {
      //hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
      // sets color
-     SetConsoleTextAttribute(hConsole, p_fg+(p_bg*16));
+     set_Console_Temp_Color(p_bg, p_fg);
      std::cout << p_Float;
-     SetConsoleTextAttribute(hConsole, fg+(bg*16));
-     set_Console_Color(bg, fg);
+     reset_Console_Color();
+     
 }
 
 void output_Console_Float_Colored_With_Additional_Charge_For_Precision_Setting(int p_bg, int p_fg, float p_Float, float p_Precision = .0000001)
 {
      //hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
      // sets color
-     SetConsoleTextAttribute(hConsole, p_fg+(p_bg*16));
+     set_Console_Temp_Color(p_bg, p_fg);
      p_Float += p_Precision;
      std::cout << p_Float;
-     SetConsoleTextAttribute(hConsole, fg+(bg*16));
-     set_Console_Color(bg, fg);
+     reset_Console_Color();
+     
 }
 
 
@@ -92,33 +207,33 @@ void output_Console_Float_Colored_With_Precision_5(int p_bg, int p_fg, float p_F
 {
      //hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
      // sets color
-     SetConsoleTextAttribute(hConsole, p_fg+(p_bg*16));
+     set_Console_Temp_Color(p_bg, p_fg);
      int tmp = int (p_Float * 100000);
      p_Float = float (tmp * .000001);
      std::cout << p_Float;
      
-     SetConsoleTextAttribute(hConsole, fg+(bg*16));
-     set_Console_Color(bg, fg);
+     reset_Console_Color();
+     
 }
 
 
 void ostr(int p_bg, int p_fg, std::string p_String)
 {
-     SetConsoleTextAttribute(hConsole, p_fg+(p_bg*16));
+     set_Console_Temp_Color(p_bg, p_fg);
      std::cout << p_String;
-     SetConsoleTextAttribute(hConsole, fg+(bg*16));
+     reset_Console_Color();
 }
 
 void ochr(int p_bg, int p_fg, char p_String)
 {
-     SetConsoleTextAttribute(hConsole, p_fg+(p_bg*16));
+     set_Console_Temp_Color(p_bg, p_fg);
      std::cout << p_String;
-     SetConsoleTextAttribute(hConsole, fg+(bg*16));
+     reset_Console_Color();
 }
 
 void opchr(int p_bg, int p_fg, char p_String)
 {
-     SetConsoleTextAttribute(hConsole, p_fg+(p_bg*16));
+     set_Console_Temp_Color(p_bg, p_fg);
      if (int (p_String) == 0 || int (p_String) == 7 || int (p_String) == 8 || int (p_String) == 9 || int (p_String) == 10 || int (p_String) == 13 || int (p_String) == 255)
      {
           std::cout << "?";
@@ -127,51 +242,51 @@ void opchr(int p_bg, int p_fg, char p_String)
      {
           std::cout << p_String;
      }
-     SetConsoleTextAttribute(hConsole, fg+(bg*16));
+     reset_Console_Color();
 }
 
 void oull(int p_bg, int p_fg, unsigned long long int p_Int)
 {
-     SetConsoleTextAttribute(hConsole, p_fg+(p_bg*16));
+     set_Console_Temp_Color(p_bg, p_fg);
      std::cout << p_Int;
-     SetConsoleTextAttribute(hConsole, fg+(bg*16));
+     reset_Console_Color();
 }
 
 void oint(int p_bg, int p_fg, int p_Int)
 {
-	SetConsoleTextAttribute(hConsole, p_fg + (p_bg * 16));
+    set_Console_Temp_Color(p_bg, p_fg);
 	std::cout << p_Int;
-	SetConsoleTextAttribute(hConsole, fg + (bg * 16));
+    reset_Console_Color();
 }
 
 void oint64(int p_bg, int p_fg, long long int p_Int)
 {
-	SetConsoleTextAttribute(hConsole, p_fg + (p_bg * 16));
+    set_Console_Temp_Color(p_bg, p_fg);
 	std::cout << p_Int;
-	SetConsoleTextAttribute(hConsole, fg + (bg * 16));
+    reset_Console_Color();
 }
 
 void oflt(int p_bg, int p_fg, float p_Float)
 {
-     SetConsoleTextAttribute(hConsole, p_fg+(p_bg*16));
+     set_Console_Temp_Color(p_bg, p_fg);
      std::cout << p_Float;
-     SetConsoleTextAttribute(hConsole, fg+(bg*16));
+     reset_Console_Color();
 }
 
 void odbl(int p_bg, int p_fg, double p_Double)
 {
-     SetConsoleTextAttribute(hConsole, p_fg+(p_bg*16));
+     set_Console_Temp_Color(p_bg, p_fg);
      std::cout << p_Double;
-     SetConsoleTextAttribute(hConsole, fg+(bg*16));
+     reset_Console_Color();
 }
 
 
 
 void opoi(int p_bg, int p_fg, void * p_NR)
 {
-     SetConsoleTextAttribute(hConsole, p_fg+(p_bg*16));
+     set_Console_Temp_Color(p_bg, p_fg);
      std::cout << p_NR;
-     SetConsoleTextAttribute(hConsole, fg+(bg*16));
+     reset_Console_Color();
 }
 
 
@@ -193,24 +308,6 @@ void oindex(int p_Index, int p_Color = 13)
 
 
 
-void console_Move_Cursor_To_Given_X_And_Y( short int p_X, short int p_Y )
-{
-     //system("PAUSE > NULL");
-    COORD tmp_Coordinate = { p_X, p_Y };
-    SetConsoleCursorPosition( hConsole, tmp_Coordinate );
-}
-
-int get_Console_Cursor_X()
-{
-	GetConsoleScreenBufferInfo(hConsole, &csbi);
-	return csbi.dwCursorPosition.X;
-}
-
-int get_Console_Cursor_Y()
-{
-	GetConsoleScreenBufferInfo(hConsole, &csbi);
-	return csbi.dwCursorPosition.Y;
-}
 
 void xy(short int p_X, short int p_Y = -1)
 {

@@ -1,8 +1,11 @@
 
 #include <iostream>
 #include <fstream>
-#include <windows.h>
 #include <sstream>
+
+#ifdef _WIN32
+#include <windows.h>
+#endif
 
 //Used by the console for drawing lines.
 #include <cstdlib>
