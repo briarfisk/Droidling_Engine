@@ -1,3 +1,6 @@
+#ifndef c_TABLE_H
+#define c_TABLE_H
+
 //This class is the table class, it holds the table rows and allows for their manipulation.
 
 //Used for polymorphic referencing.
@@ -1505,3 +1508,5 @@ public:
 		  return 1;
      }
 };
+
+#endif // !c_TABLE_H

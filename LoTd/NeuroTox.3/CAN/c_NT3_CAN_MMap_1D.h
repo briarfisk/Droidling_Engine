@@ -1,3 +1,5 @@
+#ifndef c_NT3_CAN_MMAP_1D
+#define c_NT3_CAN_MMAP_1D
 
 //The node references have been converted to u_Data unions.
 //The class for the 1D CAN.
@@ -319,3 +321,5 @@ public:
      }
 
 };
+
+#endif // !c_NT3_CAN_MMAP_1D

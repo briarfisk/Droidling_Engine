@@ -1,3 +1,5 @@
+#ifndef c_NAME_LOOKUP_TREE_H
+#define c_NAME_LOOKUP_TREE_H
 
 //For the lookup tree I will be using get() and set() functions to set and retrieve data as the array holding it will be dynamic.
 class c_CMD_Variable_Node
@@ -422,3 +424,4 @@ class c_Lookup_Tree
                     
 };
 
+#endif // !c_NAME_LOOKUP_TREE_H

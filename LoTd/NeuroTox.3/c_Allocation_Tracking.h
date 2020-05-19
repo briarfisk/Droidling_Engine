@@ -1,3 +1,6 @@
+#ifndef c_ALLOCATION_TRACKING_H
+#define c_ALLOCATION_TRACKING_H
+
 int ga_Cell_Alloc;
 int ga_Row_Alloc;
 int ga_Table_Alloc;
@@ -18,3 +21,5 @@ void output_Alloc()
      cout << "\n Row->" << ga_Row_Alloc;
      cout << "\n Table->" << ga_Table_Alloc;
 }
+
+#endif // !c_ALLOCATION_TRACKING_H

@@ -1,3 +1,6 @@
+#ifndef NEUROTOX_3_H
+#define NEUROTOX_3_H
+
 /*
  *   This is the main header file for the NeuroTox library. The NeuroTox library contains
  * classes that allow one to work with memory trees through a black box. Memory trees can
@@ -115,5 +118,4 @@ public:
 //Includes for the Assemblies.
 #include "Assemblies/c_NT3_SANDBOX.h"
 
-//Includes for the NT3 Engine.
-#include "CMD/c_NT3_Command_Parser.h"
+#endif // !NEUROTOX_3_H

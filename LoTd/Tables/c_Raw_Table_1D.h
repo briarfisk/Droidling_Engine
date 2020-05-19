@@ -1,3 +1,5 @@
+#ifndef c_RAW_TABLE_1D_H
+#define c_RAW_TABLE_1D_H
 
 //The class encapsulating the union to ini it.
 class c_Data_3
@@ -1789,3 +1791,4 @@ public:
      }
 };
 
+#endif // !c_RAW_TABLE_1D_H

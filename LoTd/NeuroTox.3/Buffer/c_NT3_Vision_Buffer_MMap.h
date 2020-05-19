@@ -1,3 +1,6 @@
+#ifndef c_NT3_VISION_BUFFER_MMAP_H
+#define c_NT3_VISION_BUFFER_MMAP_H
+
 //This is the linked list for the buffer.
 class c_NT3_Vision_Linked_List_MMap
 {
@@ -419,3 +422,5 @@ public:
           Treetops.Root->output_LL();
      }
 };
+
+#endif // !c_NT3_VISION_BUFFER_MMAP_H

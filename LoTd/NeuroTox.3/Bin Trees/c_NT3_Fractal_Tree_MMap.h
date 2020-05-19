@@ -1,3 +1,5 @@
+#ifndef c_NT3_FRACTAL_TREE_MMAP_H
+#define c_NT3_FRACTAL_TREE_MMAP_H
 
 class c_NT3_Fractal_State_Node_MMap
 {
@@ -210,43 +212,4 @@ private:
                     
 };
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+#endif // !c_NT3_FRACTAL_TREE_MMAP_H

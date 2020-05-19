@@ -1,3 +1,6 @@
+#ifndef c_NT3_BASE_CONSTRUCT_H
+#define c_NT3_BASE_CONSTRUCT_H
+
 //This contains the base construct polymorphic class.
 class c_NT3_Base_Construct: public c_NT3_Base
 {
@@ -105,7 +108,6 @@ public:
      ////==-----------------------+
      
      virtual c_Raw_Table_1D * get_Table_1D(std::string p_Table)=0;
-     virtual c_Raw_Table_2D * get_Table_2D(std::string p_Table)=0;
      
      virtual void set_Name(std::string p_Name)=0;
      virtual void set_CID(unsigned long long int p_CID)=0;
@@ -158,3 +160,5 @@ public:
      virtual void Save(std::string p_DIR, std::string p_Name)=0; //Saves the construct.
      virtual void Load(std::string p_DIR, std::string p_Name)=0; //Loads a construct.     
 };
+
+#endif // !c_NT3_BASE_CONSTRUCT_H

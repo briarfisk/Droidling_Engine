@@ -1,3 +1,6 @@
+#ifndef c_TABLE_HANDLER_H
+#define c_TABLE_HANDLER_H
+
 //Handles the tables. Allows for one manager for registering, tracking, and manipulating tables.
 //Currently only tables with 1 dimensional data are implemented. 
 
@@ -613,5 +616,4 @@ public:
 	}
 };
 
-
-
+#endif // !c_TABLE_HANDLER_H

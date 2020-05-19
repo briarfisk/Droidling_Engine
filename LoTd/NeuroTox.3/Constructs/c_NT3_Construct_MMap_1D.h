@@ -1,3 +1,6 @@
+#ifndef c_NT3_CONSTRUCT_MMAP_1D_H
+#define c_NT3_CONSTRUCT_MMAP_1D_H
+
 //The construct class.
 class c_NT3_Construct_MMap_1D: public c_NT3_Base_Construct
 {
@@ -183,10 +186,6 @@ public:
           if (p_Table == "tbl_Vision_Output"){ return &tbl_Vision_Output; }
           if (p_Table == "tbl_Vision_Charge_Output"){ return &tbl_Vision_Charge_Output; }
           ostr(0, 12, "\n Table NOT found:"); std::cout << p_Table;
-          return NULL;
-     }
-     c_Raw_Table_2D * get_Table_2D(std::string p_Table)
-     {
           return NULL;
      }
      
@@ -1392,3 +1391,5 @@ public:
      }
      
 };
+
+#endif // !c_NT3_CONSTRUCT_MMAP_1D_H

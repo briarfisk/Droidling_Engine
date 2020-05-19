@@ -56,6 +56,10 @@ namespace LoTd
     //Includes for the Neurotox.3 library.
     #include "NeuroTox.3/NeuroTox.3.h"
 
+    //Includes for the NT3 Engine.
+    #include "CMD/CMD.h"
+
+
     //The init routines for libraries contained within such as console.
     //Must be called or the console functions will not hook in properly.
     void init()
